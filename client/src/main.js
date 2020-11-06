@@ -4,9 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import titleMixin from './mixins/title-mixin'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
 
 Vue.config.productionTip = false
 Vue.mixin(titleMixin)
+Vue.use(Vuetify)
 
 /* eslint-disable no-new */
 new Vue({
