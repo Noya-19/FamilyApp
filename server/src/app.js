@@ -12,6 +12,7 @@ app.use(cors())
 
 require('./routes')(app)
 
+// insert {force: true} to clear db for testing
 sequelize.sync()
     .then(() => {
         app.listen(config.port);

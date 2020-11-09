@@ -7,6 +7,7 @@
 <script>
 export default {
   name: 'Shopping',
+  title: 'Shopping',
   props: {
   }
 }

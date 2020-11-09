@@ -8,6 +8,7 @@
 <script>
 export default {
     name: 'Chores',
+    title: 'Chores',
     props: {
     
     }

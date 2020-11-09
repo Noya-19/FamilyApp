@@ -7,6 +7,7 @@
 <script>
 export default {
   name: 'School',
+  title: 'School',
   props: {
   }
 }
