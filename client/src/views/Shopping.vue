@@ -40,21 +40,16 @@
                 <button type="button" @click="addItem" class="btn btn-primary"><i class="fa fa-plus"></i> Add  </button>
             </div>
         </form>
-        <div class="grid-container">
-            <div class="item1">1</div>
-            <div class="item2">2</div>
-            <div class="item3">3</div>
 
-        </div>
     </main>
 </template>
 
 <script>
 export default {
   name: 'Shopping',
-  title: 'shopping-list-table',
+  title: 'Shopping',
   props: {
-  },
+        },
     data: {
         quantity: '',
         itemName: '',
@@ -127,31 +122,5 @@ export default {
     button {
         margin-left: 2%;
     }
-    .grid-container {
-        display: grid;
-        grid-template-columns: auto auto auto;
-        grid-gap: 10px;
-        background-color: #2196F3;
-        padding: 10px;
-    }
 
-        .grid-container > div {
-            background-color: rgba(255, 255, 255, 0.8);
-           text-align: center;
-            padding: 20px 0;
-            font-size: 30px;
-        }
-
-    .item1 {
-        grid-row-start: 1;
-        grid-row-end: 3;
-    }
-    .item2 {
-        grid-row-start: 1;
-        grid-row-end: 3;
-    }
-    .item3 {
-        grid-row-start: 1;
-        grid-row-end: 3;
-    }
 </style>
