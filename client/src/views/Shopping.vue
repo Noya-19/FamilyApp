@@ -50,22 +50,25 @@ export default {
   title: 'Shopping',
   props: {
         },
-    data: {
-        quantity: '',
-        itemName: '',
-        itemsList: [
-            {
-                quantity: 3,
-                itemName: "Apples",
-                inEditMode: false
-            },
-            {
-                quantity: 6,
-                itemName: "Pears",
-                inEditMode: false
+    data: function () {
+        return {
+            quantity: '',
+            itemName: '',
+            itemsList: [
+                {
+                    quantity: 3,
+                    itemName: "Apples",
+                    inEditMode: false
+                },
+                {
+                    quantity: 6,
+                    itemName: "Pears",
+                    inEditMode: false
 
-            }],
-        inEditMode: false
+                }],
+            inEditMode: false
+        };
+
     },
     methods: {
         addItem: function () {
