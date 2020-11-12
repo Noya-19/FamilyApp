@@ -40,16 +40,70 @@
                 <button type="button" @click="addItem" class="btn btn-primary"><i class="fa fa-plus"></i> Add  </button>
             </div>
         </form>
+        <div class="grid-container">
+            <div class="item1">1</div>
+            <div class="item2">2</div>
+            <div class="item3">3</div>
+
+        </div>
     </main>
 </template>
 
 <script>
 export default {
   name: 'Shopping',
-  title: 'Shopping',
+  title: 'shopping-list-table',
   props: {
-  }
+  },
+    data: {
+        quantity: '',
+        itemName: '',
+        itemsList: [
+            {
+                quantity: 3,
+                itemName: "Apples",
+                inEditMode: false
+            },
+            {
+                quantity: 6,
+                itemName: "Pears",
+                inEditMode: false
 
+            }],
+        inEditMode: false
+    },
+    methods: {
+        addItem: function () {
+            var quantityIN = this.quantity;
+            var itemNameIN = this.itemName.trim();
+            this.itemsList.push({
+                quantity: quantityIN,
+                itemName: itemNameIN,
+                inEditMode: false
+            });
+            this.clearAll();
+        },
+        clearQuantity: function () {
+            this.quantity = '';
+        },
+        clearItemName: function () {
+            this.itemName = '';
+        },
+        clearAll: function () {
+            this.clearQuantity();
+            this.clearItemName();
+        },
+        removeItem: function (index) {
+            this.itemsList.splice(index, 1); //delete 1 element from the array at the position index
+        },
+        editItem: function (item) {
+            item.inEditMode = true;
+        },
+        editItemComplete: function (item) {
+            item.inEditMode = false;
+        }
+
+    }
 }
 </script>
 
@@ -72,5 +126,32 @@ export default {
 
     button {
         margin-left: 2%;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-gap: 10px;
+        background-color: #2196F3;
+        padding: 10px;
+    }
+
+        .grid-container > div {
+            background-color: rgba(255, 255, 255, 0.8);
+           text-align: center;
+            padding: 20px 0;
+            font-size: 30px;
+        }
+
+    .item1 {
+        grid-row-start: 1;
+        grid-row-end: 3;
+    }
+    .item2 {
+        grid-row-start: 1;
+        grid-row-end: 3;
+    }
+    .item3 {
+        grid-row-start: 1;
+        grid-row-end: 3;
     }
 </style>
