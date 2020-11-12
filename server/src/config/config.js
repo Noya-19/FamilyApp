@@ -5,9 +5,8 @@ module.exports = {
         user: process.env.DB_USER || 'familyapp',
         password: process.env.DB_PASS || 'familyapp',
         options: {
-            dialect: process.env.DIALECT || 'sqlite',
+            dialect: process.env.DIALECT || 'mysql',
             host: process.env.HOST || 'localhost',
-            storage: './familyapp.sqlite'
         }
     },
     authentication: {
