@@ -6,7 +6,11 @@ module.exports = (app) => {
     app.post('/register',
         AuthenticationControllerPolicy.register,
         AuthenticationController.register)
-
     app.post('/login',
         AuthenticationController.login)
+
+    app.get('/chores',
+        ChoresController.index)
+    app.post('/chores',
+        ChoresController.create)
 }

@@ -6,11 +6,17 @@
 </template>
 
 <script>
+import ChoreService from '@/services/ChoreService'
 export default {
     name: 'Chores',
     title: 'Chores',
-    props: {
-    
+    data () {
+        return {
+            chores: null
+        }
+    },
+    async mounted () {
+        this.chores = await SongService.index()
     }
 }
 </script>

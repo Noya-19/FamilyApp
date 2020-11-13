@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         postedBy: DataTypes.STRING,
         created: DataTypes.DATE,
         dueDate: DataTypes.DATE,
+        familyid: DataTypes.STRING
     })
 
     return Chore

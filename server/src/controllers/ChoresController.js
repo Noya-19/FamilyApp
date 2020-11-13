@@ -1,10 +1,13 @@
 const {Chore} = require('../models')
 
 module.exports = {
-    async index (req, res) {
+    async getAllByFamilyID (req, res) {
         try {
-            const chores = Chore.findAll({
-                where: {}
+            const {familyid} = req.body
+            const chores = await Chore.findAll({
+                where: {
+                    familyid: familyid
+                }
             })
             res.send(chores)
         } catch (err) {
