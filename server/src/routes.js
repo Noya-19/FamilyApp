@@ -1,4 +1,6 @@
 const AuthenticationController = require('./controllers/AuthenticationController')
+const ChoresController = require('./controllers/ChoresController')
+const FamilyController = require('./controllers/FamilyController')
 
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 
@@ -9,8 +11,13 @@ module.exports = (app) => {
     app.post('/login',
         AuthenticationController.login)
 
+    app.get('/families',
+        FamilyController.getFamilyUsers)
+    app.post('/families',
+        FamilyController.post)
+
     app.get('/chores',
-        ChoresController.index)
+        ChoresController.getAllByUserID)
     app.post('/chores',
-        ChoresController.create)
+        ChoresController.post)
 }

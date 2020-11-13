@@ -1,12 +1,12 @@
 const {Chore} = require('../models')
 
 module.exports = {
-    async getAllByFamilyID (req, res) {
+    async getAllByUserID (req, res) {
         try {
-            const {familyid} = req.body
+            const {userid} = req.body
             const chores = await Chore.findAll({
                 where: {
-                    familyid: familyid
+                    userid: userid
                 }
             })
             res.send(chores)
@@ -18,7 +18,7 @@ module.exports = {
     },
     async post (req, res) {
         try {
-            const chore = Chore.create(req.body)
+            const chore = await Chore.create(req.body)
             res.send(chore)
         } catch (err) {
             res.status(500).send({

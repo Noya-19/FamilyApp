@@ -35,4 +35,14 @@ fs
 db.sequelize = sequelize
 db.Sequelize = Sequelize
 
+// Models/Tables
+db.users = require('../models/User.js')(sequelize, Sequelize);
+db.family = require('../models/Family.js')(sequelize, Sequelize);
+db.chores = require('../models/Chore.js')(sequelize, Sequelize);
+
+// Relations
+db.family.hasMany(db.users);
+db.chores.belongsTo(db.users);
+db.users.hasMany(db.chores);
+
 module.exports = db

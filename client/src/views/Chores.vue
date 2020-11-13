@@ -16,7 +16,7 @@ export default {
         }
     },
     async mounted () {
-        this.chores = await SongService.index()
+        this.chores = await ChoreService.index()
     }
 }
 </script>
