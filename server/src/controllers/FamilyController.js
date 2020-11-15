@@ -10,12 +10,9 @@ module.exports = {
                 }
             })
             res.send(users)
-<<<<<<< HEAD
             .then(function (data) {
                 res.send(data)
             })
-=======
->>>>>>> 77f015ff5cdd211a053c8888cfc299b15c244db9
         } catch (err) {
             res.status(500).send({
                 error: 'An error has occurred while fetching users.'
