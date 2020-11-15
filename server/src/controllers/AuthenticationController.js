@@ -1,5 +1,4 @@
 const {User} = require('../models')
-const {Family} = require('../models')
 const jwt = require('jsonwebtoken')
 const config = require('../config/config')
 
@@ -25,20 +24,11 @@ module.exports = {
             })
             // email already exists
         }
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> 77f015ff5cdd211a053c8888cfc299b15c244db9
         // try {
         //     const {FamilyId} = req.body
         //     const familyCheck = await Family.findOne({
         //         where: {
-<<<<<<< HEAD
         //             id: FamilyId
-=======
-        //             FamilyId: FamilyId
->>>>>>> 77f015ff5cdd211a053c8888cfc299b15c244db9
         //         }
         //     })
         //     if (!familyCheck) {
@@ -51,10 +41,6 @@ module.exports = {
         //         error: 'Invalid family code.'
         //     })
         // }
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> 77f015ff5cdd211a053c8888cfc299b15c244db9
     },
     async login (req, res) {
         try {
