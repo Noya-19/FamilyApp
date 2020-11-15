@@ -1,4 +1,5 @@
 const {User} = require('../models')
+const {Family} = require('../models')
 const jwt = require('jsonwebtoken')
 const config = require('../config/config')
 
@@ -24,6 +25,23 @@ module.exports = {
             })
             // email already exists
         }
+        // try {
+        //     const {FamilyId} = req.body
+        //     const familyCheck = await Family.findOne({
+        //         where: {
+        //             FamilyId: FamilyId
+        //         }
+        //     })
+        //     if (!familyCheck) {
+        //         return res.status(403).send({
+        //             error: 'Error finding family.'
+        //         })
+        //     }
+        // } catch (err) {
+        //     res.status(400).send({
+        //         error: 'Invalid family code.'
+        //     })
+        // }
     },
     async login (req, res) {
         try {

@@ -6,6 +6,14 @@
           name="family-app-form"
           autocomplete="off">
           <v-text-field
+            label="First Name"
+            v-model="firstname"
+          ></v-text-field>
+          <v-text-field
+            label="Last Name"
+            v-model="lastname"
+          ></v-text-field>
+          <v-text-field
             label="Email"
             v-model="email"
           ></v-text-field>
@@ -15,6 +23,10 @@
             type="password"
             v-model="password"
             autocomplete="new-password"
+          ></v-text-field>
+          <v-text-field
+            label="Family Code"
+            v-model="familyid"
           ></v-text-field>
         </form>
         <br>
@@ -40,6 +52,9 @@ export default {
     return {
       email: '',
       password: '',
+      FamilyId: '',
+      firstname: '',
+      lastname: '',
       error: null
     }
   },
@@ -48,7 +63,10 @@ export default {
       try {
         const response = await AuthenticationService.register({
           email: this.email,
-          password: this.password
+          password: this.password,
+          FamilyId: this.FamilyId,
+          firstname: this.firstname,
+          lastname: this.lastname
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
