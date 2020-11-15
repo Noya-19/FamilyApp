@@ -3,10 +3,10 @@ const {Family} = require('../models')
 module.exports = {
     async getFamilyUsers (req, res) {
         try {
-            const {FamilyId} = req.body
+            const {familyid} = req.body
             const users = await User.findAll({
                 where: {
-                    FamilyId: FamilyId
+                    familyid: familyid
                 }
             })
             res.send(users)

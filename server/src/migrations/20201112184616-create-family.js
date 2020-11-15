@@ -1,4 +1,7 @@
 'use strict';
+
+const Family = require("../models/Family");
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Families', {
@@ -7,9 +10,6 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      name: {
-        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

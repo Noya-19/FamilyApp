@@ -12,8 +12,28 @@ function jwtSignUser (user) {
 module.exports = {
     async register (req, res) {
         try {
+            const creatingNewFamily = req.body
             const user = await User.create(req.body)
             const userJson = user.toJSON()
+            if (!creatingNewFamily) {
+                const {familyid} = req.body
+                const familyCheck = await Family.findOne({
+                    where: {
+                        id: familyid
+                    }
+                })
+                if (!familyCheck) {
+                    return res.status(403).send({
+                        error: 'Error finding family.'
+                    })
+                } else {
+                    familyCheck.add(user)
+                }
+            } else {
+                const family = await Family.create(req.body)
+                res.send(family)
+                family.add(user)
+            }
             res.send({
                 user: userJson,
                 token: jwtSignUser(userJson)
@@ -24,23 +44,6 @@ module.exports = {
             })
             // email already exists
         }
-        // try {
-        //     const {FamilyId} = req.body
-        //     const familyCheck = await Family.findOne({
-        //         where: {
-        //             id: FamilyId
-        //         }
-        //     })
-        //     if (!familyCheck) {
-        //         return res.status(403).send({
-        //             error: 'Error finding family.'
-        //         })
-        //     }
-        // } catch (err) {
-        //     res.status(400).send({
-        //         error: 'Invalid family code.'
-        //     })
-        // }
     },
     async login (req, res) {
         try {

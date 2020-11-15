@@ -24,7 +24,12 @@
             v-model="password"
             autocomplete="new-password"
           ></v-text-field>
+          <v-radio-group row v-model="creatingNewFamily" class="justify-center">
+              <v-radio value=true label="Yes"></v-radio>
+              <v-radio value=false label="No"></v-radio>
+          </v-radio-group>
           <v-text-field
+            v-if="!creatingNewFamily"
             label="Family Code"
             v-model="FamilyId"
           ></v-text-field>
@@ -34,7 +39,6 @@
         <br>
         <v-btn
           dark
-          class="cyan"
           @click="register">
           Register
         </v-btn>
@@ -55,6 +59,7 @@ export default {
       FamilyId: '',
       firstname: '',
       lastname: '',
+      creatingNewFamily: true,
       error: null
     }
   },
@@ -64,6 +69,7 @@ export default {
         const response = await AuthenticationService.register({
           email: this.email,
           password: this.password,
+          creatingNewFamily: this.creatingNewFamily,
           FamilyId: this.FamilyId,
           firstname: this.firstname,
           lastname: this.lastname
@@ -73,7 +79,7 @@ export default {
       } catch (error) {
         this.error = error.response.data.error
       }
-    }
+    },
   }
 }
 </script>

@@ -10,7 +10,8 @@ module.exports = {
             // FamilyId: Joi.string().regex(
             //     new RegExp('^[a-zA-Z0-9]{8}$')
             // ),
-            FamilyId: Joi.number().integer(),
+            familyid: Joi.number().integer(),
+            creatingNewFamily: Joi.boolean(),
             firstname: Joi.string(),
             lastname: Joi.string()
         })
