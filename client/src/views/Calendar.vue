@@ -16,34 +16,33 @@
 </template>
 
 <script>
-  export default {
-    name: 'Calendar',
-    title: 'Calendar',
-    props: {
+    import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
+    // The next two lines are processed by webpack. If you're using the component without webpack compilation,
+    // you should just create <link> elements for these. Both are optional, you can create your own theme if you prefer.
+    require("vue-simple-calendar/static/css/default.css")
+    require("vue-simple-calendar/static/css/holidays-us.css")
 
-    
-    },
-        import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
-	// The next two lines are processed by webpack. If you're using the component without webpack compilation,
-	// you should just create <link> elements for these. Both are optional, you can create your own theme if you prefer.
-	require("vue-simple-calendar/static/css/default.css")
-	require("vue-simple-calendar/static/css/holidays-us.css")
+    export default {
+        name: 'Calendar',
+        title: 'Calendar',
+        props: {
 
-	export default {
-            name: 'app',
-            data: function () {
-                return { showDate: new Date() }
+
+        },
+        data: function () {
+            return { showDate: new Date() }
+        },
+        components: {
+            CalendarView,
+            CalendarViewHeader,
+        },
+        methods: {
+            setShowDate(d) {
+                this.showDate = d;
             },
-            components: {
-                CalendarView,
-                CalendarViewHeader,
-            },
-            methods: {
-                setShowDate(d) {
-                    this.showDate = d;
-                },
-            }
+
         }
+    }
 
        
 </script>
