@@ -1,46 +1,94 @@
 <template>
     <main class="shopping">
-        <form id="shopping-list">
-            <h2>Shopping List</h2>
-            <table id="shopping-list-table" class="table table-condensed table-hover">
-                <thead>
-                    <tr>
-                        <th>Quantity</th>
-                        <th>Item</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tr v-for="(item, index) in itemsList">
-                    <td>
-                        <span v-show="!item.inEditMode">{{ item.quantity }}</span>
-                        <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" />
-                    </td>
-                    <td>
-                        <span v-show="!item.inEditMode">{{ item.itemName }}</span>
-                        <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-success" v-show="item.inEditMode" @click="editItemComplete(item)"><i class="fa fa-save"></i> Save  </button>
-                        <button type="button" class="btn btn-info" v-show="!item.inEditMode" @click="editItem(item)"><i class="fa fa-edit"></i> Edit  </button>
-                        <button type="button" class="btn btn-danger" @click="removeItem(index)"><i class="fa fa-remove"></i> Delete  </button>
-                    </td>
-                </tr>
-            </table>
-            <h4>Add new item</h4>
-            <div class="row col-md-6">
-                <div class="col-md-6 form-group">
-                    Quantity
-                    <input type="number" v-model="quantity" class="checkbox" autofocus>
-                </div>
-                <div class="col-md-6 form-group">
-                    Name
-                    <input type="text" v-model="itemName" class="checkbox">
-                </div>
+        <h2>Shopping List</h2>
+       
+        <div class="grid-container">
+            <div class="item1">
+                <form id="shopping-list">
 
-                <button type="button" @click="addItem" class="btn btn-primary"><i class="fa fa-plus"></i> Add  </button>
+                    <table id="shopping-list-table" class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>Quantity</th>
+                                <th>Item</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tr v-for="(item, index) in itemsList">
+                            <td>
+                                <span v-show="!item.inEditMode">{{ item.quantity }}</span>
+                                <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" />
+                            </td>
+                            <td>
+                                <span v-show="!item.inEditMode">{{ item.itemName }}</span>
+                                <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success" v-show="item.inEditMode" @click="editItemComplete(item)"><i class="fa fa-save"></i> Save  </button>
+                                <button type="button" class="btn btn-info" v-show="!item.inEditMode" @click="editItem(item)"><i class="fa fa-edit"></i> Edit  </button>
+                                <button type="button" class="btn btn-danger" @click="removeItem(index)"><i class="fa fa-remove"></i> Delete  </button>
+                            </td>
+                        </tr>
+                    </table>
+                    <h4>Add new item</h4>
+                    <div class="row col-md-6">
+                        <div class="col-md-6 form-group">
+                            Quantity
+                            <input type="number" v-model="quantity" class="checkbox" autofocus>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            Name
+                            <input type="text" v-model="itemName" class="checkbox">
+                        </div>
+
+                        <button type="button" @click="addItem" class="btn btn-primary"><i class="fa fa-plus"></i> Add  </button>
+                    </div>
+                </form>
+
             </div>
-        </form>
+            <div class="item3">
+                <form id="recipie-list">
 
+                    <table id="recipie-list-table" class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>Quantity</th>
+                                <th>Item</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tr v-for="(item, index) in itemsList">
+                            <td>
+                                <span v-show="!item.inEditMode">{{ item.quantity }}</span>
+                                <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" />
+                            </td>
+                            <td>
+                                <span v-show="!item.inEditMode">{{ item.itemName }}</span>
+                                <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success" v-show="item.inEditMode" @click="editItemComplete(item)"><i class="fa fa-save"></i> Save  </button>
+                                <button type="button" class="btn btn-info" v-show="!item.inEditMode" @click="editItem(item)"><i class="fa fa-edit"></i> Edit  </button>
+                                <button type="button" class="btn btn-danger" @click="removeItem(index)"><i class="fa fa-remove"></i> Delete  </button>
+                            </td>
+                        </tr>
+                    </table>
+                    <h4>Add new item</h4>
+                    <div class="row col-md-6">
+                        <div class="col-md-6 form-group">
+                            Quantity
+                            <input type="number" v-model="quantity" class="checkbox" autofocus>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            Name
+                            <input type="text" v-model="itemName" class="checkbox">
+                        </div>
+
+                        <button type="button" @click="addItem" class="btn btn-primary"><i class="fa fa-plus"></i> Add  </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </main>
 </template>
 
@@ -125,5 +173,27 @@ export default {
     button {
         margin-left: 2%;
     }
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1.5fr auto 1.5fr;
+        grid-gap: 10px;
+        background-color: #2196F3;
+        padding: 10px;
+    }
 
+    .grid-container > div {
+        background-color: rgba(255, 255, 255, 0.8);
+        text-align: center;
+        padding: 20px 0;
+        font-size: 30px;
+    }
+
+    .item1 {
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+    .item3 {
+        grid-column-start: 3;
+        grid-column-end: 3;
+    }
 </style>
