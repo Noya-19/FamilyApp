@@ -24,6 +24,26 @@ module.exports = {
             })
             // email already exists
         }
+<<<<<<< Updated upstream
+=======
+        // try {
+        //     const {FamilyId} = req.body
+        //     const familyCheck = await Family.findOne({
+        //         where: {
+        //             id: FamilyId
+        //         }
+        //     })
+        //     if (!familyCheck) {
+        //         return res.status(403).send({
+        //             error: 'Error finding family.'
+        //         })
+        //     }
+        // } catch (err) {
+        //     res.status(400).send({
+        //         error: 'Invalid family code.'
+        //     })
+        // }
+>>>>>>> Stashed changes
     },
     async login (req, res) {
         try {

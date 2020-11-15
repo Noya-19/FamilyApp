@@ -9,8 +9,18 @@
 export default {
     name: 'Chores',
     title: 'Chores',
+<<<<<<< Updated upstream
     props: {
     
+=======
+    data () {
+        return {
+            chores: null
+        }
+    },
+    async mounted () {
+        this.chores = await ChoreService.index(this.$store.userid)
+>>>>>>> Stashed changes
     }
 }
 </script>

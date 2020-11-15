@@ -6,7 +6,17 @@ module.exports = {
             email: Joi.string().email(),
             password: Joi.string().regex(
                 new RegExp('^[a-zA-Z0-9]{8,32}$')
+<<<<<<< Updated upstream
             )
+=======
+            ),
+            // FamilyId: Joi.string().regex(
+            //     new RegExp('^[a-zA-Z0-9]{8}$')
+            // ),
+            FamilyId: Joi.number().integer(),
+            firstname: Joi.string(),
+            lastname: Joi.string()
+>>>>>>> Stashed changes
         })
         // WORKING WITH DEPRECATED VERSION
         //                   = Joi.validate(req.body, schema);
