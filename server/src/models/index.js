@@ -11,7 +11,7 @@ if (config.use_env_variable) {
         config.db.database,
         config.db.user,
         config.db.password,
-        config.db.options
+        config.db.options,
     );
 } else {
     sequelize = new Sequelize(

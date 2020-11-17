@@ -1,4 +1,5 @@
 const {User} = require('../models')
+const {Family} = require('../models')
 const jwt = require('jsonwebtoken')
 const config = require('../config/config')
 
@@ -13,50 +14,46 @@ module.exports = {
     async register (req, res) {
         try {
             const creatingNewFamily = req.body.creatingNewFamily
-            console.log(creatingNewFamily)
             if (!creatingNewFamily) {
                 const familyid = req.body.familyid
-                const familyCheck = await Family.findOne({
+                const family = await Family.findOne({
                     where: {
                         id: familyid
                     }
                 })
-                console.log('familyCheck: ' + familyCheck)
-                if (!familyCheck) {
-                    console.log('invalid family code')
+                if (!family) {
                     return res.status(403).send({
                         error: 'Error finding family.'
                     })
                 } else {
-                    const {user} = await User.create({
+                    const user = await User.create({
                         email: req.body.email,
                         password: req.body.password,
                         firstname: req.body.firstname,
-                        lastname: req.body.lastname
+                        lastname: req.body.lastname,
+                        FamilyId: req.body.familyid
                     })
-                    console.log('add user to family')
-                    familyCheck.add(user)
-                    //user.FamilyId = familyid
+                    const userJson = user.toJSON()
+                    res.send({
+                        user: userJson,
+                        token: jwtSignUser(userJson)
+                    })
                 }
             } else {
                 const family = await Family.create()
-                console.log('created family')
-                res.send(family)
-                const {user} = await User.create({
+                const user = await User.create({
                     email: req.body.email,
                     password: req.body.password,
                     firstname: req.body.firstname,
-                    lastname: req.body.lastname
+                    lastname: req.body.lastname,
+                    FamilyId: family.id
                 })
-                family.add(user)
-                console.log('created family - add user to family')
-                //user.FamilyId = family.id
+                const userJson = user.toJSON()
+                res.send({
+                    user: userJson,
+                    token: jwtSignUser(userJson)
+                })
             }
-            const userJson = user.toJSON()
-            res.send({
-                user: userJson,
-                token: jwtSignUser(userJson)
-            })
         } catch (err) {
             res.status(400).send({
                 error: 'This email is already in use.'
