@@ -26,7 +26,7 @@
           ></v-text-field>
           <v-text-field
             label="Family Code"
-            v-model="familyid"
+            v-model="FamilyId"
           ></v-text-field>
         </form>
         <br>
