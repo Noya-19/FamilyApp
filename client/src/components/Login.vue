@@ -1,5 +1,5 @@
 <template>
-  <v-layout column>
+  <v-layout column v-if="!$store.state.isUserLoggedIn">
     <v-flex xs6 offset-xs3>
       <div title="Login">
         <v-text-field

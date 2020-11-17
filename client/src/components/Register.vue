@@ -1,5 +1,5 @@
 <template>
-  <v-layout column>
+  <v-layout column v-if="!$store.state.isUserLoggedIn">
     <v-flex xs6 offset-xs3>
       <div title="Register">
         <form 
@@ -25,8 +25,8 @@
             autocomplete="new-password"
           ></v-text-field>
           <v-radio-group row v-model="creatingNewFamily" class="justify-center">
-              <v-radio value=true label="Yes"></v-radio>
-              <v-radio value=false label="No"></v-radio>
+              <v-radio value="true" label="Yes"></v-radio>
+              <v-radio value="false" label="No"></v-radio>
           </v-radio-group>
           <v-text-field
             v-if="!creatingNewFamily"

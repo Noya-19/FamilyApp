@@ -12,28 +12,47 @@ function jwtSignUser (user) {
 module.exports = {
     async register (req, res) {
         try {
-            const creatingNewFamily = req.body
-            const user = await User.create(req.body)
-            const userJson = user.toJSON()
+            const creatingNewFamily = req.body.creatingNewFamily
+            console.log(creatingNewFamily)
             if (!creatingNewFamily) {
-                const {familyid} = req.body
+                const familyid = req.body.familyid
                 const familyCheck = await Family.findOne({
                     where: {
                         id: familyid
                     }
                 })
+                console.log('familyCheck: ' + familyCheck)
                 if (!familyCheck) {
+                    console.log('invalid family code')
                     return res.status(403).send({
                         error: 'Error finding family.'
                     })
                 } else {
+                    const {user} = await User.create({
+                        email: req.body.email,
+                        password: req.body.password,
+                        firstname: req.body.firstname,
+                        lastname: req.body.lastname
+                    })
+                    console.log('add user to family')
                     familyCheck.add(user)
+                    //user.FamilyId = familyid
                 }
             } else {
-                const family = await Family.create(req.body)
+                const family = await Family.create()
+                console.log('created family')
                 res.send(family)
+                const {user} = await User.create({
+                    email: req.body.email,
+                    password: req.body.password,
+                    firstname: req.body.firstname,
+                    lastname: req.body.lastname
+                })
                 family.add(user)
+                console.log('created family - add user to family')
+                //user.FamilyId = family.id
             }
+            const userJson = user.toJSON()
             res.send({
                 user: userJson,
                 token: jwtSignUser(userJson)

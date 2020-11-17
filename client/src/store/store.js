@@ -8,7 +8,9 @@ export default new Vuex.Store({
     state: {
         token: null,
         user: null,
-        isUserLoggedIn: false
+        isUserLoggedIn: false,
+        chores: [],
+        events: []
     },
     mutations: {
         setToken (state, token) {
@@ -21,6 +23,12 @@ export default new Vuex.Store({
         },
         setUser (state, user) {
             state.user = user
+        },
+        setChores (state, chores) {
+            state.chores = chores
+        },
+        setEvents (state, events) {
+            state.events = events
         }
     },
     actions: {
@@ -30,6 +38,20 @@ export default new Vuex.Store({
         },
         setUser ({commit}, user) {
             commit('setUser', user)
+        },
+        setChores ({commit}, chores) {
+            commit('setChores', chores)
+        },
+        setEvents ({commit}, events) {
+            commit('setEvents', events)
         }
+    },
+    getters: {
+        getChores: state => {
+            return state.chores
+        },
+        getEvents: state => {
+            return state.events
+        },
     }
 })
