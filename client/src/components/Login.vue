@@ -47,6 +47,16 @@ export default {
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
+        .then(function (response) {
+            if (response.status === 200 && 'token' in response.body) {
+              this.$session.start()
+              this.$session.set('jwt', response.body.token)
+              Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.token
+              this.$router.push('/dashboard')
+            }
+          }, function (err) {
+            console.log('err', err)
+          })
       } catch (error) {
         this.error = error.response.data.error
       }

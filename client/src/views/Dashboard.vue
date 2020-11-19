@@ -1,13 +1,13 @@
 <template>
-    <main class="home">
+    <main class="dashboard">
     </main>
 </template>
 
 <script>
 
 export default {
-  name: 'Home',
-  title: 'Home',
+  name: 'Dashboard',
+  title: 'Dashboard',
   components: {
   },
 

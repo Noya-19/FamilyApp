@@ -8,11 +8,17 @@ import Vuetify from 'vuetify'
 import { sync } from 'vuex-router-sync'
 import 'vuetify/dist/vuetify.min.css'
 import store from '@/store/store'
+import VueSession from 'vue-session'
 
 Vue.config.productionTip = false
 
 Vue.mixin(titleMixin)
 Vue.use(Vuetify)
+
+var sessionOptions = {
+  persist: true
+}
+Vue.use(VueSession, sessionOptions)
 
 sync(store, router)
 

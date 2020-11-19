@@ -3,16 +3,14 @@ const {Chore} = require('../models')
 module.exports = {
     async getAllByUserID (req, res) {
         try {
-            const {userid} = req.body
-            const {chores} = await Chore.findAll({
+            const userid = req.body.userid
+            const chores = await Chore.findAll({
                 where: {
                     UserId: userid,
                     assignedTo: userid
                 }
             })
-            .then(function (data) {
-                res.send(data)
-            })
+            res.send(chores)
         } catch (err) {
             res.status(500).send({
                 error: 'An error has occurred while fetching chores.'

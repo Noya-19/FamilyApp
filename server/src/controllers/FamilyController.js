@@ -1,18 +1,17 @@
 const {Family} = require('../models')
+const {User} = require('../models')
+const {Chore} = require('../models')
 
 module.exports = {
     async getFamilyUsers (req, res) {
         try {
-            const {familyid} = req.body
+            const familyid = req.body.FamilyId
             const users = await User.findAll({
                 where: {
-                    familyid: familyid
+                    FamilyId: familyid
                 }
             })
             res.send(users)
-            .then(function (data) {
-                res.send(data)
-            })
         } catch (err) {
             res.status(500).send({
                 error: 'An error has occurred while fetching users.'
