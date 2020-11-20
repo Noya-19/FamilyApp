@@ -23,7 +23,6 @@ export default {
         }
     },
     async mounted () {
-        this.chores = await ChoreService.index(this.$store.userid)
     }
 }
 </script>

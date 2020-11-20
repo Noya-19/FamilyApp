@@ -28,6 +28,7 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
+import FamilyService from '@/services/FamilyService'
 export default {
   name: 'Login',
   title: 'Login',
@@ -52,7 +53,13 @@ export default {
       }
     },
     async getAssociatedFamilyMembers(familyid) {
-      const response = await 
+      try {
+        const response = await FamilyService({
+          //
+        })
+      } catch (error) {
+        this.error = error.response.data.error
+      }
     }
   }
 }

@@ -8,6 +8,7 @@ yarn-error.log*
 /test/e2e/reports/
 selenium-debug.log
 server/package-lock.json
+server/package.json
 client/package.json
 client/package-lock.json
 # Editor directories and files
