@@ -11,7 +11,7 @@ if (config.use_env_variable) {
         config.db.database,
         config.db.user,
         config.db.password,
-        config.db.options
+        config.db.options,
     );
 } else {
     sequelize = new Sequelize(
@@ -39,10 +39,13 @@ db.Sequelize = Sequelize
 db.users = require('../models/User.js')(sequelize, Sequelize);
 db.family = require('../models/Family.js')(sequelize, Sequelize);
 db.chores = require('../models/Chore.js')(sequelize, Sequelize);
+db.events = require('../models/Event.js')(sequelize, Sequelize);
 
 // Relations
-db.family.hasMany(db.users);
 db.chores.belongsTo(db.users);
+db.events.belongsTo(db.users);
+db.family.hasMany(db.users);
 db.users.hasMany(db.chores);
+db.users.hasMany(db.events);
 
 module.exports = db

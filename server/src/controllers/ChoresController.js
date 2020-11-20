@@ -1,12 +1,12 @@
-const {Chore} = require('../models')
+const { Chore } = require('../models')
 
 module.exports = {
-    async getAllByUserID (req, res) {
+    async getAllByAssignedTo (req, res) {
         try {
-            const {userid} = req.body
+            const userid = req.body.UserId
             const chores = await Chore.findAll({
                 where: {
-                    userid: userid
+                    assignedTo: userid    
                 }
             })
             res.send(chores)
@@ -19,7 +19,7 @@ module.exports = {
     async post (req, res) {
         try {
             const chore = await Chore.create(req.body)
-            res.send(chore)
+            res.status(200).send(chore)
         } catch (err) {
             res.status(500).send({
                 error: 'An error has occurred while creating the chore.'

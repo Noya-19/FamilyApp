@@ -18,18 +18,18 @@
                             <div class="field">
                                 <label class="label">Name of event</label>
                                 <div class="control">
-                                    <input type="text" class="input"  id="titile"/>
+                                    <input type="text" class="input" v-model="title" id="title"/>
                                 </div>
                                 <div class="field">
                                     <label class="label">Start date</label>
                                     <div class="control">
-                                        <input type="date" class="input" id="startDate"/>
+                                        <input type="date" class="input" v-model="startDay" id="startDate"/>
                                     </div>
                                 </div>
                                 <div class="field">
                                     <label class="label">End date</label>
                                     <div class="control">
-                                        <input type="date" class="input" id="endDate" />
+                                        <input type="date" class="input" v-model="endDay" />
                                     </div>
                                 </div>
                                 <button class="button is-info" @click="addEvent"> Add Item</button>
@@ -41,14 +41,31 @@
 
             
             <calendar-view
-                           :show-date="showDate"
-                           class="theme-default holiday-us-traditional holiday-us-official">
-                <calendar-view-header slot="header"
-                                      slot-scope="t"
-                                      :header-props="t.headerProps"
-                                      @input="setShowDate"
-                                    />
-
+                     :show-date="showDate"
+			        :items="items"
+			        :enable-date-selection="true"
+			        :selection-start="selectionStart"
+			        :selection-end="selectionEnd"
+			        :display-week-numbers="false"
+			        :item-top="themeOptions.top"
+			        :item-content-height="themeOptions.height"
+			        :item-border-height="themeOptions.border"
+			        :current-period-label="themeOptions.currentPeriodLabel"
+			        class="holiday-us-traditional holiday-us-official"
+			        @date-selection-start="setSelection"
+			        @date-selection="setSelection"
+			        @date-selection-finish="finishSelection"
+		        >
+			        <calendar-view-header
+				        slot="header"
+				        slot-scope="{ headerProps }"
+				        :header-props="headerProps"
+				        :previous-year-label="themeOptions.previousYearLabel"
+				        :previous-period-label="themeOptions.previousPeriodLabel"
+				        :next-period-label="themeOptions.nextPeriodLabel"
+				        :next-year-label="themeOptions.nextYearLabel"
+				        @input="setShowDate"
+			        />
             </calendar-view>
         </div>
     </main>
@@ -71,11 +88,50 @@
         data: function () {
             return {
                 showDate: new Date(),
-                items: [{
-                    id: "1",
-                    startDate: "2020-11-18",
-                }]
+                selectionStart: null,
+                selectionEnd: null,
+                theme: "gcal",
+                items: Array(0),
+                    //.fill()
+                    //.map((_, i) => this.getRandomEvent(i)),
+                startDay:"",
+                endDay: "",
+                title:"",
+                
             }
+        },
+        watch: {
+            items: function (newItems, oldItems) {//not increasing when random events are added      
+                console.log("inside of watch");
+                
+            },
+
+        },
+
+        computed: {
+            themeOptions() {
+                return this.theme == "gcal"
+                    ? {
+                        top: "2.6em",
+                        height: "2.1em",
+                        border: "0px",
+                        previousYearLabel: "\uE5CB\uE5CB",
+                        previousPeriodLabel: "\uE5CB",
+                        nextPeriodLabel: "\uE5CC",
+                        nextYearLabel: "\uE5CC\uE5CC",
+                        currentPeriodLabel: "Today",
+                    }
+                    : {
+                        top: "1.4em",
+                        height: "1.4em",
+                        border: "2px",
+                        previousYearLabel: "<<",
+                        previousPeriodLabel: "<",
+                        nextPeriodLabel: ">",
+                        nextYearLabel: ">>",
+                        currentPeriodLabel: "",
+                    }
+            },
         },
         components: {
             CalendarView,
@@ -88,13 +144,19 @@
             },
             addEvent() {
                 //adding data to items array
+                const startDay = new Date(this.startDay);
+                const endDay = new Date(this.endDay);
+                const title = this.title;
+                console.log(Date.UTC(endDay.getUTCFullYear(), endDay.getUTCMonth(), endDay.getUTCDate()));
+                console.log(startDay.getFullYear());
                 this.items.push({
-                    startDate: this.newItemStartDate,
-                    endDate: this.newItemEndDate,
-                    title: this.newItemTitle,
-                    id: "e" + Math.random().toString(36)
-
+                    id: "e" + Math.random().toString(36),
+                    title: title,
+                    startDate: Date.UTC(startDay.getUTCFullYear(), startDay.getUTCMonth(), startDay.getUTCDate()),
+                    endDate: Date.UTC(endDay.getUTCFullYear(), endDay.getUTCMonth(), endDay.getUTCDate()),
+                    classes: Math.random() > 0.9 ? ["custom-date-class-red"] : null,
                 }),
+
                 console.log("added");
 
                 /*send data to backend
@@ -109,7 +171,32 @@
                  /* else resend data
                  */
 
-            }
+            },
+            getRandomEvent(index) {
+                const startDay = Math.floor(Math.random() * 28 + 1)
+                const endDay = Math.floor(Math.random() * 4) + startDay
+                var d = new Date()
+                console.log(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), endDay))
+                var i = {
+                    id: index,
+                    title: "Event " + (index + 1),
+                    startDate: Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), startDay),
+                    endDate: Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), endDay),
+                    classes: Math.random() > 0.9 ? ["custom-date-class-red"] : null,
+                }
+                return i
+            },
+            setShowDate(d) {
+                this.showDate = d
+            },
+            setSelection(dateRange) {
+                this.selectionEnd = dateRange[1]
+                this.selectionStart = dateRange[0]
+            },
+            finishSelection(dateRange) {
+                this.setSelection(dateRange)
+            },
+
 
         }
     }
@@ -118,6 +205,10 @@
 </script>
     
 <style lang="scss" scoped>
+
+    .cv-item.custom-date-class-red {
+        background-color: #ff6666;
+    }
     #calendar {
         display: flex;
         flex-grow: 1;
