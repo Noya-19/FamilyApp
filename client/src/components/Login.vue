@@ -36,7 +36,10 @@ export default {
     return {
       email: '',
       password: '',
-      error: null
+      error: null,
+      family: [],
+      chores: [],
+      events: [],
     }
   },
   methods: {
@@ -55,8 +58,22 @@ export default {
     async getAssociatedFamilyMembers(familyid) {
       try {
         const response = await FamilyService({
-          //
+          // get list of users
         })
+      } catch (error) {
+        this.error = error.response.data.error
+      }
+    },
+    async getFamilyChores(family) {
+      try {
+        /*
+          1. Loop through family array
+          2. For each user in family:
+            -call Chore API to obtain list of chores
+            -push each chore to chores[]
+          3. update Vuex store's chores[]
+        */
+
       } catch (error) {
         this.error = error.response.data.error
       }
