@@ -5,8 +5,15 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
+    },
+
+  }, {
+    getterMethods: {
+      getFamilyId() {
+        return this.id;
+      }
     }
   })
-
+  
   return Family
 }

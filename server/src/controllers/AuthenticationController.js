@@ -40,12 +40,15 @@ module.exports = {
                     })
                 }
             } else {
-                const family = await Family.create()
                 const user = await User.create({
                     email: req.body.email,
                     password: req.body.password,
                     firstname: req.body.firstname,
                     lastname: req.body.lastname,
+                    FamilyId: null
+                })
+                const family = await Family.create()
+                await user.update({
                     FamilyId: family.id
                 })
                 const userJson = user.toJSON()

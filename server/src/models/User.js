@@ -40,6 +40,11 @@ module.exports = (sequelize, DataTypes) => {
             userId() {
                 return this.id;
             }
+        },
+        setterMethods: {
+            setFamilyId(familyid) {
+                this.setDataValue('FamilyId', familyid);
+            }
         }
     })
 

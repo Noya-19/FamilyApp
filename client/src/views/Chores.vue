@@ -17,6 +17,11 @@ export default {
             chores: null
         }
     },
+    methods: {
+        getAllFamilyChores () {
+            
+        }
+    },
     async mounted () {
         this.chores = await ChoreService.index(this.$store.userid)
     }

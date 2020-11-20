@@ -50,6 +50,9 @@ export default {
       } catch (error) {
         this.error = error.response.data.error
       }
+    },
+    async getAssociatedFamilyMembers(familyid) {
+      const response = await 
     }
   }
 }
