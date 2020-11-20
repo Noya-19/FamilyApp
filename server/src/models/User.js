@@ -29,6 +29,17 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         hooks: {
             beforeSave: hashPassword
+        },
+        getterMethods: {
+            firstName() {
+                return this.firstname;
+            },
+            lastName() {
+                return this.lastname;
+            },
+            userId() {
+                return this.id;
+            }
         }
     })
 

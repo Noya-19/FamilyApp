@@ -1,12 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import VuexPersistence from 'vuex-persist'
 
 Vue.use(Vuex)
-
-const vuexLocal = new VuexPersistence({
-    storage: window.localStorage
-})
 
 export default new Vuex.Store({
     strict: true,
@@ -14,13 +9,11 @@ export default new Vuex.Store({
         token: null,
         user: null,
         isUserLoggedIn: false,
+        family: [],
         chores: [],
         events: []
     },
-    plugins: [new VuexPersistence().plugin],
     mutations: {
-        RESTORE_MUTATION: vuexPersist.RESTORE_MUTATION,
-        
         setToken (state, token) {
             state.token = token
             if (token) {
@@ -31,6 +24,9 @@ export default new Vuex.Store({
         },
         setUser (state, user) {
             state.user = user
+        },
+        setFamily (state, family) {
+            state.family = family
         },
         setChores (state, chores) {
             state.chores = chores
@@ -47,6 +43,9 @@ export default new Vuex.Store({
         setUser ({commit}, user) {
             commit('setUser', user)
         },
+        setFamily ({commit}, family) {
+            commit('setFamily', family)
+        },
         setChores ({commit}, chores) {
             commit('setChores', chores)
         },
@@ -60,6 +59,9 @@ export default new Vuex.Store({
         },
         getEvents: state => {
             return state.events
+        },
+        getFamily: state => {
+            return state.family
         },
     }
 })

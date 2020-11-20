@@ -1,12 +1,13 @@
 const {Event} = require('../models')
+const User = require('../models/User')
 
 module.exports = {
     async getUserEvents (req, res) {
         try {
-            const userid = req.body.userid
+            const userid = req.body.UserId
             const events = await Event.findAll({
                 where: {
-                    postedBy: userid
+                    UserId: userid
                 }
             })
             res.send(events)

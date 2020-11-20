@@ -1,6 +1,5 @@
 const {Family} = require('../models')
 const {User} = require('../models')
-const {Chore} = require('../models')
 
 module.exports = {
     async getFamilyUsers (req, res) {

@@ -12,13 +12,7 @@ export default {
   name: 'App',
   components: {
     GlobalNav
-  },
-
-  beforeCreate: function () {
-    if (!this.$session.exists()) {
-      this.$router.push('/')
-    }
-  },
+  }
 }
 </script>
 

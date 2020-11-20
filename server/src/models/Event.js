@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
         title: DataTypes.STRING,
         startDate: DataTypes.DATEONLY,
         endDate: DataTypes.DATEONLY,
-        postedBy: DataTypes.INTEGER
+        UserId: DataTypes.INTEGER
     })
 
     return Event

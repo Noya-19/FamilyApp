@@ -18,7 +18,7 @@ module.exports = (app) => {
         FamilyController.post)
 
     app.get('/chores',
-        ChoresController.getAllByUserID)
+        ChoresController.getAllByAssignedTo)
     app.post('/chores',
         ChoresController.post)
 
