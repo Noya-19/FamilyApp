@@ -4,8 +4,8 @@
         <div class="header"><h1>CSUN</h1></div>
 
         <div class="left"> Everone's Assignments</div>  
-        <div class="middle">School Calendar</div>
-        <div class="right">Linear Algebra</div>
+        <div class="right">School Calendar</div>
+        <div class="bot-left">Linear Algebra</div>
         <div class="footer">Filter by People</div>
       </div>
     </main>
@@ -36,14 +36,14 @@ export default {
     display: grid;
     grid-template-areas:
     "header header header header header"
-    "left left middle middle middle"
-    "right right footer footer footer";
+    "left left right right right"
+    "bot-left bot-left footer footer footer";
     grid-column-gap: 4rem;
   }
 
   .left,
-  .middle,
-  .right {
+  .right,
+  .bot-left {
     margin-top: 0.625rem;
     //height: 30rem;
     padding: 0.625rem;
@@ -68,14 +68,14 @@ export default {
   }
 
         /* Style the middle column */
-  .middle {
-    grid-area: middle;
+  .right {
+    grid-area: right;
     height: 40rem;
   }
 
         /* Style the right column */
-  .right {
-    grid-area: right;
+  .bot-left {
+    grid-area: bot-left;
     height: 8.5rem;
     padding-right: 2rem;
     padding: 0.625rem;

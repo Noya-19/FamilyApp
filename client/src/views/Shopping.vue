@@ -23,7 +23,7 @@ export default {
 
   .grid-container {
     grid-template-columns: 19.4rem 19.4rem 19.4rem 19.4rem 19.4rem;/*200px 200px 200px 200px 200px 200px;*/
-    grid-template-rows: 2.5rem 50rem auto;
+    grid-template-rows: 2.5rem 45rem auto;
     padding-left: $lg-gutter;
     padding-right: $lg-gutter;
     background-color: $light-gray;
@@ -35,15 +35,14 @@ export default {
     grid-template-areas:
     " header header header header header"
     "left left left right right"
-    " footer footer footer middle middle";
+    " footer footer footer empty empty";
     grid-column-gap: 2rem;
   }
 
   .left,
-  .middle,
   .right {
     margin-top: 0.625rem;
-    height: 50rem;
+    height: 45rem;
     padding: 0.625rem;
     color: black;
     border: 0.0625rem solid $border-white;
@@ -63,11 +62,6 @@ export default {
     grid-area: left;
   }
 
-      /* Style the middle column */
-  .middle {
-    grid-area: middle;
-  }
-
       /* Style the right column */
   .right {
     grid-area: right;
@@ -77,6 +71,7 @@ export default {
   .footer {
     grid-area: footer;
     background-color: $light-blue;
+    height: 3rem;
     padding: 0.625rem;
     text-align: center;
     margin-top: 1.25rem;

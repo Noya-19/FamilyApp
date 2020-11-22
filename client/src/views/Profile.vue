@@ -23,7 +23,7 @@ export default {
 
   .grid-container {
     grid-template-columns: 24.5rem 24.5rem 24.5rem 24.5rem;
-    grid-template-rows: 2.5rem 50rem auto;
+    grid-template-rows: 2.5rem 45rem auto;
     padding-left: $lg-gutter;
     padding-right: $lg-gutter;
     background-color: $light-gray;
@@ -43,7 +43,7 @@ export default {
   .middle,
   .right {
     margin-top: 0.625rem;
-    height: 50rem;
+    height: 45rem;
     padding: 0.625rem;
     color: black;
     border: 0.0625rem solid $border-white;
@@ -77,6 +77,7 @@ export default {
   .footer {
     grid-area: footer;
     background-color: $light-blue;
+    height: 3rem;
     padding: 0.625rem;
     text-align: center;
     margin-top: 1.25rem;

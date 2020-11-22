@@ -101,6 +101,19 @@ export default {
         padding-top: 1rem;
     }
 
+    .left {
+        grid-area: left;
+    }
+
+      /* Style the middle column */
+    .middle {
+        grid-area: middle;
+    }
+
+    .right{
+        grid-area: right;
+    }
+
         /* Style the left column */
         /* Style the footer */
     .footer {

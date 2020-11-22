@@ -3,8 +3,8 @@
         <div class="grid-container">
         <div class="header"><h1>FAMTASTIC</h1></div>
         <div class="left"> Shopping List</div>  
-        <div class="middle">Calendar</div>
-        <div class="right">People</div>
+        <div class="right">Calendar</div>
+        <div class="bot-left">People</div>
         <div class="footer">Chore List</div>
       </div>
     </main>
@@ -49,15 +49,15 @@ export default {
     display: grid;
     grid-template-areas:
     "header header header header"
-    "left left middle middle"
-    "right footer middle middle";
+    "left left right right"
+    "bot-left footer right right";
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
   }
 
   .left,
-  .middle,
   .right,
+  .bot-left,
   .footer {
     margin-top: 0.625rem;
     //height: 50rem;
@@ -82,14 +82,14 @@ export default {
   }
 
       /* Style the middle column */
-  .middle {
-    grid-area: middle;
+  .right {
+    grid-area: right;
     height: 51rem;
   }
 
-      /* Style the right column */
-  .right {
-    grid-area: right;
+      /* Style the bot-left column */
+  .bot-left {
+    grid-area: bot-left;
     height: 23.5rem;
     padding: 0.625rem;
     text-align: center;
