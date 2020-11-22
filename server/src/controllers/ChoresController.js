@@ -26,19 +26,19 @@ module.exports = {
             })
         }
     },
-    async delete (req, res) {
-        try {
-            const choreid = req.body.id
-            const chore = await Chore.findOne({
-                where: {
-                    id: choreid 
-                }
-            })
-            res.send(chores)
-        } catch (err) {
-            res.status(500).send({
-                error: 'An error has occurred while fetching chores.'
-            })
-        }
-    }
+    // async delete (req, res) {
+    //     try {
+    //         const choreid = req.body.id
+    //         const chore = await Chore.findOne({
+    //             where: {
+    //                 id: choreid 
+    //             }
+    //         })
+    //         res.send(chore)
+    //     } catch (err) {
+    //         res.status(500).send({
+    //             error: 'An error has occurred while fetching chores.'
+    //         })
+    //     }
+    // }
 }

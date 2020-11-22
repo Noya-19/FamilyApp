@@ -1,10 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VuexPersistence from 'vuex-persist'
 
 Vue.use(Vuex)
 
+const vuexLocal = new VuexPersistence({
+    storage: window.localStorage
+  })
+
 export default new Vuex.Store({
     strict: true,
+    plugins: [vuexLocal.plugin],
     state: {
         token: null,
         user: null,

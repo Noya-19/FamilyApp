@@ -51,6 +51,9 @@ export default {
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
+        // getAssociatedFamilyMember()
+        // getFamilyChores()
+        // getFamilyEvents()
       } catch (error) {
         this.error = error.response.data.error
       }
@@ -73,7 +76,6 @@ export default {
             -push each chore to chores[]
           3. update Vuex store's chores[]
         */
-
       } catch (error) {
         this.error = error.response.data.error
       }
