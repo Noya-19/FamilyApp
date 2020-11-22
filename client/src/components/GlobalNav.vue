@@ -5,7 +5,7 @@
         <!--/router-link-->
 
         <ul class="global-nav__links" :class="isNavOpen ? 'global-nav__links--active' : ''">
-            <li v-if="$store.state.isUserLoggedIn" class="global-nav__element"><router-link to="/">Home</router-link></li>
+            <li v-if="$store.state.isUserLoggedIn" class="global-nav__element"><router-link to="/dashboard">Dashboard</router-link></li>
             <li v-if="$store.state.isUserLoggedIn" class="global-nav__element"><router-link to="/calendar">Calendar</router-link></li>
             <li v-if="$store.state.isUserLoggedIn" class="global-nav__element"><router-link to="/chores">Chores</router-link></li>
             <li v-if="$store.state.isUserLoggedIn" class="global-nav__element"><router-link to="/school">School</router-link></li>
@@ -39,9 +39,7 @@ export default {
         logout () {
             this.$store.dispatch('setToken', null)
             this.$store.dispatch('setUser', null)
-            this.$router.push({
-                name: 'Home'
-            })
+            this.$router.push('/')
         }
     },
 

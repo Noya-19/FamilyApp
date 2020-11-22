@@ -1,5 +1,5 @@
 <template>
-  <v-layout column>
+  <v-layout column v-if="!$store.state.isUserLoggedIn">
     <v-flex xs6 offset-xs3>
       <div title="Login">
         <v-text-field
@@ -28,6 +28,7 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
+import FamilyService from '@/services/FamilyService'
 export default {
   name: 'Login',
   title: 'Login',
@@ -35,7 +36,10 @@ export default {
     return {
       email: '',
       password: '',
-      error: null
+      error: null,
+      family: [],
+      chores: [],
+      events: [],
     }
   },
   methods: {
@@ -47,6 +51,29 @@ export default {
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
+      } catch (error) {
+        this.error = error.response.data.error
+      }
+    },
+    async getAssociatedFamilyMembers(familyid) {
+      try {
+        const response = await FamilyService({
+          // get list of users
+        })
+      } catch (error) {
+        this.error = error.response.data.error
+      }
+    },
+    async getFamilyChores(family) {
+      try {
+        /*
+          1. Loop through family array
+          2. For each user in family:
+            -call Chore API to obtain list of chores
+            -push each chore to chores[]
+          3. update Vuex store's chores[]
+        */
+
       } catch (error) {
         this.error = error.response.data.error
       }
