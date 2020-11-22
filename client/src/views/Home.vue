@@ -1,12 +1,5 @@
 <template>
     <main class="home">
-      <div class="grid-container">
-        <div class="header"><h1>FAMTASTIC</h1></div>
-        <div class="left"> Shopping List</div>  
-        <div class="middle">Calendar</div>
-        <div class="right">People</div>
-        <div class="footer">Chore List</div>
-      </div>
     </main>
 </template>
 
@@ -33,87 +26,5 @@ export default {
 
 <style scoped lang="scss">
 @import '../scss/variables.scss';
-
-  .grid-container {
-    grid-template-columns: 25.5rem 25.5rem 25.5rem 25.5rem;/*200px 200px 200px 200px 200px 200px;*/
-    grid-template-rows: 2.5rem 25rem auto;
-    padding-left: $lg-gutter;
-    padding-right: $lg-gutter;
-    background-color: $light-gray;
-    //background-color: black;
-  }
-      
-  .grid-container {
-    display: grid;
-    grid-template-areas:
-    "header header header header"
-    "left left middle middle"
-    "right footer middle middle";
-    grid-column-gap: 2rem;
-    grid-row-gap: 2rem;
-  }
-
-  .left,
-  .middle,
-  .right,
-  .footer {
-    margin-top: 0.625rem;
-    //height: 50rem;
-    padding: 0.625rem;
-    color: black;
-    border: 0.0625rem solid $border-white;
-    border-color: black;
-    border-radius: 0.625rem;
-    background-color:#F8F8F8;
-    border-color: black;
-    border-width: 0.125rem;
-  }
-
-  .header{
-    padding-top: 1rem;
-  }
-
-      /* Style the left column */
-  .left {
-    grid-area: left;
-    height: 25rem;
-  }
-
-      /* Style the middle column */
-  .middle {
-    grid-area: middle;
-    height: 51rem;
-  }
-
-      /* Style the right column */
-  .right {
-    grid-area: right;
-    height: 23.5rem;
-    padding: 0.625rem;
-    text-align: center;
-    margin-top: 1.25rem;
-    color: black;
-    border: 0.0625rem solid $border-white;
-    border-color: black;
-    border-radius: 0.625rem;
-    border-color: black;
-    border-width: 0.125rem;
-  }
-
-      /* Style the footer */
-  .footer {
-    grid-area: footer;
-    height: 23.5rem;
-    //background-color: #67A4E1;
-    padding: 0.625rem;
-    text-align: center;
-    margin-top: 1.25rem;
-    color: black;
-    border: 0.0625rem solid $border-white;
-    border-color: black;
-    border-radius: 0.625rem;
-    border-color: black;
-    border-width: 0.125rem;
-  }
 
 </style>

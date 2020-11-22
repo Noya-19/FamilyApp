@@ -66,7 +66,7 @@ export default {
         
     .grid-container {
         grid-template-columns: 17rem 17rem 17rem 17rem 17rem 17rem;/*200px 200px 200px 200px 200px 200px;*/
-        grid-template-rows: 2.5rem 50rem auto;
+        grid-template-rows: 2.5rem 45rem auto;
         padding-left: $lg-gutter;
         padding-right: $lg-gutter;
         background-color: $light-gray;
@@ -86,7 +86,7 @@ export default {
     .middle,
     .right {
         margin-top: 0.625rem;
-        height: 50rem;
+        height: 45rem;
         padding: 0.625rem;
         color: black;
         border: 0.0625rem solid $border-white;
@@ -102,24 +102,11 @@ export default {
     }
 
         /* Style the left column */
-    .left {
-        grid-area: left;
-    }
-
-        /* Style the middle column */
-    .middle {
-        grid-area: middle;
-    }
-
-        /* Style the right column */
-    .right {
-        grid-area: right;
-    }
-
         /* Style the footer */
     .footer {
         grid-area: footer;
         background-color: $light-blue;
+        height: 3rem;
         padding: 0.625rem;
         text-align: center;
         margin-top: 1.25rem;

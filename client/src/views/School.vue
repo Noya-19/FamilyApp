@@ -64,17 +64,19 @@ export default {
   .left {
     grid-area: left;
     padding-right: 2rem;
+    height: 40rem;
   }
 
         /* Style the middle column */
   .middle {
     grid-area: middle;
+    height: 40rem;
   }
 
         /* Style the right column */
   .right {
     grid-area: right;
-    height: 12.5rem;
+    height: 8.5rem;
     padding-right: 2rem;
     padding: 0.625rem;
     text-align: center;
@@ -89,7 +91,7 @@ export default {
 
   .footer {
     grid-area: footer;
-    height: 12.5rem;
+    height: 8.5rem;
     background-color: $light-blue;
     padding: 0.625rem;
     text-align: center;
