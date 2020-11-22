@@ -53,8 +53,6 @@ export default {
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
-        //console.log(this.$store.state.user.FamilyId)
-        //this.test()
         await this.getAssociatedFamilyMembers(this.$store.state.user.FamilyId)
         await this.getFamilyChores(this.$store.state.family)
       } catch (error) {
