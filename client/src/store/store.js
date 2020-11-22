@@ -9,7 +9,7 @@ export default new Vuex.Store({
         token: null,
         user: null,
         isUserLoggedIn: false,
-        family: [],
+        family: {},
         chores: [],
         events: []
     },
@@ -29,7 +29,9 @@ export default new Vuex.Store({
             state.family = family
         },
         setChores (state, chores) {
-            state.chores = chores
+            chores.forEach(chore => {
+                state.chores.push(chore)
+            })
         },
         setEvents (state, events) {
             state.events = events
