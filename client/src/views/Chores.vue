@@ -10,13 +10,19 @@ import ChoreService from '@/services/ChoreService'
 export default {
     name: 'Chores',
     title: 'Chores',
+    props: {
+    },
     data () {
         return {
             chores: null
         }
     },
+    methods: {
+        getAllFamilyChores () {
+            
+        }
+    },
     async mounted () {
-        this.chores = await ChoreService.index()
     }
 }
 </script>

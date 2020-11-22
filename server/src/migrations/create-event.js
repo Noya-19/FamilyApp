@@ -1,10 +1,7 @@
 'use strict';
-
-const Family = require("../models/Family");
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Families', {
+    await queryInterface.createTable('Events', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -22,6 +19,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Families');
+    await queryInterface.dropTable('Events');
   }
 };

@@ -10,7 +10,8 @@ module.exports = {
             // FamilyId: Joi.string().regex(
             //     new RegExp('^[a-zA-Z0-9]{8}$')
             // ),
-            FamilyId: Joi.number(),
+            familyid: Joi.number().integer(),
+            creatingNewFamily: Joi.boolean(),
             firstname: Joi.string(),
             lastname: Joi.string()
         })
@@ -32,21 +33,6 @@ module.exports = {
                             <br>
                             2. It must be at least 8 characters in length and not greater than 32 characters in length.`
                             
-                    })
-                    break
-                case 'FamilyId':
-                    res.status(400).send({
-                         error: 'You must provide a valid family code.'
-                    })
-                    break
-                case 'firstname':
-                    res.status(400).send({
-                        error: 'Invalid first name.'
-                })
-                    break
-                case 'lastname':
-                    res.status(400).send({
-                        error: 'Invalid last name.'
                     })
                     break
                 default:

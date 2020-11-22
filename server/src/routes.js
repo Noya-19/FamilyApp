@@ -1,6 +1,7 @@
 const AuthenticationController = require('./controllers/AuthenticationController')
 const ChoresController = require('./controllers/ChoresController')
 const FamilyController = require('./controllers/FamilyController')
+const EventsController = require('./controllers/EventsController')
 
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 
@@ -17,7 +18,12 @@ module.exports = (app) => {
         FamilyController.post)
 
     app.get('/chores',
-        ChoresController.getAllByUserID)
+        ChoresController.getAllByAssignedTo)
     app.post('/chores',
         ChoresController.post)
+
+    app.get('/events',
+        EventsController.getUserEvents)
+    app.post('/events',
+        EventsController.post)
 }
