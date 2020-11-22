@@ -3,7 +3,6 @@ const { Chore } = require('../models')
 module.exports = {
     async getAllByAssignedTo (req, res) {
         try {
-            //console.log(req.query.UserId)
             const userid = req.query.UserId
             const chores = await Chore.findAll({
                 where: {
