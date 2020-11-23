@@ -34,7 +34,9 @@ export default new Vuex.Store({
             })
         },
         setEvents (state, events) {
-            state.events = events
+            events.forEach(event => {
+                state.events.push(event)
+            })
         }
     },
     actions: {

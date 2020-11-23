@@ -2,11 +2,11 @@ import Api from '@/services/Api'
 
 export default {
     index (userid) {
-        return Api().get('chores', {
+        return Api().get('events', {
             params: userid
         })
     },
-    createChore (payload) {
-        return Api().post('chores', payload)
+    createEvent (payload) {
+        return Api().post('events', payload)
     }
 }
