@@ -22,10 +22,29 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             unique: true
         },
-        password: DataTypes.STRING
+        password: DataTypes.STRING,
+        firstname: DataTypes.STRING,
+        lastname: DataTypes.STRING,
+        FamilyId: DataTypes.INTEGER
     }, {
         hooks: {
             beforeSave: hashPassword
+        },
+        getterMethods: {
+            firstName() {
+                return this.firstname;
+            },
+            lastName() {
+                return this.lastname;
+            },
+            userId() {
+                return this.id;
+            }
+        },
+        setterMethods: {
+            setFamilyId(familyid) {
+                this.setDataValue('FamilyId', familyid);
+            }
         }
     })
 
