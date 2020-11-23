@@ -57,8 +57,6 @@ export default {
         await this.getAssociatedFamilyMembers(this.$store.state.user.FamilyId)
         await this.getFamilyChores(this.$store.state.family)
         await this.getFamilyEvents(this.$store.state.family)
-        console.log(this.$store.state.chores)    //Print out all chores in array
-        console.log(this.$store.state.events)    //Print out all events in array
       } catch (error) {
         this.error = error.response.data.error
       }
