@@ -30,6 +30,7 @@
 import AuthenticationService from '@/services/AuthenticationService'
 import FamilyService from '@/services/FamilyService'
 import ChoreService from '@/services/ChoreService'
+import EventService from '@/services/EventService'
 export default {
   name: 'Login',
   title: 'Login',
@@ -55,6 +56,9 @@ export default {
         this.$store.dispatch('setUser', response.data.user)
         await this.getAssociatedFamilyMembers(this.$store.state.user.FamilyId)
         await this.getFamilyChores(this.$store.state.family)
+        await this.getFamilyEvents(this.$store.state.family)
+        console.log(this.$store.state.chores)    //Print out all chores in array
+        console.log(this.$store.state.events)    //Print out all events in array
       } catch (error) {
         this.error = error.response.data.error
       }
@@ -80,13 +84,23 @@ export default {
             this.$store.dispatch('setChores', value.data)
           })
         })
-        //console.log(this.$store.state.chores)    Print out all chores in array
       } catch (error) {
         this.error = error.response.data.error
       }
     },
-    async test(){
-      console.log("test method")
+    async getFamilyEvents(family) {
+      try {
+        family.forEach(user => {
+          const response = EventService.index({
+            UserId: user.id
+          })
+          response.then((value)=>{
+            this.$store.dispatch('setEvents', value.data)
+          })
+        })
+      } catch (error) {
+        this.error = error.response.data.error
+      }
     }
   }
 }
