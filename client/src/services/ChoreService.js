@@ -8,5 +8,10 @@ export default {
     },
     createChore (payload) {
         return Api().post('chores', payload)
+    },
+    deleteChore (choreid) {
+        return Api().get('chores/delete', {
+            params: choreid
+        })
     }
 }
