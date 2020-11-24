@@ -4,7 +4,7 @@ const {User} = require('../models')
 module.exports = {
     async getFamilyUsers (req, res) {
         try {
-            const familyid = req.body.FamilyId
+            const familyid = req.query.FamilyId
             const users = await User.findAll({
                 where: {
                     FamilyId: familyid
