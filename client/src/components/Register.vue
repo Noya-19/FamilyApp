@@ -49,6 +49,10 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
+import FamilyService from '@/services/FamilyService'
+import ChoreService from '@/services/ChoreService'
+import EventService from '@/services/EventService'
+import HelperMethods from '@/services/HelperMethods'
 export default {
   name: 'Register',
   title: 'Register',
@@ -76,9 +80,9 @@ export default {
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
-        // getAssociatedFamilyMember()
-        // getFamilyChores()
-        // getFamilyEvents()
+        await HelperMethods.getAssociatedFamilyMembers(this.$store.state.user.FamilyId)
+        await HelperMethods.getFamilyChores(this.$store.state.family)
+        await HelperMethods.getFamilyEvents(this.$store.state.family)
       } catch (error) {
         this.error = error.response.data.error
       }
@@ -87,5 +91,5 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 </style>
