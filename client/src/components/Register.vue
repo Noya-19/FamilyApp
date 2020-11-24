@@ -24,9 +24,9 @@
             v-model="password"
             autocomplete="new-password"
           ></v-text-field>
-          <v-radio-group row v-model="creatingNewFamily" class="justify-center">
-              <v-radio value="true" label="Yes"></v-radio>
-              <v-radio value="false" label="No"></v-radio>
+          <v-radio-group row v-model="creatingNewFamily" class="v-radio__containter">
+              <v-radio class="v-radio__button" value=true label="Yes"></v-radio>
+              <v-radio class="v-radio__button" value=false label="No"></v-radio>
           </v-radio-group>
           <v-text-field
             v-if="!creatingNewFamily"
@@ -49,7 +49,9 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
-import HelperMethods from '@/services/HelperMethods'
+import FamilyService from '@/services/FamilyService'
+import ChoreService from '@/services/ChoreService'
+import EventService from '@/services/EventService'
 export default {
   name: 'Register',
   title: 'Register',
@@ -60,7 +62,7 @@ export default {
       FamilyId: '',
       firstname: '',
       lastname: '',
-      creatingNewFamily: true,
+      creatingNewFamily: '',
       error: null
     }
   },
@@ -77,16 +79,63 @@ export default {
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
-        await HelperMethods.getAssociatedFamilyMembers(this.$store.state.user.FamilyId)
-        await HelperMethods.getFamilyChores(this.$store.state.family)
-        await HelperMethods.getFamilyEvents(this.$store.state.family)
+        await this.getAssociatedFamilyMembers(this.$store.state.user.FamilyId)
+        await this.getFamilyChores(this.$store.state.family)
+        await this.getFamilyEvents(this.$store.state.family)
       } catch (error) {
         this.error = error.response.data.error
       }
     },
-  }
+    async getAssociatedFamilyMembers(familyid) {
+        try {
+          const response = await FamilyService.getFamilyUsers({
+            FamilyId: familyid
+          })
+          this.$store.dispatch('setFamily', response.data)
+          //this.$store.state.family.forEach(user => console.log(user.id)) print out all user ids in the family
+        } catch (error) {
+          this.error = error.response.data.error
+        }
+    },
+    async getFamilyChores(family) {
+        try {
+          family.forEach(user => {
+            const response = ChoreService.index({
+              UserId: user.id
+            })
+            response.then((value)=>{
+              this.$store.dispatch('setChores', value.data)
+            })
+          })
+        } catch (error) {
+          this.error = error.response.data.error
+        }
+    },
+    async getFamilyEvents(family) {
+        try {
+          family.forEach(user => {
+            const response = EventService.index({
+              UserId: user.id
+            })
+            response.then((value)=>{
+              this.$store.dispatch('setEvents', value.data)
+            })
+          })
+        } catch (error) {
+          this.error = error.response.data.error
+        }
+    }
+  },
 }
 </script>
 
 <style scoped lang="scss">
+.v-radio {
+  &container {
+    justify-self: center;
+  }
+  &__button {
+    justify-self: center;
+  }
+}
 </style>

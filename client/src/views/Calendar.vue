@@ -152,8 +152,8 @@
                 this.items.push({
                     id: "e" + Math.random().toString(36),
                     title: title,
-                    startDate: Date.UTC(startDay.getUTCFullYear(), startDay.getUTCMonth(), startDay.getUTCDate()),
-                    endDate: Date.UTC(endDay.getUTCFullYear(), endDay.getUTCMonth(), endDay.getUTCDate()),
+                    startDate: Date.UTC(startDay.getUTCFullYear(), startDay.getUTCMonth(), startDay.getUTCDate()+1),
+                    endDate: Date.UTC(endDay.getUTCFullYear(), endDay.getUTCMonth(), endDay.getUTCDate()+1),
                     classes: Math.random() > 0.9 ? ["custom-date-class-red"] : null,
                 }),
 

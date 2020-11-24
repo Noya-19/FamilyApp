@@ -8,5 +8,10 @@ export default {
     },
     createEvent (payload) {
         return Api().post('events', payload)
+    },
+    deleteEvent (eventid) {
+        return Api().get('event/delete', {
+            params: eventid
+        })
     }
 }
