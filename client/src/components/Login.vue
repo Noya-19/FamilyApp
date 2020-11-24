@@ -57,6 +57,7 @@ export default {
         await this.getAssociatedFamilyMembers(this.$store.state.user.FamilyId)
         await this.getFamilyChores(this.$store.state.family)
         await this.getFamilyEvents(this.$store.state.family)
+        this.$router.push('/dashboard')
       } catch (error) {
         this.error = error.response.data.error
       }
