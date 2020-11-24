@@ -16,9 +16,7 @@ export default {
     }
   },
 
-  methods: {
-    
-  },
+  methods: {},
 
   mounted: function () {
 
@@ -26,7 +24,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import '../scss/variables.scss';
 
 </style>
