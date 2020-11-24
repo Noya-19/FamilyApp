@@ -75,6 +75,7 @@
     import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
     // The next two lines are processed by webpack. If you're using the component without webpack compilation,
     // you should just create <link> elements for these. Both are optional, you can create your own theme if you prefer.
+    import EventService from '@/services/EventService'
     require("vue-simple-calendar/static/css/default.css")
     require("vue-simple-calendar/static/css/holidays-us.css")
     
@@ -102,7 +103,6 @@
         },
         watch: {
             items: function (newItems, oldItems) {//not increasing when random events are added      
-                console.log("inside of watch");
                 
             },
 
@@ -137,27 +137,31 @@
             CalendarView,
             CalendarViewHeader,
         },
+        mounted: function(){
+            this.referenceEvents()
+        },
         methods: {
             setShowDate(d) {
                 this.showDate = d;
 
             },
-            addEvent() {
+            async addEvent() {
                 //adding data to items array
                 const startDay = new Date(this.startDay);
                 const endDay = new Date(this.endDay);
                 const title = this.title;
-                console.log(Date.UTC(endDay.getUTCFullYear(), endDay.getUTCMonth(), endDay.getUTCDate()));
-                console.log(startDay.getFullYear());
-                this.items.push({
-                    id: "e" + Math.random().toString(36),
+                const eventToAdd = {
                     title: title,
                     startDate: Date.UTC(startDay.getUTCFullYear(), startDay.getUTCMonth(), startDay.getUTCDate()+1),
                     endDate: Date.UTC(endDay.getUTCFullYear(), endDay.getUTCMonth(), endDay.getUTCDate()+1),
-                    classes: Math.random() > 0.9 ? ["custom-date-class-red"] : null,
-                }),
-
-                console.log("added");
+                    UserId: this.$store.state.user.id
+                }
+                try {
+                    const reponse = await EventService.createEvent(eventToAdd)
+                    this.$store.dispatch('addEvent', reponse.data)
+                } catch (error) {
+                    this.error = error.response.data.error
+                }
 
                 /*send data to backend
                  * check for sucsess
@@ -182,7 +186,6 @@
                     title: "Event " + (index + 1),
                     startDate: Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), startDay),
                     endDate: Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), endDay),
-                    classes: Math.random() > 0.9 ? ["custom-date-class-red"] : null,
                 }
                 return i
             },
@@ -196,8 +199,9 @@
             finishSelection(dateRange) {
                 this.setSelection(dateRange)
             },
-
-
+            referenceEvents(){
+                this.items = this.$store.state.events
+            }
         }
     }
 
