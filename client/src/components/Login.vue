@@ -28,9 +28,6 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
-import FamilyService from '@/services/FamilyService'
-import ChoreService from '@/services/ChoreService'
-import EventService from '@/services/EventService'
 import HelperMethods from '@/services/HelperMethods'
 export default {
   name: 'Login',
