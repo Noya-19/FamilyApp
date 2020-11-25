@@ -7,10 +7,9 @@
                     <div class="control">
                         <div class="box">
                             <div class="select">
-                                <select>
-                                    <option>month</option>
-                                    <option>week</option>
-                                    <option>day</option>
+                                <select v-model="displayVariable">
+                                    <option value="month">month</option>
+                                    <option value="week">week</option>
                                 </select>
                             </div>
                         </div>
@@ -33,41 +32,72 @@
                                     </div>
                                 </div>
                                 <button class="button is-info" @click="addEvent"> Add Item</button>
+                                <button class="button is-info" @click="deleteEvent(selectedEvent)">Delete Event</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            
-            <calendar-view
-                     :show-date="showDate"
-			        :items="items"
-			        :enable-date-selection="true"
-			        :selection-start="selectionStart"
-			        :selection-end="selectionEnd"
-			        :display-week-numbers="false"
-			        :item-top="themeOptions.top"
-			        :item-content-height="themeOptions.height"
-			        :item-border-height="themeOptions.border"
-			        :current-period-label="themeOptions.currentPeriodLabel"
-			        class="holiday-us-traditional holiday-us-official"
-			        @date-selection-start="setSelection"
-			        @date-selection="setSelection"
-			        @date-selection-finish="finishSelection"
-		        >
-			        <calendar-view-header
-				        slot="header"
-				        slot-scope="{ headerProps }"
-				        :header-props="headerProps"
-				        :previous-year-label="themeOptions.previousYearLabel"
-				        :previous-period-label="themeOptions.previousPeriodLabel"
-				        :next-period-label="themeOptions.nextPeriodLabel"
-				        :next-year-label="themeOptions.nextYearLabel"
-				        @input="setShowDate"
-			        />
+            <calendar-view v-if="displayVariable ==='month'"
+                :show-date="showDate"
+                :enableDragDrop="true"
+                :items="items"
+                displayPeriodUom="month"
+                :enable-date-selection="true"
+                :selection-start="selectionStart"
+                :selection-end="selectionEnd"
+                :display-week-numbers="false"
+                :item-top="themeOptions.top"
+                :item-content-height="themeOptions.height"
+                :item-border-height="themeOptions.border"
+                :current-period-label="themeOptions.currentPeriodLabel"
+                class="holiday-us-traditional holiday-us-official"
+                @date-selection-start="setSelection"
+                @date-selection="setSelection"
+                @date-selection-finish="finishSelection"
+                @click-item="selectEvent"
+                >
+            <calendar-view-header slot="header"
+                slot-scope="{ headerProps }"
+                :header-props="headerProps"
+                :previous-year-label="themeOptions.previousYearLabel"
+                :previous-period-label="themeOptions.previousPeriodLabel"
+                :next-period-label="themeOptions.nextPeriodLabel"
+                :next-year-label="themeOptions.nextYearLabel"
+                @input="setShowDate" />
+            </calendar-view>
+            <calendar-view v-if="displayVariable ==='week'"
+                :show-date="showDate"
+                :enableDragDrop="true"
+                :items="items"
+                displayPeriodUom="week"
+                :enable-date-selection="true"
+                :selection-start="selectionStart"
+                :selection-end="selectionEnd"
+                :display-week-numbers="false"
+                :item-top="themeOptions.top"
+                :item-content-height="themeOptions.height"
+                :item-border-height="themeOptions.border"
+                :current-period-label="themeOptions.currentPeriodLabel"
+                class="holiday-us-traditional holiday-us-official"
+                @date-selection-start="setSelection"
+                @date-selection="setSelection"
+                @date-selection-finish="finishSelection"
+                @click-item="selectEvent"
+                >
+                <calendar-view-header
+                    slot="header"
+                    slot-scope="{ headerProps }"
+                    :header-props="headerProps"
+                    :previous-year-label="themeOptions.previousYearLabel"
+                    :previous-period-label="themeOptions.previousPeriodLabel"
+                    :next-period-label="themeOptions.nextPeriodLabel"
+                    :next-year-label="themeOptions.nextYearLabel"
+                    @input="setShowDate" />
             </calendar-view>
         </div>
+        
     </main>
 </template>
 
@@ -98,16 +128,10 @@
                 startDay:"",
                 endDay: "",
                 title:"",
-                
+                displayVariable: "month",
+                selectedEvent: {},
             }
         },
-        watch: {
-            items: function (newItems, oldItems) {//not increasing when random events are added      
-                
-            },
-
-        },
-
         computed: {
             themeOptions() {
                 return this.theme == "gcal"
@@ -141,9 +165,28 @@
             this.referenceEvents()
         },
         methods: {
+            selectEvent (event) {
+                this.selectedEvent = event
+            },
+            async deleteEvent () {
+                if(!this.selectedEvent){
+                    console.log('Please select an event.')
+                } else {
+                    try {
+                        const eventStoreIndex = this.$store.state.events.indexOf(this.selectedEvent.originalItem)
+                        await EventService.deleteEvent({
+                            eventid: this.selectedEvent.id
+                        }).then(
+                            this.$store.dispatch('removeEvent', eventStoreIndex)
+                        )
+                        this.selectedEvent = {}
+                    } catch (error) {
+                        this.error = error.response.data.error;
+                    }
+                }
+            },
             setShowDate(d) {
                 this.showDate = d;
-
             },
             async addEvent() {
                 //adding data to items array
@@ -162,19 +205,6 @@
                 } catch (error) {
                     this.error = error.response.data.error
                 }
-
-                /*send data to backend
-                 * check for sucsess
-                 * if sucsessfull clear data in field
-                 */
-                //document.getElementsByClassName('input').innerHTML = '';
-                //document.getElementById('ename').innerHTML = '';
-                //document.getElementById('endDate').value = '';
-
-
-                 /* else resend data
-                 */
-
             },
             getRandomEvent(index) {
                 const startDay = Math.floor(Math.random() * 28 + 1)
@@ -186,6 +216,7 @@
                     title: "Event " + (index + 1),
                     startDate: Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), startDay),
                     endDate: Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), endDay),
+                    classes: Math.random() > 0.9 ? ["custom-date-class-red"] : null,
                 }
                 return i
             },
