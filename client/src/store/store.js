@@ -37,6 +37,17 @@ export default new Vuex.Store({
             events.forEach(event => {
                 state.events.push(event)
             })
+        },
+        addEvent (state, event){
+            state.events.push(event)
+        },
+        removeEvent (state, eventIndex){
+            state.events.splice(eventIndex, 1)
+        },
+        emptyStore (state){
+            state.family= {},
+            state.chores= [],
+            state.events= []
         }
     },
     actions: {
@@ -55,6 +66,15 @@ export default new Vuex.Store({
         },
         setEvents ({commit}, events) {
             commit('setEvents', events)
+        },
+        addEvent ({commit}, event){
+            commit('addEvent', event)
+        },
+        removeEvent ({commit}, event){
+            commit('removeEvent', event)
+        },
+        emptyStore ({commit}) {
+            commit('emptyStore')
         }
     },
     getters: {
