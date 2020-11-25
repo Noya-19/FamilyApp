@@ -28,30 +28,18 @@ module.exports = {
     },
     async delete (req, res) {
         try {
-<<<<<<< HEAD
-            const choreid = req.body.id
-            const chore = await Chore.findOne({
-=======
             const choreid = req.query.choreid
             await Chore.destroy({
->>>>>>> 9bfaac7193cea24725499120499faa8e30750dff
                 where: {
                     id: choreid 
                 }
             })
-<<<<<<< HEAD
-            res.send(chores)
-        } catch (err) {
-            res.status(500).send({
-                error: 'An error has occurred while fetching chores.'
-=======
             res.status(200).send({
                 statusText: 'Sucessfully deleted chore.'
             })
         } catch (err) {
             res.status(500).send({
                 error: 'An error has occurred while deleting chore.'
->>>>>>> 9bfaac7193cea24725499120499faa8e30750dff
             })
         }
     }
