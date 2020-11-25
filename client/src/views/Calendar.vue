@@ -32,6 +32,7 @@
                                     </div>
                                 </div>
                                 <button class="button is-info" @click="addEvent"> Add Item</button>
+                                <button class="button is-info" @click="deleteEvent(selectedEvent)">Delete Event</button>
                             </div>
                         </div>
                     </div>
@@ -55,7 +56,8 @@
                 @date-selection-start="setSelection"
                 @date-selection="setSelection"
                 @date-selection-finish="finishSelection"
-                ref="calView">
+                @click-item="selectEvent"
+                >
             <calendar-view-header slot="header"
                 slot-scope="{ headerProps }"
                 :header-props="headerProps"
@@ -82,7 +84,8 @@
                 @date-selection-start="setSelection"
                 @date-selection="setSelection"
                 @date-selection-finish="finishSelection"
-                ref="calView">
+                @click-item="selectEvent"
+                >
                 <calendar-view-header
                     slot="header"
                     slot-scope="{ headerProps }"
@@ -125,8 +128,8 @@
                 startDay:"",
                 endDay: "",
                 title:"",
-                displayVariable: "month"
-                
+                displayVariable: "month",
+                selectedEvent: {},
             }
         },
         computed: {
@@ -162,9 +165,28 @@
             this.referenceEvents()
         },
         methods: {
+            selectEvent (event) {
+                this.selectedEvent = event
+            },
+            async deleteEvent () {
+                if(!this.selectedEvent){
+                    console.log('Please select an event.')
+                } else {
+                    try {
+                        const eventStoreIndex = this.$store.state.events.indexOf(this.selectedEvent.originalItem)
+                        await EventService.deleteEvent({
+                            eventid: this.selectedEvent.id
+                        }).then(
+                            this.$store.dispatch('removeEvent', eventStoreIndex)
+                        )
+                        this.selectedEvent = {}
+                    } catch (error) {
+                        this.error = error.response.data.error;
+                    }
+                }
+            },
             setShowDate(d) {
                 this.showDate = d;
-
             },
             async addEvent() {
                 //adding data to items array

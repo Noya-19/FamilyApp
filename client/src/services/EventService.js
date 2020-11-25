@@ -10,7 +10,7 @@ export default {
         return Api().post('events', payload)
     },
     deleteEvent (eventid) {
-        return Api().get('event/delete', {
+        return Api().get('events/delete', {
             params: eventid
         })
     }
