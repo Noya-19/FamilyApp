@@ -10,7 +10,6 @@
                                 <select v-model="displayVariable">
                                     <option value="month">month</option>
                                     <option value="week">week</option>
-
                                 </select>
                             </div>
                         </div>
@@ -18,12 +17,12 @@
                             <div class="field">
                                 <label class="label">Name of event</label>
                                 <div class="control">
-                                    <input type="text" class="input" v-model="title" id="title" />
+                                    <input type="text" class="input" v-model="title" id="title"/>
                                 </div>
                                 <div class="field">
                                     <label class="label">Start date</label>
                                     <div class="control">
-                                        <input type="date" class="input" v-model="startDay" id="startDate" />
+                                        <input type="date" class="input" v-model="startDay" id="startDate"/>
                                     </div>
                                 </div>
                                 <div class="field">
@@ -39,62 +38,60 @@
                 </div>
             </div>
 
-
             <calendar-view v-if="displayVariable ==='month'"
-                           :show-date="showDate"
-                           :enableDragDrop="true"
-                           :items="items"
-                           displayPeriodUom="month"
-                           :enable-date-selection="true"
-                           :selection-start="selectionStart"
-                           :selection-end="selectionEnd"
-                           :display-week-numbers="false"
-                           :item-top="themeOptions.top"
-                           :item-content-height="themeOptions.height"
-                           :item-border-height="themeOptions.border"
-                           :current-period-label="themeOptions.currentPeriodLabel"
-                           class="holiday-us-traditional holiday-us-official"
-                           @date-selection-start="setSelection"
-                           @date-selection="setSelection"
-                           @date-selection-finish="finishSelection"
-                           ref="calView">
-                <calendar-view-header slot="header"
-                                      slot-scope="{ headerProps }"
-                                      :header-props="headerProps"
-                                      :previous-year-label="themeOptions.previousYearLabel"
-                                      :previous-period-label="themeOptions.previousPeriodLabel"
-                                      :next-period-label="themeOptions.nextPeriodLabel"
-                                      :next-year-label="themeOptions.nextYearLabel"
-                                      @input="setShowDate" />
+                :show-date="showDate"
+                :enableDragDrop="true"
+                :items="items"
+                displayPeriodUom="month"
+                :enable-date-selection="true"
+                :selection-start="selectionStart"
+                :selection-end="selectionEnd"
+                :display-week-numbers="false"
+                :item-top="themeOptions.top"
+                :item-content-height="themeOptions.height"
+                :item-border-height="themeOptions.border"
+                :current-period-label="themeOptions.currentPeriodLabel"
+                class="holiday-us-traditional holiday-us-official"
+                @date-selection-start="setSelection"
+                @date-selection="setSelection"
+                @date-selection-finish="finishSelection"
+                ref="calView">
+            <calendar-view-header slot="header"
+                slot-scope="{ headerProps }"
+                :header-props="headerProps"
+                :previous-year-label="themeOptions.previousYearLabel"
+                :previous-period-label="themeOptions.previousPeriodLabel"
+                :next-period-label="themeOptions.nextPeriodLabel"
+                :next-year-label="themeOptions.nextYearLabel"
+                @input="setShowDate" />
             </calendar-view>
             <calendar-view v-if="displayVariable ==='week'"
-                           :show-date="showDate"
-                           :enableDragDrop="true"
-                           :items="items"
-                           displayPeriodUom="week"
-                           :enable-date-selection="true"
-                           :selection-start="selectionStart"
-                           :selection-end="selectionEnd"
-                           :display-week-numbers="false"
-                           :item-top="themeOptions.top"
-                           :item-content-height="themeOptions.height"
-                           :item-border-height="themeOptions.border"
-                           :current-period-label="themeOptions.currentPeriodLabel"
-                           class="holiday-us-traditional holiday-us-official"
-                           @date-selection-start="setSelection"
-                           @date-selection="setSelection"
-                           @date-selection-finish="finishSelection"
-
-                           ref="calView">
+                :show-date="showDate"
+                :enableDragDrop="true"
+                :items="items"
+                displayPeriodUom="week"
+                :enable-date-selection="true"
+                :selection-start="selectionStart"
+                :selection-end="selectionEnd"
+                :display-week-numbers="false"
+                :item-top="themeOptions.top"
+                :item-content-height="themeOptions.height"
+                :item-border-height="themeOptions.border"
+                :current-period-label="themeOptions.currentPeriodLabel"
+                class="holiday-us-traditional holiday-us-official"
+                @date-selection-start="setSelection"
+                @date-selection="setSelection"
+                @date-selection-finish="finishSelection"
+                ref="calView">
                 <calendar-view-header
-                                      slot="header"
-                                      slot-scope="{ headerProps }"
-                                      :header-props="headerProps"
-                                      :previous-year-label="themeOptions.previousYearLabel"
-                                      :previous-period-label="themeOptions.previousPeriodLabel"
-                                      :next-period-label="themeOptions.nextPeriodLabel"
-                                      :next-year-label="themeOptions.nextYearLabel"
-                                      @input="setShowDate" />
+                    slot="header"
+                    slot-scope="{ headerProps }"
+                    :header-props="headerProps"
+                    :previous-year-label="themeOptions.previousYearLabel"
+                    :previous-period-label="themeOptions.previousPeriodLabel"
+                    :next-period-label="themeOptions.nextPeriodLabel"
+                    :next-year-label="themeOptions.nextYearLabel"
+                    @input="setShowDate" />
             </calendar-view>
         </div>
         
@@ -105,6 +102,7 @@
     import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
     // The next two lines are processed by webpack. If you're using the component without webpack compilation,
     // you should just create <link> elements for these. Both are optional, you can create your own theme if you prefer.
+    import EventService from '@/services/EventService'
     require("vue-simple-calendar/static/css/default.css")
     require("vue-simple-calendar/static/css/holidays-us.css")
     
@@ -131,15 +129,6 @@
                 
             }
         },
-        watch: {
-            items: function (newItems, oldItems) {//not increasing when random events are added      
-                console.log("inside of watch");
-                
-            },
-            
-
-        },
-
         computed: {
             themeOptions() {
                 return this.theme == "gcal"
@@ -164,48 +153,36 @@
                         currentPeriodLabel: "",
                     }
             },
-
         },
         components: {
             CalendarView,
             CalendarViewHeader,
         },
+        mounted: function(){
+            this.referenceEvents()
+        },
         methods: {
-            //add method to change date when dragged and dropped
-
             setShowDate(d) {
                 this.showDate = d;
 
             },
-            addEvent() {
+            async addEvent() {
                 //adding data to items array
                 const startDay = new Date(this.startDay);
                 const endDay = new Date(this.endDay);
                 const title = this.title;
-                console.log(Date.UTC(endDay.getUTCFullYear(), endDay.getUTCMonth(), endDay.getUTCDate()));
-                console.log(startDay.getFullYear());
-                this.items.push({
-                    id: "e" + Math.random().toString(36),
+                const eventToAdd = {
                     title: title,
                     startDate: Date.UTC(startDay.getUTCFullYear(), startDay.getUTCMonth(), startDay.getUTCDate()+1),
                     endDate: Date.UTC(endDay.getUTCFullYear(), endDay.getUTCMonth(), endDay.getUTCDate()+1),
-                    classes: Math.random() > 0.9 ? ["custom-date-class-red"] : null,
-                }),
-
-                console.log("added");
-
-                /*send data to backend
-                 * check for sucsess
-                 * if sucsessfull clear data in field
-                 */
-                //document.getElementsByClassName('input').innerHTML = '';
-                //document.getElementById('ename').innerHTML = '';
-                //document.getElementById('endDate').value = '';
-
-
-                 /* else resend data
-                 */
-
+                    UserId: this.$store.state.user.id
+                }
+                try {
+                    const reponse = await EventService.createEvent(eventToAdd)
+                    this.$store.dispatch('addEvent', reponse.data)
+                } catch (error) {
+                    this.error = error.response.data.error
+                }
             },
             getRandomEvent(index) {
                 const startDay = Math.floor(Math.random() * 28 + 1)
@@ -231,8 +208,9 @@
             finishSelection(dateRange) {
                 this.setSelection(dateRange)
             },
-
-
+            referenceEvents(){
+                this.items = this.$store.state.events
+            }
         }
     }
 

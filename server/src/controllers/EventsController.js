@@ -1,10 +1,9 @@
 const {Event} = require('../models')
-const User = require('../models/User')
 
 module.exports = {
     async getUserEvents (req, res) {
         try {
-            const userid = req.body.UserId
+            const userid = req.query.UserId
             const events = await Event.findAll({
                 where: {
                     UserId: userid
@@ -27,4 +26,21 @@ module.exports = {
             })
         }
     },
+    async delete (req, res) {
+        try {
+            const eventid = req.query.eventid
+            await Event.destroy({
+                where: {
+                    id: eventid 
+                }
+            })
+            res.status(200).send({
+                statusText: 'Sucessfully deleted event.'
+            })
+        } catch (err) {
+            res.status(500).send({
+                error: 'An error has occurred while deleting event.'
+            })
+        }
+    }
 }

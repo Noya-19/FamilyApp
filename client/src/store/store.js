@@ -34,7 +34,12 @@ export default new Vuex.Store({
             })
         },
         setEvents (state, events) {
-            state.events = events
+            events.forEach(event => {
+                state.events.push(event)
+            })
+        },
+        addEvent (state, event){
+            state.events.push(event)
         }
     },
     actions: {
@@ -53,6 +58,9 @@ export default new Vuex.Store({
         },
         setEvents ({commit}, events) {
             commit('setEvents', events)
+        },
+        addEvent ({commit}, event){
+            commit('addEvent', event)
         }
     },
     getters: {
