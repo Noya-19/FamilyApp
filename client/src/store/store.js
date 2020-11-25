@@ -8,7 +8,10 @@ export default new Vuex.Store({
     state: {
         token: null,
         user: null,
-        isUserLoggedIn: false
+        isUserLoggedIn: false,
+        family: {},
+        chores: [],
+        events: []
     },
     mutations: {
         setToken (state, token) {
@@ -21,6 +24,19 @@ export default new Vuex.Store({
         },
         setUser (state, user) {
             state.user = user
+        },
+        setFamily (state, family) {
+            state.family = family
+        },
+        setChores (state, chores) {
+            chores.forEach(chore => {
+                state.chores.push(chore)
+            })
+        },
+        setEvents (state, events) {
+            events.forEach(event => {
+                state.events.push(event)
+            })
         }
     },
     actions: {
@@ -30,6 +46,26 @@ export default new Vuex.Store({
         },
         setUser ({commit}, user) {
             commit('setUser', user)
+        },
+        setFamily ({commit}, family) {
+            commit('setFamily', family)
+        },
+        setChores ({commit}, chores) {
+            commit('setChores', chores)
+        },
+        setEvents ({commit}, events) {
+            commit('setEvents', events)
         }
+    },
+    getters: {
+        getChores: state => {
+            return state.chores
+        },
+        getEvents: state => {
+            return state.events
+        },
+        getFamily: state => {
+            return state.family
+        },
     }
 })

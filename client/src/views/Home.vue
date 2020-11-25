@@ -1,6 +1,5 @@
 <template>
     <main class="home">
-        <h1>FAMTASTIC</h1>
     </main>
 </template>
 
@@ -14,14 +13,10 @@ export default {
 
   data () {
     return {
-      family: {},
-      families: []
     }
   },
 
-  methods: {
-    
-  },
+  methods: {},
 
   mounted: function () {
 
@@ -29,7 +24,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import '../scss/variables.scss';
 
 </style>

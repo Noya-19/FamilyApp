@@ -1,4 +1,5 @@
 const {User} = require('../models')
+const {Family} = require('../models')
 const jwt = require('jsonwebtoken')
 const config = require('../config/config')
 
@@ -12,12 +13,50 @@ function jwtSignUser (user) {
 module.exports = {
     async register (req, res) {
         try {
-            const user = await User.create(req.body)
-            const userJson = user.toJSON()
-            res.send({
-                user: userJson,
-                token: jwtSignUser(userJson)
-            })
+            const creatingNewFamily = req.body.creatingNewFamily
+            if (!creatingNewFamily) {
+                const familyid = req.body.familyid
+                const family = await Family.findOne({
+                    where: {
+                        id: familyid
+                    }
+                })
+                if (!family) {
+                    return res.status(403).send({
+                        error: 'Error finding family.'
+                    })
+                } else {
+                    const user = await User.create({
+                        email: req.body.email,
+                        password: req.body.password,
+                        firstname: req.body.firstname,
+                        lastname: req.body.lastname,
+                        FamilyId: req.body.familyid
+                    })
+                    const userJson = user.toJSON()
+                    res.send({
+                        user: userJson,
+                        token: jwtSignUser(userJson)
+                    })
+                }
+            } else {
+                const user = await User.create({
+                    email: req.body.email,
+                    password: req.body.password,
+                    firstname: req.body.firstname,
+                    lastname: req.body.lastname,
+                    FamilyId: null
+                })
+                const family = await Family.create()
+                await user.update({
+                    FamilyId: family.id
+                })
+                const userJson = user.toJSON()
+                res.send({
+                    user: userJson,
+                    token: jwtSignUser(userJson)
+                })
+            }
         } catch (err) {
             res.status(400).send({
                 error: 'This email is already in use.'
@@ -47,7 +86,7 @@ module.exports = {
             }
 
             const userJson = user.toJSON()
-            res.send({
+            res.status(200).send({
                 user: userJson,
                 token: jwtSignUser(userJson)
             })

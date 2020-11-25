@@ -1,10 +1,18 @@
 <template>
-  <v-layout column>
+  <v-layout column v-if="!$store.state.isUserLoggedIn">
     <v-flex xs6 offset-xs3>
       <div title="Register">
         <form 
           name="family-app-form"
           autocomplete="off">
+          <v-text-field
+            label="First Name"
+            v-model="firstname"
+          ></v-text-field>
+          <v-text-field
+            label="Last Name"
+            v-model="lastname"
+          ></v-text-field>
           <v-text-field
             label="Email"
             v-model="email"
@@ -16,13 +24,21 @@
             v-model="password"
             autocomplete="new-password"
           ></v-text-field>
+          <v-radio-group row v-model="creatingNewFamily" class="justify-center">
+              <v-radio value="true" label="Yes"></v-radio>
+              <v-radio value="false" label="No"></v-radio>
+          </v-radio-group>
+          <v-text-field
+            v-if="!creatingNewFamily"
+            label="Family Code"
+            v-model="FamilyId"
+          ></v-text-field>
         </form>
         <br>
         <div class="danger-alert" v-html="error" />
         <br>
         <v-btn
           dark
-          class="cyan"
           @click="register">
           Register
         </v-btn>
@@ -40,6 +56,10 @@ export default {
     return {
       email: '',
       password: '',
+      FamilyId: '',
+      firstname: '',
+      lastname: '',
+      creatingNewFamily: true,
       error: null
     }
   },
@@ -48,14 +68,21 @@ export default {
       try {
         const response = await AuthenticationService.register({
           email: this.email,
-          password: this.password
+          password: this.password,
+          creatingNewFamily: this.creatingNewFamily,
+          FamilyId: this.FamilyId,
+          firstname: this.firstname,
+          lastname: this.lastname
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user)
+        // getAssociatedFamilyMember()
+        // getFamilyChores()
+        // getFamilyEvents()
       } catch (error) {
         this.error = error.response.data.error
       }
-    }
+    },
   }
 }
 </script>
