@@ -51,12 +51,20 @@ export default {
         }
     },
     methods: {
-        getAllFamilyChores () {
-            
+        async createChore(title, dueDate, assignedTo, UserId) {
+            try {
+                const response = await ChoreService.createChore({
+                    title: title, // STRING
+                    dueDate: dueDate, // DATEONLY
+                    assignedTo: assignedTo, // INTEGER
+                    UserId:  UserId, //INTEGER
+                })
+                this.$store.dispatch('addChore', reponse.data)
+            } catch (error) {
+                this.error = error.response.data.error
+            }
         }
     },
-    async mounted () {
-    }
 }
 </script>
 

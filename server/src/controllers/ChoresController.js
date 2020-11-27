@@ -35,7 +35,7 @@ module.exports = {
                 }
             })
             res.status(200).send({
-                statusText: 'Sucessfully deleted chore.'
+                statusText: 'Successfully deleted chore.'
             })
         } catch (err) {
             res.status(500).send({

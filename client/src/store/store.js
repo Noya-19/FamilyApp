@@ -38,7 +38,7 @@ export default new Vuex.Store({
                 state.events.push(event)
             })
         },
-        addEvent (state, event){
+        addEvent (state, event) {
             state.events.push(event)
         },
         removeEvent (state, eventIndex){
@@ -48,6 +48,9 @@ export default new Vuex.Store({
             state.family= {},
             state.chores= [],
             state.events= []
+        },
+        addChore (state, chore) {
+            state.chores.push(chore)
         }
     },
     actions: {
@@ -75,6 +78,9 @@ export default new Vuex.Store({
         },
         emptyStore ({commit}) {
             commit('emptyStore')
+        },
+        addChore ({commit}) {
+            commit('addEvent', chore)
         }
     },
     getters: {

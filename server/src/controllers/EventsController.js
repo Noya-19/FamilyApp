@@ -35,7 +35,7 @@ module.exports = {
                 }
             })
             res.status(200).send({
-                statusText: 'Sucessfully deleted event.'
+                statusText: 'Successfully deleted event.'
             })
         } catch (err) {
             res.status(500).send({
