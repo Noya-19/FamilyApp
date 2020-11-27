@@ -11,7 +11,8 @@ export default new Vuex.Store({
         isUserLoggedIn: false,
         family: {},
         chores: [],
-        events: []
+        events: [],
+        mappedUserIds: []
     },
     mutations: {
         setToken (state, token) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
         },
         setFamily (state, family) {
             state.family = family
+            state.family.forEach(user =>
+                state.mappedUserIds.push(user.id)
+            )
         },
         setChores (state, chores) {
             chores.forEach(chore => {
@@ -47,7 +51,8 @@ export default new Vuex.Store({
         emptyStore (state){
             state.family= {},
             state.chores= [],
-            state.events= []
+            state.events= [],
+            state.mappedUserIds= []
         }
     },
     actions: {
