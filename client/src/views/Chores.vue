@@ -19,7 +19,7 @@
                         </td>
                     </tr>
                 </table>
-                
+
             </div>
             <div class="header"><h1>Chores</h1></div>
             <div class="middle">
@@ -71,7 +71,7 @@ export default {
     },
     methods: {
         getAllFamilyChores () {
-            
+
         },
         blankInput() {
             alert("Chore cannot be left blank");
@@ -93,7 +93,7 @@ export default {
             this.completedList.push({
                 choresName: item.choresName,
             });
-            
+
         },
         openForm() {
             document.getElementById("myForm").style.display = "block";
@@ -110,7 +110,7 @@ export default {
 <style scoped lang="scss">
     @import "../scss/variables.scss";
         /* The grid container */
-     
+
     .grid-container {
         grid-template-columns: 17rem 17rem 17rem 17rem 17rem 17rem;/*200px 200px 200px 200px 200px 200px;*/
         grid-template-rows: 2.5rem 45rem auto;
@@ -119,7 +119,7 @@ export default {
         background-color: $light-gray;
         //background-color: black;
     }
-        
+
     .grid-container {
         display: grid;
         grid-template-areas:

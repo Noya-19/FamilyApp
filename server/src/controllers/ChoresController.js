@@ -6,7 +6,7 @@ module.exports = {
             const userid = req.query.UserId
             const chores = await Chore.findAll({
                 where: {
-                    assignedTo: userid    
+                    assignedTo: userid
                 }
             })
             res.send(chores)
@@ -28,16 +28,18 @@ module.exports = {
     },
     async delete (req, res) {
         try {
-            const choreid = req.body.id
-            const chore = await Chore.findOne({
+            const choreid = req.query.choreid
+            await Chore.destroy({
                 where: {
-                    id: choreid 
+                    id: choreid
                 }
             })
-            res.send(chores)
+            res.status(200).send({
+                statusText: 'Sucessfully deleted chore.'
+            })
         } catch (err) {
             res.status(500).send({
-                error: 'An error has occurred while fetching chores.'
+                error: 'An error has occurred while deleting chore.'
             })
         }
     }
