@@ -12,8 +12,7 @@
                     </thead>
                     <tr v-for="(item, index) of choreList">
                         <td>
-                            <choreComponent :title="item.choresName" :dueDate="item.dueDate" :assignedTo="item.assignedTo" >
-
+                            <choreComponent :title="item.choresName" :dueDate="item.dueDate" :assignedTo="item.assignedTo" :postedBy="item.postedBy" >
                             </choreComponent>
                         </td>
                         <td>
@@ -70,8 +69,8 @@ export default {
     data () {
         return {
             choresName: "",
-            assignedTo: "",
             dueDate: "",
+            assignedTo:'',
             postedBy:"",
             choresList: [],
             completedList: [],
@@ -115,7 +114,10 @@ export default {
         closeForm() {
             document.getElementById("myForm").style.display = "none";
         },
+
     },
+
+
     async mounted () {
     }
 }
