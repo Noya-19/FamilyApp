@@ -10,7 +10,7 @@
                             <th>Chores</th>
                         </tr>
                     </thead>
-                    <tr v-for="(item, index) of choreList">
+                    <tr v-for="(item, index) of choreList" :key=index>
                         <td>
                             <choreComponent :title="item.choresName" :dueDate="item.dueDate" :assignedTo="item.assignedTo" :postedBy="item.postedBy" >
                             </choreComponent>
@@ -30,11 +30,11 @@
                             <th>Completed</th>
                         </tr>
                     </thead>
-                    <tr v-for="(item, index) of completedList">
+                    <!--tr v-for="(item, index) of completedList">
                         <td>
                             {{item.choresName}}
                         </td>
-                    </tr>
+                    </tr-->
                 </table>
             </div>
             <div class="right">Up for Grabs</div>
@@ -117,8 +117,8 @@ export default {
 
     },
 
-
-    async mounted () {
+    mounted: function () {
+        choresList = this.$store.state.chores
     }
 }
 </script>
