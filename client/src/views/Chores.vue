@@ -10,9 +10,11 @@
                             <th>Chores</th>
                         </tr>
                     </thead>
-                    <tr v-for="(item, index) in choresList">
+                    <tr v-for="(item, index) of choreList">
                         <td>
-                            {{item.choresName}}
+                            <choreComponent :title="item.choresName" :dueDate="item.dueDate" :assignedTo="item.assignedTo" >
+
+                            </choreComponent>
                         </td>
                         <td>
                             <button type="button" class="completeButton" @click="completedChore(index,item)" >Completed</button>
@@ -29,7 +31,7 @@
                             <th>Completed</th>
                         </tr>
                     </thead>
-                    <tr v-for="(item, index) in  completedList">
+                    <tr v-for="(item, index) of completedList">
                         <td>
                             {{item.choresName}}
                         </td>
@@ -44,6 +46,8 @@
                     <form action="/action_page.php" class="form-container">
                         <h1>Add New Chore</h1>
                         <input type="text" v-model="choresName" class="choreNameText" placeholder="enter chore" id="textbox">
+                        <input type="date" v-model="dueDate" >
+
                         <button type="button" class="btn" @click="addChore">Add New Chore</button>
                         <button type="button" class="btn cancel" @click="closeForm()">Close</button>
                     </form>
@@ -55,38 +59,46 @@
 </template>
 
 <script>
-import ChoreService from '@/services/ChoreService'
+    import ChoreService from '@/services/ChoreService'
+    import choreComponent from '/../components/ChoreComponent'
 export default {
     name: 'Chores',
     title: 'Chores',
-    props: {
+    components:{
+        choreComponent
     },
     data () {
         return {
             choresName: "",
-            assigned:"",
+            assignedTo: "",
+            dueDate: "",
+            postedBy:"",
             choresList: [],
             completedList: [],
+            firstName:[],
         }
     },
+
     methods: {
         getAllFamilyChores () {
 
         },
-        blankInput() {
-            alert("Chore cannot be left blank");
+        clearTextField() {
+            this.choresName = "";
+            this.dueDate = "";
         },
         addChore() {
             if (this.choresName == "") {
-                alert("CHore cannot be left blank");
+                alert("Chore cannot be left blank");//alert notification if chores left blank
                 return;
             }
-            console.log(this.choresName);
             this.choresList.push({
                 choresName: this.choresName,
+                dueDate: this.dueDate
             });
-            this.choresName = "";
+            clearTextField();
         },
+
         completedChore(index,item) {
             console.log("inside completedChore");
             this.choresList.splice(index, 1);
@@ -95,9 +107,11 @@ export default {
             });
 
         },
+
         openForm() {
             document.getElementById("myForm").style.display = "block";
         },
+
         closeForm() {
             document.getElementById("myForm").style.display = "none";
         },
