@@ -31,7 +31,6 @@ export default new Vuex.Store({
             state.family.forEach(user =>
                 state.mappedUserIds.push(user.id)
             )
-            console.log(state.mappedUserIds)
         },
         setChores (state, chores) {
             chores.forEach(chore => {
@@ -52,7 +51,8 @@ export default new Vuex.Store({
         emptyStore (state){
             state.family= {},
             state.chores= [],
-            state.events= []
+            state.events= [],
+            state.mappedUserIds= []
         }
     },
     actions: {
