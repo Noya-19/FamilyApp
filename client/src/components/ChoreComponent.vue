@@ -36,7 +36,7 @@ export default {
             return this.$store.family[this.$store.mappedUserIds.indexOf(userid)].firstname;
         }
     },
-    mounted: function() {
+    created: function() {
         this.assignedToFirstName = this.getNameByUserId(this.assignedToInt);
         this.postedByFirstName = this.getNameByUserId(this.postedByInt);
     },
