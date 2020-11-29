@@ -77,16 +77,18 @@ export default {
         blankInput() {
             alert("Chore cannot be left blank");
         },
-        addChore() {
-            if (this.choresName == "") {
-                alert("CHore cannot be left blank");
-                return;
+        async createChore(title, dueDate, assignedTo, UserId) {
+            try {
+                const response = await ChoreService.createChore({
+                    title: title, // STRING
+                    dueDate: dueDate, // DATEONLY
+                    assignedTo: assignedTo, // INTEGER
+                    UserId:  UserId, //INTEGER
+                })
+                this.$store.dispatch('addChore', reponse.data)
+            } catch (error) {
+                this.error = error.response.data.error
             }
-            console.log(this.choresName);
-            this.choresList.push({
-                choresName: this.choresName,
-            });
-            this.choresName = "";
         },
         completedChore(index,item) {
             console.log("inside completedChore");
