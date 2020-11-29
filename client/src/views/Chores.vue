@@ -46,7 +46,7 @@
                     <form action="/action_page.php" class="form-container">
                         <h1>Add New Chore</h1>
                         <input type="text" v-model="choresName" class="choreNameText" placeholder="enter chore" id="textbox">
-                        <button type="button" class="btn" @click="addChore">Add New Chore</button>
+                        <button type="button" class="btn" @click="createChore">Add New Chore</button>
                         <button type="button" class="btn cancel" @click="closeForm()">Close</button>
                     </form>
                 </div>
@@ -66,7 +66,7 @@ export default {
         return {
             choresName: "",
             assigned:"",
-            choresList: {},
+            choresList: [],
             completedList: [],
         }
     },
@@ -86,12 +86,12 @@ export default {
                     UserId:  UserId, //INTEGER
                 })
                 this.$store.dispatch('addChore', reponse.data)
+                this.choreList.push(response.data)
             } catch (error) {
                 this.error = error.response.data.error
             }
         },
         completedChore(index,item) {
-            console.log("inside completedChore");
             this.choresList.splice(index, 1);
             this.completedList.push({
                 choresName: item.choresName,
