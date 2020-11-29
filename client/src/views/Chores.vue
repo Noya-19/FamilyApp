@@ -8,7 +8,7 @@
                             <th>Chores</th>
                         </tr>
                     </thead>
-                    <tr v-for="(chore, index) of choreList" :key=index>
+                    <tr v-for="(chore, index) of incompletedChores" :key=index>
                         <td>
                             <ChoreComponent 
                                 :title="chore.title" 
@@ -17,7 +17,7 @@
                                 :postedBy="chore.UserId"/>
                         </td>
                         <td>
-                            <button type="button" class="completeButton" @click="completedChore(index,item)" >Completed</button>
+                            <button type="button" class="completeButton" @click="updateChore(incompletedChores[index], true)" >Completed</button>
                         </td>
                     </tr>
                 </table>
@@ -30,13 +30,16 @@
                             <th>Completed</th>
                         </tr>
                     </thead>
-                    <tr v-for="(chore, index) in completedList" :key="index">
+                    <tr v-for="(chore, index) in completedChores" :key="index">
                         <td>
                             <ChoreComponent 
                                 :title="chore.title" 
-                                :dueDate='COMPLETED'
+                                :dueDate="'Complete!'"
                                 :assignedTo="chore.assignedTo" 
                                 :postedBy="chore.UserId"/>
+                        </td>
+                        <td>
+                            <button type="button" class="incompleteButton" @click="updateChore(completedChores[index], false)" >Mark as incomplete</button>
                         </td>
                     </tr>
                 </table>
@@ -73,7 +76,6 @@ export default {
             choresName: "",
             assigned:"",
             choreList: [],
-            completedList: [],
         }
     },
     methods: {
@@ -98,12 +100,21 @@ export default {
                 this.error = error.response.data.error
             }
         },
-        completedChore(index,item) {
-            this.choreList.splice(index, 1);
-            this.completedList.push({
-                choresName: item.choresName,
-            });
-            
+        async updateChore (chore, value) {
+            const choreStoreIndex = this.$store.state.chores.indexOf(chore)
+            try {
+                const response = await ChoreService.updateChore({
+                    id: chore.id,
+                    isComplete: value
+                })
+                console.log(response)
+                this.$store.dispatch('setChoreCompletion', choreStoreIndex, response.data)
+            } catch (error) {
+                this.error = error.response.data.error;
+            }
+            console.log('ic: ' + this.incompletedChores)
+            console.log('c: ' + this.completedChores)
+            console.log('all: ' + this.choreList)
         },
         openForm() {
             document.getElementById("myForm").style.display = "block";
@@ -116,9 +127,9 @@ export default {
         }
     },
     computed: {
-        choreList: function () {
+        incompletedChores: function () {
             return this.choreList.filter(function(e) {
-                return e.isComplete === false
+                return !e.isComplete
             })
         },
         completedChores: function() {
@@ -129,7 +140,6 @@ export default {
     },
     mounted () {
         this.referenceChores()
-        console.log(this.choreList)
     }
 }
 </script>

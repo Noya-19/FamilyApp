@@ -37,6 +37,9 @@ export default new Vuex.Store({
                 state.chores.push(chore)
             })
         },
+        setChoreCompletion (state, choreIndex, value) {
+            state.chores[choreIndex].isComplete = value
+        },
         setEvents (state, events) {
             events.forEach(event => {
                 state.events.push(event)
@@ -71,6 +74,9 @@ export default new Vuex.Store({
         },
         setChores ({commit}, chores) {
             commit('setChores', chores)
+        },
+        setChoreCompletion ({commit}, choreIndex, value) {
+            commit('setChoreCompletion', choreIndex, value)
         },
         setEvents ({commit}, events) {
             commit('setEvents', events)
