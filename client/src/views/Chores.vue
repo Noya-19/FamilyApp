@@ -8,14 +8,13 @@
                             <th>Chores</th>
                         </tr>
                     </thead>
-                    <tr v-for="(item, index) of choreList" :key=index>
+                    <tr v-for="(chore, index) of choreList" :key=index>
                         <td>
-                            <choreComponent 
-                                :title="item.choresName" 
-                                :dueDate="item.dueDate" 
-                                :assignedTo="item.assignedTo" 
-                                :postedBy="item.postedBy">
-                            </choreComponent>
+                            <ChoreComponent 
+                                :title="chore.title" 
+                                :dueDate="chore.dueDate" 
+                                :assignedTo="chore.assignedTo" 
+                                :postedBy="chore.UserId"/>
                         </td>
                         <td>
                             <button type="button" class="completeButton" @click="completedChore(index,item)" >Completed</button>
@@ -31,9 +30,13 @@
                             <th>Completed</th>
                         </tr>
                     </thead>
-                    <tr v-for="(item, index) in completedList" :key="index">
+                    <tr v-for="(chore, index) in completedList" :key="index">
                         <td>
-                            {{item.choresName}}
+                            <ChoreComponent 
+                                :title="chore.title" 
+                                :dueDate='COMPLETED'
+                                :assignedTo="chore.assignedTo" 
+                                :postedBy="chore.UserId"/>
                         </td>
                     </tr>
                 </table>
@@ -58,15 +61,18 @@
 
 <script>
 import ChoreService from '@/services/ChoreService'
-import ChoreComponent from '@/components/ChoreComponent'
+import ChoreComponent from '../components/ChoreComponent'
 export default {
     name: 'Chores',
     title: 'Chores',
+    components: {
+        ChoreComponent
+    },
     data () {
         return {
             choresName: "",
             assigned:"",
-            choresList: [],
+            choreList: [],
             completedList: [],
         }
     },
@@ -83,7 +89,8 @@ export default {
                     title: title, // STRING
                     dueDate: dueDate, // DATEONLY
                     assignedTo: assignedTo, // INTEGER
-                    UserId:  UserId, //INTEGER
+                    UserId: UserId, // INTEGER
+                    isComplete: false, // BOOLEAN
                 })
                 this.$store.dispatch('addChore', reponse.data)
                 this.choreList.push(response.data)
@@ -92,7 +99,7 @@ export default {
             }
         },
         completedChore(index,item) {
-            this.choresList.splice(index, 1);
+            this.choreList.splice(index, 1);
             this.completedList.push({
                 choresName: item.choresName,
             });
@@ -104,9 +111,25 @@ export default {
         closeForm() {
             document.getElementById("myForm").style.display = "none";
         },
+        referenceChores(){
+            this.choreList = this.$store.state.chores
+        }
+    },
+    computed: {
+        choreList: function () {
+            return this.choreList.filter(function(e) {
+                return e.isComplete === false
+            })
+        },
+        completedChores: function() {
+            return this.choreList.filter(function(e) {
+                return e.isComplete
+            })
+        }
     },
     mounted () {
-        
+        this.referenceChores()
+        console.log(this.choreList)
     }
 }
 </script>

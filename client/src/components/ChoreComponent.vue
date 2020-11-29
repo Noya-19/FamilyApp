@@ -1,15 +1,13 @@
 <template>
     <div>
-        <p>
-            {{title}}
-            <br />
-            Due: {{dueDate}}
-            <br />
-            assigned to: {{assignedToFirstName}}
-            <br />
-            posted by: {{postedBy}}
-            <br />
-        </p>
+        <span>{{title}}</span>
+        <br>
+        <span>Due: {{dueDate}}</span>
+        <br>
+        <span>assigned to: {{assignedToFirstName}}</span>
+        <br>
+        <span>posted by: {{postedByFirstName}}</span>
+        <br>
     </div>
 
 </template>
@@ -19,7 +17,7 @@ export default {
     name: 'ChoreComponent',
     props: {
         title: String,
-        dueDate: Date,
+        dueDate: String,
         assignedTo: Number,
         postedBy: Number,
     },
@@ -27,18 +25,16 @@ export default {
         return {
             assignedToFirstName:'',
             postedByFirstName: '',
-            assignedToInt: this.assignedTo,
-            postedByInt: this.postedBy
         }
     },
     methods: {
         getNameByUserId(userid) {
-            return this.$store.family[this.$store.mappedUserIds.indexOf(userid)].firstname;
+            return this.$store.state.family[this.$store.state.mappedUserIds.indexOf(userid)].firstname;
         }
     },
-    created: function() {
-        this.assignedToFirstName = this.getNameByUserId(this.assignedToInt);
-        this.postedByFirstName = this.getNameByUserId(this.postedByInt);
+    mounted: function() {
+        this.assignedToFirstName = this.getNameByUserId(this.assignedTo);
+        this.postedByFirstName = this.getNameByUserId(this.postedBy);
     },
 }
 </script>
