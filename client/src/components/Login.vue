@@ -57,52 +57,53 @@ export default {
         await this.getAssociatedFamilyMembers(this.$store.state.user.FamilyId)
         await this.getFamilyChores(this.$store.state.family)
         await this.getFamilyEvents(this.$store.state.family)
+        this.$router.push('/dashboard')
       } catch (error) {
         this.error = error.response.data.error
       }
     },
     async getAssociatedFamilyMembers(familyid) {
-      try {
-        const response = await FamilyService.getFamilyUsers({
-          FamilyId: familyid
-        })
-        this.$store.dispatch('setFamily', response.data)
-        //this.$store.state.family.forEach(user => console.log(user.id)) print out all user ids in the family
-      } catch (error) {
-        this.error = error.response.data.error
-      }
+        try {
+          const response = await FamilyService.getFamilyUsers({
+            FamilyId: familyid
+          })
+          this.$store.dispatch('setFamily', response.data)
+          //this.$store.state.family.forEach(user => console.log(user.id)) print out all user ids in the family
+        } catch (error) {
+          this.error = error.response.data.error
+        }
     },
     async getFamilyChores(family) {
-      try {
-        family.forEach(user => {
-          const response = ChoreService.index({
-            UserId: user.id
+        try {
+          family.forEach(user => {
+            const response = ChoreService.index({
+              UserId: user.id
+            })
+            response.then((value)=>{
+              this.$store.dispatch('setChores', value.data)
+            })
           })
-          response.then((value)=>{
-            this.$store.dispatch('setChores', value.data)
-          })
-        })
-      } catch (error) {
-        this.error = error.response.data.error
-      }
+        } catch (error) {
+          this.error = error.response.data.error
+        }
     },
     async getFamilyEvents(family) {
-      try {
-        family.forEach(user => {
-          const response = EventService.index({
-            UserId: user.id
+        try {
+          family.forEach(user => {
+            const response = EventService.index({
+              UserId: user.id
+            })
+            response.then((value)=>{
+              this.$store.dispatch('setEvents', value.data)
+            })
           })
-          response.then((value)=>{
-            this.$store.dispatch('setEvents', value.data)
-          })
-        })
-      } catch (error) {
-        this.error = error.response.data.error
-      }
+        } catch (error) {
+          this.error = error.response.data.error
+        }
     }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 </style>

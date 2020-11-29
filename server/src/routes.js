@@ -19,11 +19,15 @@ module.exports = (app) => {
 
     app.get('/chores',
         ChoresController.getAllByAssignedTo)
+    app.get('/chores/delete',
+        ChoresController.delete)
     app.post('/chores',
         ChoresController.post)
 
     app.get('/events',
         EventsController.getUserEvents)
+    app.get('/events/delete',
+        EventsController.delete)
     app.post('/events',
         EventsController.post)
 }
