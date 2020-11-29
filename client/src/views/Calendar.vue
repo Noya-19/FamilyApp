@@ -206,6 +206,10 @@
     
 <style lang="scss" scoped>
 
+    h1{
+        padding-top: 1rem;
+        padding-left: 5rem;
+    }
     .cv-item.custom-date-class-red {
         background-color: #ff6666;
     }
