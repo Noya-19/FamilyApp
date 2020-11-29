@@ -53,6 +53,9 @@ export default new Vuex.Store({
             state.chores= [],
             state.events= [],
             state.mappedUserIds= []
+        },
+        addChore (state, chore){
+            state.chores.push(chore)
         }
     },
     actions: {
@@ -80,7 +83,10 @@ export default new Vuex.Store({
         },
         emptyStore ({commit}) {
             commit('emptyStore')
-        }
+        },
+        addChore ({commit}, chore){
+            commit('addChore', chore)
+        },
     },
     getters: {
         getChores: state => {
