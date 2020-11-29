@@ -24,12 +24,12 @@ export default {
   @import "../scss/variables.scss";
 
   .grid-container {
-    grid-template-columns: 17rem 17rem 17rem 17rem 17rem;/*200px 200px 200px 200px 200px 200px;*/
+    grid-template-columns: 17rem 17rem 17rem 17rem 17rem;
     grid-template-rows: 1rem 40rem auto;
     padding-left: $lg-gutter;
     padding-right: $lg-gutter;
     background-color: $light-gray;
-    //background-color: black;
+
   }
         
   .grid-container {
@@ -88,7 +88,7 @@ export default {
     border-color: black;
     border-width: 0.125rem;
   }
-
+    /* Style the footer */
   .footer {
     grid-area: footer;
     height: 8.5rem;

@@ -27,7 +27,7 @@ export default {
     padding-left: $lg-gutter;
     padding-right: $lg-gutter;
     background-color: $light-gray;
-    //background-color: black;
+
   }
       
   .grid-container {

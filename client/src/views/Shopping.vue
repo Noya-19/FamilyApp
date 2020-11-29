@@ -22,12 +22,12 @@ export default {
 @import '../scss/variables.scss';
 
   .grid-container {
-    grid-template-columns: 19.4rem 19.4rem 19.4rem 19.4rem 19.4rem;/*200px 200px 200px 200px 200px 200px;*/
+    grid-template-columns: 19.4rem 19.4rem 19.4rem 19.4rem 19.4rem;
     grid-template-rows: 1rem 45rem auto;
     padding-left: $lg-gutter;
     padding-right: $lg-gutter;
     background-color: $light-gray;
-    //background-color: black;
+
   }
       
   .grid-container {
