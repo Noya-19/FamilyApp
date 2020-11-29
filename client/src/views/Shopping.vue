@@ -47,9 +47,59 @@
                 </form>
             </div>
             <div class="item2">this is the start of the new item</div>
+            <form id="recipes-list">
 
+                <table id="shopping-list-table" class="table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>Quantity</th>
+                            <th>Item</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tr v-for="(item, index) in  recipes">
+                        <td>
+                            {{item.itemName}}
+                        </td>
+
+                        <td>
+                            <button type="button" class="btn btn-success" v-show="item.inEditMode" @click="editItemComplete(item)"><i class="fa fa-save"></i> Save  </button>
+                            <button type="button" class="btn btn-info" v-show="!item.inEditMode" @click="editItem(item)"><i class="fa fa-edit"></i> Edit  </button>
+                            <button type="button" class="btn btn-danger" @click="removeItem(index)"><i class="fa fa-remove"></i> Delete  </button>
+                            <button type="button" class="console" @click="info(item)"><i class="fa fa-remove"></i> info  </button>
+                        </td>
+                    </tr>
+                </table>
+
+                <h4>Add new item</h4>
+                <div class="row col-md-6">
+                    <div class="col-md-6 form-group">
+                        Quantity
+                        <input type="number" v-model="quantity" class="checkbox" autofocus>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        Name
+                        <input type="text" v-model="itemName" class="checkbox">
+                    </div>
+
+                    <button type="button" @click="addItemRec" class="btn btn-primary"><i class="fa fa-plus"></i> Add  </button>
+                </div>
+            </form>
         </div>
+        <div class="form-popup" id="myForm">
+            <form action="/action_page.php" class="form-container">
+                <h1>Add New Ingredients</h1>
 
+                <label for="email"><b>Email</b></label>
+                <input type="text" placeholder="Enter Email" name="email" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+
+                <button type="button" class="btn">Add Another</button>
+                <button type="button" class="btn cancel" @click="closeForm()">Done</button>
+            </form>
+        </div>
     </main>
 </template>
 
@@ -117,6 +167,15 @@ export default {
         },
         info: function (itemlist) {
             console.log(this.itemList.length);
+        },
+        openForm: function() {
+            document.getElementById("myForm").style.display = "block";
+        },
+        closeForm: function() {
+            document.getElementById("myForm").style.display = "none";
+        },
+        addItemRec: function () {
+
         }
 
     }
