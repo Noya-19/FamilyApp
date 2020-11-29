@@ -20,8 +20,8 @@ export default {
     props: {
         title: String,
         dueDate: Date,
-        assignedTo: Integer,
-        postedBy: Integer,
+        assignedTo: Number,
+        postedBy: Number,
     },
     data() {
         return {
