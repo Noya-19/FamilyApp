@@ -14,10 +14,9 @@
                                 :title="chore.title" 
                                 :dueDate="chore.dueDate" 
                                 :assignedTo="chore.assignedTo" 
-                                :postedBy="chore.UserId"/>
-                        </td>
-                        <td>
-                            <button type="button" class="completeButton" @click="updateChore(incompletedChores[index], true)" >Completed</button>
+                                :postedBy="chore.UserId"
+                                :id="chore.id"
+                                :isComplete="chore.isComplete"/>
                         </td>
                     </tr>
                 </table>
@@ -34,12 +33,11 @@
                         <td>
                             <ChoreComponent 
                                 :title="chore.title" 
-                                :dueDate="'Complete!'"
+                                :dueDate="chore.dueDate"
                                 :assignedTo="chore.assignedTo" 
-                                :postedBy="chore.UserId"/>
-                        </td>
-                        <td>
-                            <button type="button" class="incompleteButton" @click="updateChore(completedChores[index], false)" >Mark as incomplete</button>
+                                :postedBy="chore.UserId"
+                                :id="chore.id"
+                                :isComplete="chore.isComplete"/>
                         </td>
                     </tr>
                 </table>
@@ -100,22 +98,6 @@ export default {
                 this.error = error.response.data.error
             }
         },
-        async updateChore (chore, value) {
-            const choreStoreIndex = this.$store.state.chores.indexOf(chore)
-            try {
-                const response = await ChoreService.updateChore({
-                    id: chore.id,
-                    isComplete: value
-                })
-                console.log(response)
-                this.$store.dispatch('setChoreCompletion', choreStoreIndex, response.data)
-            } catch (error) {
-                this.error = error.response.data.error;
-            }
-            console.log('ic: ' + this.incompletedChores)
-            console.log('c: ' + this.completedChores)
-            console.log('all: ' + this.choreList)
-        },
         openForm() {
             document.getElementById("myForm").style.display = "block";
         },
@@ -136,6 +118,11 @@ export default {
             return this.choreList.filter(function(e) {
                 return e.isComplete
             })
+        }
+    },
+    watch: {
+        choreList: function () {
+
         }
     },
     mounted () {

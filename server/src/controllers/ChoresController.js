@@ -52,7 +52,7 @@ module.exports = {
             }
             chore.isComplete = isCompleteReq;
             await chore.save();
-            res.status(200).send(isCompleteReq)
+            res.status(200).send(chore)
         } catch (err) {
             res.status(500).send({
                 error: 'An error has occurred while updating the chore.'

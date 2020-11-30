@@ -1,6 +1,6 @@
 <template>
   <v-layout column v-if="!$store.state.isUserLoggedIn">
-    <v-flex xs6 offset-xs3>
+    <v-container>
       <div title="Register">
         <form
           name="family-app-form"
@@ -24,10 +24,11 @@
             v-model="password"
             autocomplete="new-password"
           ></v-text-field>
-          <v-radio-group row v-model="creatingNewFamily" class="v-radio__containter">
-              <v-radio class="v-radio__button" value=true label="Yes"></v-radio>
-              <v-radio class="v-radio__button" value=false label="No"></v-radio>
-          </v-radio-group>
+          <v-switch
+            v-model="creatingNewFamily"
+            :label="'Create new family?'"
+            default=true
+          ></v-switch>
           <v-text-field
             v-if="!creatingNewFamily"
             label="Family Code"
@@ -43,7 +44,7 @@
           Register
         </v-btn>
       </div>
-    </v-flex>
+    </v-container>
   </v-layout>
 </template>
 
@@ -131,12 +132,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.v-radio {
-  &container {
-    justify-self: center;
-  }
-  &__button {
-    justify-self: center;
-  }
-}
+
 </style>
