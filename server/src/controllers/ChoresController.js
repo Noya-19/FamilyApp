@@ -42,5 +42,21 @@ module.exports = {
                 error: 'An error has occurred while deleting chore.'
             })
         }
-    }
+    },
+    async updateChore (req, res) {
+        try {
+            const isCompleteReq = req.query.isComplete
+            const chore = await Chore.findOne({ where: { id: req.query.id}})
+            if (!chore) {
+                throw Error(`Chore not updated. id:${id}`);
+            }
+            chore.isComplete = isCompleteReq;
+            await chore.save();
+            res.status(200).send(isCompleteReq)
+        } catch (err) {
+            res.status(500).send({
+                error: 'An error has occurred while updating the chore.'
+            })
+        }
+    },
 }

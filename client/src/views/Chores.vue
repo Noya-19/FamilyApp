@@ -1,8 +1,6 @@
 <template>
     <main class="chores">
-
         <div class="grid-container">
-
             <div class="left">
                 <table id="chores-list-table" class="table table-condensed table-hover">
                     <thead>
@@ -10,17 +8,19 @@
                             <th>Chores</th>
                         </tr>
                     </thead>
-                    <tr v-for="(item, index) of choreList">
+                    <tr v-for="(chore, index) of incompletedChores" :key=index>
                         <td>
-                            <choreComponent :title="item.choresName" :dueDate="item.dueDate" :assignedTo="item.assignedTo" :postedBy="item.postedBy" >
-                            </choreComponent>
+                            <ChoreComponent 
+                                :title="chore.title" 
+                                :dueDate="chore.dueDate" 
+                                :assignedTo="chore.assignedTo" 
+                                :postedBy="chore.UserId"/>
                         </td>
                         <td>
-                            <button type="button" class="completeButton" @click="completedChore(index,item)" >Completed</button>
+                            <button type="button" class="completeButton" @click="updateChore(incompletedChores[index], true)" >Completed</button>
                         </td>
                     </tr>
                 </table>
-
             </div>
             <div class="header"><h1>Chores</h1></div>
             <div class="middle">
@@ -30,9 +30,16 @@
                             <th>Completed</th>
                         </tr>
                     </thead>
-                    <tr v-for="(item, index) of completedList">
+                    <tr v-for="(chore, index) in completedChores" :key="index">
                         <td>
-                            {{item.choresName}}
+                            <ChoreComponent 
+                                :title="chore.title" 
+                                :dueDate="'Complete!'"
+                                :assignedTo="chore.assignedTo" 
+                                :postedBy="chore.UserId"/>
+                        </td>
+                        <td>
+                            <button type="button" class="incompleteButton" @click="updateChore(completedChores[index], false)" >Mark as incomplete</button>
                         </td>
                     </tr>
                 </table>
@@ -45,9 +52,7 @@
                     <form action="/action_page.php" class="form-container">
                         <h1>Add New Chore</h1>
                         <input type="text" v-model="choresName" class="choreNameText" placeholder="enter chore" id="textbox">
-                        <input type="date" v-model="dueDate" >
-
-                        <button type="button" class="btn" @click="addChore">Add New Chore</button>
+                        <button type="button" class="btn" @click="createChore">Add New Chore</button>
                         <button type="button" class="btn cancel" @click="closeForm()">Close</button>
                     </form>
                 </div>
@@ -58,67 +63,83 @@
 </template>
 
 <script>
-    import ChoreService from '@/services/ChoreService'
-    import choreComponent from '/../components/ChoreComponent'
+import ChoreService from '@/services/ChoreService'
+import ChoreComponent from '../components/ChoreComponent'
 export default {
     name: 'Chores',
     title: 'Chores',
-    components:{
-        choreComponent
+    components: {
+        ChoreComponent
     },
     data () {
         return {
             choresName: "",
-            dueDate: "",
-            assignedTo:'',
-            postedBy:"",
-            choresList: [],
-            completedList: [],
-            firstName:[],
+            assigned:"",
+            choreList: [],
         }
     },
-
     methods: {
         getAllFamilyChores () {
-
+            
         },
-        clearTextField() {
-            this.choresName = "";
-            this.dueDate = "";
+        blankInput() {
+            alert("Chore cannot be left blank");
         },
-        addChore() {
-            if (this.choresName == "") {
-                alert("Chore cannot be left blank");//alert notification if chores left blank
-                return;
+        async createChore(title, dueDate, assignedTo, UserId) {
+            try {
+                const response = await ChoreService.createChore({
+                    title: title, // STRING
+                    dueDate: dueDate, // DATEONLY
+                    assignedTo: assignedTo, // INTEGER
+                    UserId: UserId, // INTEGER
+                    isComplete: false, // BOOLEAN
+                })
+                this.$store.dispatch('addChore', reponse.data)
+                this.choreList.push(response.data)
+            } catch (error) {
+                this.error = error.response.data.error
             }
-            this.choresList.push({
-                choresName: this.choresName,
-                dueDate: this.dueDate
-            });
-            clearTextField();
         },
-
-        completedChore(index,item) {
-            console.log("inside completedChore");
-            this.choresList.splice(index, 1);
-            this.completedList.push({
-                choresName: item.choresName,
-            });
-
+        async updateChore (chore, value) {
+            const choreStoreIndex = this.$store.state.chores.indexOf(chore)
+            try {
+                const response = await ChoreService.updateChore({
+                    id: chore.id,
+                    isComplete: value
+                })
+                console.log(response)
+                this.$store.dispatch('setChoreCompletion', choreStoreIndex, response.data)
+            } catch (error) {
+                this.error = error.response.data.error;
+            }
+            console.log('ic: ' + this.incompletedChores)
+            console.log('c: ' + this.completedChores)
+            console.log('all: ' + this.choreList)
         },
-
         openForm() {
             document.getElementById("myForm").style.display = "block";
         },
-
         closeForm() {
             document.getElementById("myForm").style.display = "none";
         },
-
+        referenceChores(){
+            this.choreList = this.$store.state.chores
+        }
     },
-
-
-    async mounted () {
+    computed: {
+        incompletedChores: function () {
+            return this.choreList.filter(function(e) {
+                return !e.isComplete
+            })
+        },
+        completedChores: function() {
+            return this.choreList.filter(function(e) {
+                return e.isComplete
+            })
+        }
+    },
+    mounted () {
+        this.referenceChores()
     }
 }
 </script>
@@ -126,7 +147,7 @@ export default {
 <style scoped lang="scss">
     @import "../scss/variables.scss";
         /* The grid container */
-
+     
     .grid-container {
         grid-template-columns: 17rem 17rem 17rem 17rem 17rem 17rem;/*200px 200px 200px 200px 200px 200px;*/
         grid-template-rows: 2.5rem 45rem auto;
@@ -135,7 +156,7 @@ export default {
         background-color: $light-gray;
         //background-color: black;
     }
-
+        
     .grid-container {
         display: grid;
         grid-template-areas:

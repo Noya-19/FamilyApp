@@ -13,5 +13,10 @@ export default {
         return Api().get('chores/delete', {
             params: choreid
         })
+    },
+    updateChore (payload) {
+        return Api().get('chores/update', {
+            params: payload
+        })
     }
 }
