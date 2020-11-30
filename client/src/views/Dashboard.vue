@@ -3,7 +3,41 @@
         <div class="grid-container">
         <div class="header"><h1>FAMTASTIC</h1></div>
         <div class="left"> Shopping List</div>  
-        <div class="right">Calendar</div>
+        <div class="right">
+            <h2 >Calendar</h2>
+            <div id="calendar">                
+                <calendar-view v-if="displayVariable ==='month'"
+                               :show-date="showDate"
+                               :enableDragDrop="true"
+                               :items="items"
+                               displayPeriodUom="month"
+                               :enable-date-selection="true"
+                               :selection-start="selectionStart"
+                               :selection-end="selectionEnd"
+                               :display-week-numbers="false"
+                               :item-top="themeOptions.top"
+                               :item-content-height="themeOptions.height"
+                               :item-border-height="themeOptions.border"
+                               :current-period-label="themeOptions.currentPeriodLabel"
+                               class="holiday-us-traditional holiday-us-official"
+                               @date-selection-start="setSelection"
+                               @date-selection="setSelection"
+                               @date-selection-finish="finishSelection"
+                               @click-item="selectEvent">
+                    <calendar-view-header slot="header"
+                                          slot-scope="{ headerProps }"
+                                          :header-props="headerProps"
+                                          :previous-year-label="themeOptions.previousYearLabel"
+                                          :previous-period-label="themeOptions.previousPeriodLabel"
+                                          :next-period-label="themeOptions.nextPeriodLabel"
+                                          :next-year-label="themeOptions.nextYearLabel"
+                                          @input="setShowDate" />
+                </calendar-view>
+            </div>
+            <table>
+
+            </table>
+        </div>
         <div class="bot-left">People</div>
         <div class="footer">Chore List</div>
       </div>
@@ -11,6 +45,13 @@
 </template>
 
 <script>
+    import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
+    // The next two lines are processed by webpack. If you're using the component without webpack compilation,
+    // you should just create <link> elements for these. Both are optional, you can create your own theme if you prefer.
+    import EventService from '@/services/EventService'
+    require("vue-simple-calendar/static/css/default.css")
+    require("vue-simple-calendar/static/css/holidays-us.css")
+    var eventColors = ["aqua", "#67A4E1", "pink", "yellow", "green", "gray", "white", "lightgreen"]
 
 export default {
   name: 'Dashboard',
@@ -19,16 +60,84 @@ export default {
   },
 
   data () {
-    return {
+      return {
+          showDate: new Date(),
+          selectionStart: null,
+          selectionEnd: null,
+          theme: "gcal",
+          items: [],
+          startDay: "",
+          endDay: "",
+          title: "",
+          displayVariable: "month",
+          selectedEvent: {},
+          weeklyEvents: [],
     }
   },
-
+    computed: {
+        themeOptions() {
+            return this.theme == "gcal"
+            ?{
+                top: "2.6em",
+                height: "2.1em",
+                border: "0px",
+                previousYearLabel: "\uE5CB\uE5CB",
+                previousPeriodLabel: "\uE5CB",
+                nextPeriodLabel: "\uE5CC",
+                nextYearLabel: "\uE5CC\uE5CC",
+                currentPeriodLabel: "Today",
+            }
+            : {
+                top: "1.4em",
+                height: "1.4em",
+                border: "2px",
+                previousYearLabel: "<<",
+                previousPeriodLabel: "<",
+                nextPeriodLabel: ">",
+                nextYearLabel: ">>",
+                currentPeriodLabel: "",
+            }
+        }
+    },
+  components: {
+      CalendarView,
+      CalendarViewHeader,
+  },
   methods: {
-    
+      selectEvent(event) {
+          this.selectedEvent = event
+      },
+      
+      setShowDate(d) {
+          this.showDate = d;
+      },
+      setShowDate(d) {
+          this.showDate = d
+      },
+      setSelection(dateRange) {
+          this.selectionEnd = dateRange[1]
+          this.selectionStart = dateRange[0]
+      },
+      finishSelection(dateRange) {
+          this.setSelection(dateRange)
+      },
+      referenceEvents() {
+          this.items = this.$store.state.events
+      },
+      fillWeekly() {
+          this.items.forEach(item => {
+              this.weeklyEvents.push(item)
+          })
+          this.weeklyEvents = this.weeklyEvents.sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate));
+          this.weeklyEvents = this.weeklyEvents.reverse();
+          console.log(this.weeklyEvents);
+      },
+ 
   },
 
   mounted: function () {
-
+      this.referenceEvents()
+      this.fillWeekly();
   }
 }
 </script>
@@ -53,6 +162,7 @@ export default {
     "bot-left footer right right";
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
+    text-align:center;
   }
 
   .left,
