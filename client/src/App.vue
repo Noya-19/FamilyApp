@@ -3,6 +3,7 @@
     <GlobalNav/>
     <router-view/>
   </v-app>
+  </div>
 </template>
 
 <script>

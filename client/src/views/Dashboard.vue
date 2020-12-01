@@ -34,9 +34,9 @@
                                               @input="setShowDate" />
                     </calendar-view>
                 </div>
+                <h2>Events</h2>
                 <div id="calTable">
-                    <v-simple-table
-                                    :height="heightOfCalTable"
+                    <v-simple-table :height="heightOfCalTable"
                                     :fixed-header="true">
                         <template v-slot:default>
                             <thead>
@@ -56,10 +56,32 @@
                         </template>
                     </v-simple-table>
                 </div>
-               
+
             </div>
             <div class="bot-left">People</div>
-            <div class="footer">Chore List</div>
+            <div class="footer">
+                <h2>Chores List</h2>
+                <div id="choresTable">
+                    <v-simple-table :height="heightOfCalTable"
+                                    :fixed-header="true">
+                        <template v-slot:default>
+                            <thead>
+                                <tr>
+                                    <th class="text-left">Chore</th>
+                                    <th class="text-left">Due Date</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in choreList" :key="item.choresName">
+                                    <td>{{item.title}}</td>
+                                    <td>{{item.dueDate}}</td>
+                                </tr>
+                            </tbody>
+                        </template>
+                    </v-simple-table>
+                </div>
+            </div>
         </div>
     </main>
 </template>
@@ -92,7 +114,9 @@
                 displayVariable: "month",
                 selectedEvent: {},
                 weeklyEvents: [],
-                heightOfCalTable:'300px'
+                heightOfCalTable: '300px',
+                choreList: [],
+                dueDate:'',
             }
         },
         computed: {
@@ -145,13 +169,15 @@
             referenceEvents() {
                 this.items = this.$store.state.events
             },
+            referenceChores() {
+                this.choreList = this.$store.state.chores
+            },
             fillWeekly() {
                 this.items.forEach(item => {
                     this.weeklyEvents.push(item)
                 })
                 this.weeklyEvents = this.weeklyEvents.sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate));
                 this.weeklyEvents = this.weeklyEvents.reverse();
-                console.log(this.weeklyEvents);
             },
 
         },
@@ -159,6 +185,7 @@
         mounted: function () {
             this.referenceEvents()
             this.fillWeekly();
+            this.referenceChores()
         }
     }
 </script>
@@ -168,13 +195,17 @@
     /*#calTable{
        max-height:100px;
     }*/
+    #choresTable{
+        max-height:inherit;
+        max-width:inherit
+    }
     .monthNameFormat {
         align-self: center;
     }
     #calendar {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         color: #2c3e50;
-        height: 47vh;
+        height: 45vh;
         width: inherit;
         margin-left: auto;
         margin-right: auto;
