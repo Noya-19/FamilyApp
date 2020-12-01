@@ -68,13 +68,13 @@ export default {
             }
         },
         async updateChore (chore, value) {
-            const choreStoreIndex = this.$store.state.chores.indexOf(chore)
+            const choreStoreIndex = this.$store.state.chores.indexOf(
+                this.$store.state.chores.find(e => e.id === chore.id))
             try {
                 const response = await ChoreService.updateChore({
                     id: chore.id,
                     isComplete: value
                 })
-                console.log(response)
                 this.$store.dispatch('setChoreCompletion', {
                     choreIndex: choreStoreIndex, 
                     value: response.data.isComplete

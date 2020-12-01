@@ -8,7 +8,7 @@
                             <th>Chores</th>
                         </tr>
                     </thead>
-                    <tr v-for="(chore, index) of incompletedChores" :key=index>
+                    <tr v-for="chore of incompletedChores" :key='chore.id'>
                         <td>
                             <ChoreComponent 
                                 :title="chore.title" 
@@ -29,7 +29,7 @@
                             <th>Completed</th>
                         </tr>
                     </thead>
-                    <tr v-for="(chore, index) in completedChores" :key="index">
+                    <tr v-for="chore in completedChores" :key='chore.id'>
                         <td>
                             <ChoreComponent 
                                 :title="chore.title" 
@@ -77,12 +77,6 @@ export default {
         }
     },
     methods: {
-        getAllFamilyChores () {
-            
-        },
-        blankInput() {
-            alert("Chore cannot be left blank");
-        },
         async createChore(title, dueDate, assignedTo, UserId) {
             try {
                 const response = await ChoreService.createChore({
@@ -122,7 +116,7 @@ export default {
     },
     watch: {
         choreList: function () {
-
+            this.referenceChores()
         }
     },
     mounted () {
