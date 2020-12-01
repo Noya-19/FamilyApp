@@ -1,64 +1,136 @@
 <template>
     <main class="chores">
-        <div class="grid-container">
-            <div class="left">
-                <table id="chores-list-table" class="table table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th>Chores</th>
+        <div data-app>
+            <div class="grid-container">
+                <div class="left">
+                    <table id="chores-list-table" class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>Chores</th>
+                            </tr>
+                        </thead>
+                        <tr v-for="(chore, index) of incompletedChores" :key=index>
+                            <td>
+                                <ChoreComponent :title="chore.title"
+                                                :dueDate="chore.dueDate"
+                                                :assignedTo="chore.assignedTo"
+                                                :postedBy="chore.UserId" />
+                            </td>
+                            <td>
+                                <button type="button" class="completeButton" @click="updateChore(incompletedChores[index], true)">Completed</button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tr v-for="(chore, index) of incompletedChores" :key=index>
-                        <td>
-                            <ChoreComponent 
-                                :title="chore.title" 
-                                :dueDate="chore.dueDate" 
-                                :assignedTo="chore.assignedTo" 
-                                :postedBy="chore.UserId"/>
-                        </td>
-                        <td>
-                            <button type="button" class="completeButton" @click="updateChore(incompletedChores[index], true)" >Completed</button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="header"><h1>Chores</h1></div>
-            <div class="middle">
-                <table id="completed-list-table" class="table table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th>Completed</th>
+                    </table>
+                </div>
+                <div class="header"><h1>Chores</h1></div>
+                <div class="middle">
+                    <table id="completed-list-table" class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>Completed</th>
+                            </tr>
+                        </thead>
+                        <tr v-for="(chore, index) in completedChores" :key="index">
+                            <td>
+                                <ChoreComponent :title="chore.title"
+                                                :dueDate="'Complete!'"
+                                                :assignedTo="chore.assignedTo"
+                                                :postedBy="chore.UserId" />
+                            </td>
+                            <td>
+                                <button type="button" class="incompleteButton" @click="updateChore(completedChores[index], false)">Mark as incomplete</button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tr v-for="(chore, index) in completedChores" :key="index">
-                        <td>
-                            <ChoreComponent 
-                                :title="chore.title" 
-                                :dueDate="'Complete!'"
-                                :assignedTo="chore.assignedTo" 
-                                :postedBy="chore.UserId"/>
-                        </td>
-                        <td>
-                            <button type="button" class="incompleteButton" @click="updateChore(completedChores[index], false)" >Mark as incomplete</button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="right">Up for Grabs</div>
-
-            <div class="footer">
-                <button type="button" class="btn" @click="openForm()">Add New Chore</button>
-                <div class="form-popup" id="myForm">
-                    <form action="/action_page.php" class="form-container">
-                        <h1>Add New Chore</h1>
-                        <input type="text" v-model="choresName" class="choreNameText" placeholder="enter chore" id="textbox">
-                        <button type="button" class="btn" @click="createChore">Add New Chore</button>
-                        <button type="button" class="btn cancel" @click="closeForm()">Close</button>
-                    </form>
+                    </table>
+                </div>
+                <div class="right">Up for Grabs</div>
+                <div class="footer">
+                    <v-row justify-content="center">
+                        <v-dialog v-model="dialog"
+                                  persistent
+                                  max-width="400px">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn  
+                                       color="primary"
+                                        dark
+                                        v-bind="attrs"
+                                        v-on="on">
+                                    Add Chore
+                                </v-btn>
+                            </template>
+                            <v-card>
+                                <v-card-text>
+                                    <v-container>
+                                        <v-row>
+                                            <v-col cols="12"
+                                                   max-width="300px"
+                                                   min-wdith="300px">
+                                                <v-text-field label="Chore Name"
+                                                              required></v-text-field>
+                                            </v-col>
+                                        </v-row>
+                                        <v-row>
+                                            <v-col cols="12"
+                                                  max-width="300px"
+                                                   min-wdith="300px">
+                                                <v-select :items="firstName"
+                                                          label="Asign To"
+                                                          required></v-select>
+                                            </v-col>
+                                        </v-row>
+                                        <v-row>
+                                            <v-menu ref="menu1"
+                                                    v-model="menu1"
+                                                    :close-on-content-click="false"
+                                                    transition="scale-transition"
+                                                    offset-y
+                                                    max-width="290px"
+                                                    min-width="290px">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-text-field v-model="dueDate"
+                                                                  label="Date"
+                                                                  hint="MM/DD/YYYY format"
+                                                                  persistent-hint
+                                                                  prepend-icon="mdi-calendar"
+                                                                  v-bind="attrs"
+                                                                  
+                                                                  v-on="on"></v-text-field>
+                                                </template>
+                                                <v-date-picker v-model="dueDate"
+                                                               no-title
+                                                               @input="menu1 = false"></v-date-picker>
+                                            </v-menu>
+                                        </v-row>
+                                        <v-row></v-row>
+                                    </v-container>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="blue darken-1"
+                                           text
+                                           @click="dialog = false">
+                                        Close
+                                    </v-btn>
+                                    <v-btn color="blue darken-1"
+                                           text
+                                           @click="dialog = false">
+                                        Add
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                    </v-row>
+                    <div class="form-popup" id="myForm">
+                        <form action="/action_page.php" class="form-container">
+                            <h1>Add New Chore</h1>
+                            <input type="text" v-model="choresName" class="choreNameText" placeholder="enter chore" id="textbox">
+                            <button type="button" class="btn" @click="createChore">Add New Chore</button>
+                            <button type="button" class="btn cancel" @click="closeForm()">Close</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-
     </main>
 </template>
 
@@ -73,9 +145,13 @@ export default {
     },
     data () {
         return {
+            menu1:'',
+            dueDate:"",
             choresName: "",
             assigned:"",
             choreList: [],
+            dialog: false,
+            firstName:['Kyle','Josh','Renaldy','Christain'],//need someone to help fill with names 
         }
     },
     methods: {
@@ -203,6 +279,7 @@ export default {
     .footer {
         grid-area: footer;
         background-color: $light-blue;
+
         height: 3rem;
         padding: 0.625rem;
         text-align: center;
@@ -279,5 +356,8 @@ export default {
     /* Add some hover effects to buttons */
     .form-container .btn:hover, .open-button:hover {
         opacity: 1;
+    }
+    .row{
+        justify-content:center;
     }
 </style>
