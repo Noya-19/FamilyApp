@@ -4,11 +4,19 @@
         tile
     >
         <v-card-title>{{title}}</v-card-title>
-        <v-card-text>
-            <v-row v-if="!isComplete">
+        <v-card-text v-if="!isComplete">
+            <v-row>
                 Due: {{dueDate}}
             </v-row>
-            <v-row v-else>
+            <v-row>
+                Assigned to {{assignedToFirstName}}
+            </v-row>
+            <v-row>
+                Posted by {{postedByFirstName}}
+            </v-row>
+        </v-card-text>
+        <v-card-text v-else>
+            <v-row>
                 Complete!
             </v-row>
             <v-row>
