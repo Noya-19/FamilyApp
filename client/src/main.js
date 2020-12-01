@@ -20,8 +20,8 @@ sync(store, router)
 new Vue({
   el: '#app',
   router,
-   store,
-   vuetify: new Vuetify(),
+  store,
+  vuetify: new Vuetify(),
   components: { App },
   template: '<App/>'
 })

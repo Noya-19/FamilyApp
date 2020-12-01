@@ -20,114 +20,127 @@
                                 <button type="button" class="completeButton" @click="updateChore(incompletedChores[index], true)">Completed</button>
                             </td>
                         </tr>
-                    </table>
-                </div>
-                <div class="header"><h1>Chores</h1></div>
-                <div class="middle">
-                    <table id="completed-list-table" class="table table-condensed table-hover">
-                        <thead>
-                            <tr>
-                                <th>Completed</th>
-                            </tr>
-                        </thead>
-                        <tr v-for="(chore, index) in completedChores" :key="index">
-                            <td>
-                                <ChoreComponent :title="chore.title"
-                                                :dueDate="'Complete!'"
-                                                :assignedTo="chore.assignedTo"
-                                                :postedBy="chore.UserId" />
-                            </td>
-                            <td>
-                                <button type="button" class="incompleteButton" @click="updateChore(completedChores[index], false)">Mark as incomplete</button>
-                            </td>
+                    </thead>
+                    <tr v-for="chore of incompletedChores" :key='chore.id'>
+                        <td>
+                            <ChoreComponent
+                                :title="chore.title"
+                                :dueDate="chore.dueDate"
+                                :assignedTo="chore.assignedTo"
+                                :postedBy="chore.UserId"
+                                :id="chore.id"
+                                :isComplete="chore.isComplete"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="header"><h1>Chores</h1></div>
+            <div class="middle">
+                <table id="completed-list-table" class="table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>Completed</th>
                         </tr>
-                    </table>
-                </div>
-                <div class="right">Up for Grabs</div>
-                <div class="footer">
-                    <v-row justify-content="center">
-                        <v-dialog v-model="dialog"
-                                  persistent
-                                  max-width="400px">
-                            <template v-slot:activator="{ on, attrs }">
-                                <v-btn  
-                                       color="primary"
-                                        dark
-                                        v-bind="attrs"
-                                        v-on="on">
-                                    Add Chore
-                                </v-btn>
-                            </template>
-                            <v-card>
-                                <v-card-text>
-                                    <v-container>
-                                        <v-row>
-                                            <v-col cols="12"
-                                                   max-width="300px"
-                                                   min-wdith="300px">
-                                                <v-text-field label="Chore Name"
-                                                              required></v-text-field>
-                                            </v-col>
-                                        </v-row>
-                                        <v-row>
-                                            <v-col cols="12"
-                                                  max-width="300px"
-                                                   min-wdith="300px">
-                                                <v-select :items="firstName"
-                                                          label="Asign To"
-                                                          required></v-select>
-                                            </v-col>
-                                        </v-row>
-                                        <v-row>
-                                            <v-menu ref="menu1"
-                                                    v-model="menu1"
-                                                    :close-on-content-click="false"
-                                                    transition="scale-transition"
-                                                    offset-y
-                                                    max-width="290px"
-                                                    min-width="290px">
-                                                <template v-slot:activator="{ on, attrs }">
-                                                    <v-text-field v-model="dueDate"
-                                                                  label="Date"
-                                                                  hint="MM/DD/YYYY format"
-                                                                  persistent-hint
-                                                                  prepend-icon="mdi-calendar"
-                                                                  v-bind="attrs"
-                                                                  
-                                                                  v-on="on"></v-text-field>
-                                                </template>
-                                                <v-date-picker v-model="dueDate"
-                                                               no-title
-                                                               @input="menu1 = false"></v-date-picker>
-                                            </v-menu>
-                                        </v-row>
-                                        <v-row></v-row>
-                                    </v-container>
-                                </v-card-text>
-                                <v-card-actions>
-                                    <v-spacer></v-spacer>
-                                    <v-btn color="blue darken-1"
-                                           text
-                                           @click="dialog = false">
-                                        Close
-                                    </v-btn>
-                                    <v-btn color="blue darken-1"
-                                           text
-                                           @click="dialog = false">
-                                        Add
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-dialog>
-                    </v-row>
-                    <div class="form-popup" id="myForm">
-                        <form action="/action_page.php" class="form-container">
-                            <h1>Add New Chore</h1>
-                            <input type="text" v-model="choresName" class="choreNameText" placeholder="enter chore" id="textbox">
-                            <button type="button" class="btn" @click="createChore">Add New Chore</button>
-                            <button type="button" class="btn cancel" @click="closeForm()">Close</button>
-                        </form>
-                    </div>
+                    </thead>
+                    <tr v-for="chore in completedChores" :key='chore.id'>
+                        <td>
+                            <ChoreComponent
+                                :title="chore.title"
+                                :dueDate="chore.dueDate"
+                                :assignedTo="chore.assignedTo"
+                                :postedBy="chore.UserId"
+                                :id="chore.id"
+                                :isComplete="chore.isComplete"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="right">Up for Grabs</div>
+
+            <div class="footer">
+            <v-row justify-content="center">
+                <v-dialog v-model="dialog"
+                          persistent
+                          max-width="400px">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                               color="primary"
+                                dark
+                                v-bind="attrs"
+                                v-on="on">
+                            Add Chore
+                        </v-btn>
+                    </template>
+                    <v-card>
+                        <v-card-text>
+                            <v-container>
+                                <v-row>
+                                    <v-col cols="12"
+                                           max-width="300px"
+                                           min-wdith="300px">
+                                        <v-text-field label="Chore Name"
+                                                      required></v-text-field>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col cols="12"
+                                          max-width="300px"
+                                           min-wdith="300px">
+                                        <v-select :items="firstName"
+                                                  label="Asign To"
+                                                  required></v-select>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-menu ref="menu1"
+                                            v-model="menu1"
+                                            :close-on-content-click="false"
+                                            transition="scale-transition"
+                                            offset-y
+                                            max-width="290px"
+                                            min-width="290px">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-text-field v-model="dueDate"
+                                                          label="Date"
+                                                          hint="MM/DD/YYYY format"
+                                                          persistent-hint
+                                                          prepend-icon="mdi-calendar"
+                                                          v-bind="attrs"
+
+                                                          v-on="on"></v-text-field>
+                                        </template>
+                                        <v-date-picker v-model="dueDate"
+                                                       no-title
+                                                       @input="menu1 = false"></v-date-picker>
+                                    </v-menu>
+                                </v-row>
+                                <v-row></v-row>
+                            </v-container>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1"
+                                   text
+                                   @click="dialog = false">
+                                Close
+                            </v-btn>
+                            <v-btn color="blue darken-1"
+                                   text
+                                   @click="dialog = false">
+                                Add
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+            </v-row>
+            <div class="form-popup" id="myForm">
+                <form action="/action_page.php" class="form-container">
+                    <h1>Add New Chore</h1>
+                    <input type="text" v-model="choresName" class="choreNameText" placeholder="enter chore" id="textbox">
+                    <button type="button" class="btn" @click="createChore">Add New Chore</button>
+                    <button type="button" class="btn cancel" @click="closeForm()">Close</button>
+                </form>
+                <button type="button" class="btn" @click="openForm()">Add New Chore</button>
                 </div>
             </div>
         </div>
@@ -151,16 +164,10 @@ export default {
             assigned:"",
             choreList: [],
             dialog: false,
-            firstName:['Kyle','Josh','Renaldy','Christain'],//need someone to help fill with names 
+            firstName:['Kyle','Josh','Renaldy','Christain'],//need someone to help fill with names
         }
     },
     methods: {
-        getAllFamilyChores () {
-            
-        },
-        blankInput() {
-            alert("Chore cannot be left blank");
-        },
         async createChore(title, dueDate, assignedTo, UserId) {
             try {
                 const response = await ChoreService.createChore({
@@ -175,22 +182,6 @@ export default {
             } catch (error) {
                 this.error = error.response.data.error
             }
-        },
-        async updateChore (chore, value) {
-            const choreStoreIndex = this.$store.state.chores.indexOf(chore)
-            try {
-                const response = await ChoreService.updateChore({
-                    id: chore.id,
-                    isComplete: value
-                })
-                console.log(response)
-                this.$store.dispatch('setChoreCompletion', choreStoreIndex, response.data)
-            } catch (error) {
-                this.error = error.response.data.error;
-            }
-            console.log('ic: ' + this.incompletedChores)
-            console.log('c: ' + this.completedChores)
-            console.log('all: ' + this.choreList)
         },
         openForm() {
             document.getElementById("myForm").style.display = "block";
@@ -214,6 +205,11 @@ export default {
             })
         }
     },
+    watch: {
+        choreList: function () {
+            this.referenceChores()
+        }
+    },
     mounted () {
         this.referenceChores()
     }
@@ -223,7 +219,7 @@ export default {
 <style scoped lang="scss">
     @import "../scss/variables.scss";
         /* The grid container */
-     
+
     .grid-container {
         grid-template-columns: 17rem 17rem 17rem 17rem 17rem 17rem;/*200px 200px 200px 200px 200px 200px;*/
         grid-template-rows: 2.5rem 45rem auto;
@@ -232,7 +228,7 @@ export default {
         background-color: $light-gray;
         //background-color: black;
     }
-        
+
     .grid-container {
         display: grid;
         grid-template-areas:

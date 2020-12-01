@@ -37,8 +37,8 @@ export default new Vuex.Store({
                 state.chores.push(chore)
             })
         },
-        setChoreCompletion (state, choreIndex, value) {
-            state.chores[choreIndex].isComplete = value
+        setChoreCompletion (state, payload) { // payload = {choreIndex, value}\
+            state.chores[payload.choreIndex].isComplete = payload.value
         },
         setEvents (state, events) {
             events.forEach(event => {

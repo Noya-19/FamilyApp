@@ -1,6 +1,6 @@
 <template>
   <v-layout column v-if="!$store.state.isUserLoggedIn">
-    <v-flex xs6 offset-xs3>
+    <v-container>
       <div title="Login">
         <v-text-field
           label="Email"
@@ -22,7 +22,7 @@
           Login
         </v-btn>
       </div>
-    </v-flex>
+    </v-container>
   </v-layout>
 </template>
 
