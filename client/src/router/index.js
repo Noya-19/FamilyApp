@@ -6,7 +6,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/home',
+      path: '/',
       name: 'home',
       // route level code-splitting
         // this generates a separate chunk (home.[hash].js) for this route

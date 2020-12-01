@@ -97,7 +97,7 @@
                     @input="setShowDate" />
             </calendar-view>
         </div>
-        
+
     </main>
 </template>
 
@@ -108,7 +108,9 @@
     import EventService from '@/services/EventService'
     require("vue-simple-calendar/static/css/default.css")
     require("vue-simple-calendar/static/css/holidays-us.css")
-    
+    var eventColors = ["aqua" , "#67A4E1", "pink", "yellow", "green", "gray", "white", "lightgreen"]
+
+
     export default {
         name: 'Calendar',
         title: 'Calendar',
@@ -197,7 +199,8 @@
                     title: title,
                     startDate: Date.UTC(startDay.getUTCFullYear(), startDay.getUTCMonth(), startDay.getUTCDate()+1),
                     endDate: Date.UTC(endDay.getUTCFullYear(), endDay.getUTCMonth(), endDay.getUTCDate()+1),
-                    UserId: this.$store.state.user.id
+                    UserId: this.$store.state.user.id,
+                    style: 'background-color: ' + eventColors[this.$store.state.mappedUserIds.indexOf(this.$store.state.user.id)]
                 }
                 try {
                     const reponse = await EventService.createEvent(eventToAdd)
@@ -236,9 +239,9 @@
         }
     }
 
-       
+
 </script>
-    
+
 <style lang="scss" scoped>
 
     .cv-item.custom-date-class-red {
