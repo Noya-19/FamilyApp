@@ -20,13 +20,17 @@
         </v-card-text>
         <v-card-actions>
             <v-btn v-if="!isComplete"
-                text
+                rounded
+                small
+                dark
                 @click="updateChore(selfJSON(), true)"
             >
                 Mark as Complete
             </v-btn>
             <v-btn v-else
-                text
+                rounded
+                small
+                dark
                 @click="updateChore(selfJSON(), false)"
             >
                 Mark as Incomplete
