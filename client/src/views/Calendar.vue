@@ -97,7 +97,7 @@
                     @input="setShowDate" />
             </calendar-view>
         </div>
-        
+
     </main>
 </template>
 
@@ -109,6 +109,7 @@
     require("vue-simple-calendar/static/css/default.css")
     require("vue-simple-calendar/static/css/holidays-us.css")
     var eventColors = ["aqua" , "#67A4E1", "pink", "yellow", "green", "gray", "white", "lightgreen"]
+
 
     export default {
         name: 'Calendar',
@@ -238,9 +239,9 @@
         }
     }
 
-       
+
 </script>
-    
+
 <style lang="scss" scoped>
 
     .cv-item.custom-date-class-red {

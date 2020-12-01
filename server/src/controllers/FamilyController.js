@@ -8,7 +8,15 @@ module.exports = {
             const users = await User.findAll({
                 where: {
                     FamilyId: familyid
-                }
+                },
+                attributes: {
+                    exclude: [
+                        'email', 
+                        'password',
+                        'createdAt',
+                        'updatedAt'
+                    ]
+                },
             })
             res.send(users)
         } catch (err) {
