@@ -59,6 +59,9 @@ export default new Vuex.Store({
         },
         addChore (state, chore){
             state.chores.push(chore)
+        },
+        emptyEvents (state){
+            state.events = []
         }
     },
     actions: {
@@ -75,8 +78,8 @@ export default new Vuex.Store({
         setChores ({commit}, chores) {
             commit('setChores', chores)
         },
-        setChoreCompletion ({commit}, choreIndex, value) {
-            commit('setChoreCompletion', choreIndex, value)
+        setChoreCompletion ({commit}, payload) {
+            commit('setChoreCompletion', payload)
         },
         setEvents ({commit}, events) {
             commit('setEvents', events)
@@ -93,6 +96,9 @@ export default new Vuex.Store({
         addChore ({commit}, chore){
             commit('addChore', chore)
         },
+        emptyEvents({commit}){
+            commit('emptyEvents')
+        }
     },
     getters: {
         getChores: state => {

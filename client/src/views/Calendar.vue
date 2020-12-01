@@ -174,8 +174,10 @@
             CalendarView,
             CalendarViewHeader,
         },
-        mounted: function(){
-            this.referenceEvents()
+        mounted: async function(){
+            this.$store.dispatch('emptyEvents')
+            await this.getFamilyEvents(this.$store.state.family)
+            await this.referenceEvents()
         },
         methods: {
             selectEvent (event) {
@@ -220,20 +222,6 @@
                     this.error = error.response.data.error
                 }
             },
-            getRandomEvent(index) {
-                const startDay = Math.floor(Math.random() * 28 + 1)
-                const endDay = Math.floor(Math.random() * 4) + startDay
-                var d = new Date()
-                console.log(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), endDay))
-                var i = {
-                    id: index,
-                    title: "Event " + (index + 1),
-                    startDate: Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), startDay),
-                    endDate: Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), endDay),
-                    classes: Math.random() > 0.9 ? ["custom-date-class-red"] : null,
-                }
-                return i
-            },
             setShowDate(d) {
                 this.showDate = d
             },
@@ -246,6 +234,20 @@
             },
             referenceEvents(){
                 this.items = this.$store.state.events
+            },
+            async getFamilyEvents(family) {
+                try {
+                family.forEach(user => {
+                    const response = EventService.index({
+                        UserId: user.id
+                    })
+                    response.then((value)=>{
+                        this.$store.dispatch('setEvents', value.data)
+                    })
+                })
+                } catch (error) {
+                    this.error = error.response.data.error
+                }
             }
         }
     }
