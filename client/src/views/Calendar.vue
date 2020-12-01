@@ -31,8 +31,19 @@
                                         <input type="date" class="input" v-model="endDay" />
                                     </div>
                                 </div>
-                                <button class="button is-info" @click="addEvent"> Add Item</button>
-                                <button class="button is-info" @click="deleteEvent(selectedEvent)">Delete Event</button>
+                                <v-btn class="button is-info" @click="addEvent"
+                                    dark
+                                    color='indigo darken-4'
+                                > 
+                                    Create Event
+
+                                </v-btn>
+                                <v-btn class="button is-info" @click="deleteEvent(selectedEvent)"
+                                    dark
+                                    color='red darken-1'
+                                >
+                                    Delete Event 
+                                </v-btn>
                             </div>
                         </div>
                     </div>

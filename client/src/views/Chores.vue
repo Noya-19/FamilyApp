@@ -165,12 +165,6 @@ export default {
                 this.error = error.response.data.error
             }
         },
-        openForm() {
-            document.getElementById("myForm").style.display = "block";
-        },
-        closeForm() {
-            document.getElementById("myForm").style.display = "none";
-        },
         referenceChores(){
             this.choreList = this.$store.state.chores
         }
