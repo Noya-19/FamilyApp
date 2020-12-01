@@ -22,6 +22,7 @@ new Vue({
   router,
   vuetify: new Vuetify(),
   store,
+  vuetify: new Vuetify(),
   components: { App },
   template: '<App/>'
 })

@@ -2,7 +2,7 @@
   <div id="app" data-app app-data="true">
     <GlobalNav/>
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
 <script>

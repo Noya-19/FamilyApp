@@ -23,6 +23,8 @@ module.exports = (app) => {
         ChoresController.delete)
     app.post('/chores',
         ChoresController.post)
+    app.get('/chores/update',
+        ChoresController.updateChore)
 
     app.get('/events',
         EventsController.getUserEvents)

@@ -31,8 +31,19 @@
                                         <input type="date" class="input" v-model="endDay" />
                                     </div>
                                 </div>
-                                <button class="button is-info" @click="addEvent"> Add Item</button>
-                                <button class="button is-info" @click="deleteEvent(selectedEvent)">Delete Event</button>
+                                <v-btn class="button is-info" @click="addEvent"
+                                    dark
+                                    color='indigo darken-4'
+                                > 
+                                    Create Event
+
+                                </v-btn>
+                                <v-btn class="button is-info" @click="deleteEvent(selectedEvent)"
+                                    dark
+                                    color='red darken-1'
+                                >
+                                    Delete Event 
+                                </v-btn>
                             </div>
                         </div>
                     </div>
@@ -97,7 +108,7 @@
                     @input="setShowDate" />
             </calendar-view>
         </div>
-        
+
     </main>
 </template>
 
@@ -109,6 +120,7 @@
     require("vue-simple-calendar/static/css/default.css")
     require("vue-simple-calendar/static/css/holidays-us.css")
     var eventColors = ["aqua" , "#67A4E1", "pink", "yellow", "green", "gray", "white", "lightgreen"]
+
 
     export default {
         name: 'Calendar',
@@ -238,9 +250,9 @@
         }
     }
 
-       
+
 </script>
-    
+
 <style lang="scss" scoped>
 
     .cv-item.custom-date-class-red {
