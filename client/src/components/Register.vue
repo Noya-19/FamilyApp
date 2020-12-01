@@ -25,12 +25,12 @@
             autocomplete="new-password"
           ></v-text-field>
           <v-switch
-            v-model="creatingNewFamily"
-            :label="'Create new family?'"
-            default=true
+            v-model="joinExistingFamily"
+            :label="'Join existing family'"
+            color='indigo lighten-1'
+            default=false
           ></v-switch>
-          <v-text-field
-            v-if="!creatingNewFamily"
+          <v-text-field v-if="joinExistingFamily"
             label="Family Code"
             v-model="FamilyId"
           ></v-text-field>
@@ -40,6 +40,7 @@
         <br>
         <v-btn
           dark
+          color='indigo darken-4'
           @click="register">
           Register
         </v-btn>
@@ -63,7 +64,8 @@ export default {
       FamilyId: '',
       firstname: '',
       lastname: '',
-      creatingNewFamily: '',
+      joinExistingFamily: '',
+      creatingNewFamily: true,
       error: null
     }
   },
@@ -73,8 +75,8 @@ export default {
         const response = await AuthenticationService.register({
           email: this.email,
           password: this.password,
-          creatingNewFamily: this.creatingNewFamily,
-          FamilyId: this.FamilyId,
+          creatingNewFamily: !this.joinExistingFamily,
+          familyid: this.FamilyId.parseInt(),
           firstname: this.firstname,
           lastname: this.lastname
         })
@@ -128,6 +130,16 @@ export default {
         }
     }
   },
+  watch: {
+    joinExistingFamily: {
+
+    }
+  },
+  // computed: {
+  //   joinExistingFamily: function () {
+  //     return !this.creatingNewFamily
+  //   }
+  // }
 }
 </script>
 

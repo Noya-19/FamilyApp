@@ -32,6 +32,7 @@
                 small
                 dark
                 color='indigo accent-4'
+                elevation="2"
                 @click="updateChore(selfJSON(), true)"
             >
                 Mark as Complete
@@ -41,6 +42,7 @@
                 small
                 dark
                 color='red darken-4'
+                elevation="2"
                 @click="updateChore(selfJSON(), false)"
             >
                 Mark as Incomplete

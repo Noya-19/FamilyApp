@@ -14,9 +14,15 @@
             <li v-if="!$store.state.isUserLoggedIn" class="global-nav__element"><router-link to="/register">Register</router-link></li>
             <li v-if="!$store.state.isUserLoggedIn" class="global-nav__element"><router-link to="/login">Login</router-link></li>
         </ul>
-        <button v-if="$store.state.isUserLoggedIn" class="global-nav__logout" @click="logout">
+        <v-btn v-if="$store.state.isUserLoggedIn" class="global-nav__logout" 
+            @click="logout"
+            rounded
+            dark
+            color='indigo darken-4'
+            elevation="2"
+        >
             Log Out
-        </button>
+        </v-btn>
     </nav>
 </template>
 
