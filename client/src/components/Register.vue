@@ -130,16 +130,6 @@ export default {
         }
     }
   },
-  watch: {
-    joinExistingFamily: {
-
-    }
-  },
-  // computed: {
-  //   joinExistingFamily: function () {
-  //     return !this.creatingNewFamily
-  //   }
-  // }
 }
 </script>
 
