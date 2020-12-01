@@ -1,8 +1,8 @@
 <template>
-  <div id="app" data-app app-data="true">
+  <v-app id="app" data-app app-data="true">
     <GlobalNav/>
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
 <script>

@@ -9,29 +9,18 @@
                                 <th>Chores</th>
                             </tr>
                         </thead>
-                        <tr v-for="(chore, index) of incompletedChores" :key=index>
-                            <td>
-                                <ChoreComponent :title="chore.title"
-                                                :dueDate="chore.dueDate"
-                                                :assignedTo="chore.assignedTo"
-                                                :postedBy="chore.UserId" />
-                            </td>
-                            <td>
-                                <button type="button" class="completeButton" @click="updateChore(incompletedChores[index], true)">Completed</button>
-                            </td>
-                        </tr>
                         <tr v-for="chore of incompletedChores" :key='chore.id'>
                             <td>
-                                <ChoreComponent
+                                <ChoreComponent 
                                     :title="chore.title"
                                     :dueDate="chore.dueDate"
                                     :assignedTo="chore.assignedTo"
-                                    :postedBy="chore.UserId"
+                                    :postedBy="chore.UserId" 
                                     :id="chore.id"
                                     :isComplete="chore.isComplete"/>
                             </td>
                         </tr>
-                        </table>
+                    </table>
                 </div>
                 <div class="header"><h1>Chores</h1></div>
                 <div class="middle">
@@ -59,14 +48,15 @@
                 <div class="footer">
                 <v-row justify-content="center">
                     <v-dialog v-model="dialog"
-                              persistent
-                              max-width="400px">
+                        persistent
+                        max-width="400px">
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
-                                   color="primary"
-                                    dark
-                                    v-bind="attrs"
-                                    v-on="on">
+                                color="primary"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                            >
                                 Add Chore
                             </v-btn>
                         </template>
@@ -85,32 +75,33 @@
                                         <v-col cols="12"
                                               max-width="300px"
                                                min-wdith="300px">
-                                            <v-select :items="firstName"
-                                                      label="Asign To"
-                                                      required></v-select>
+                                            <v-select 
+                                                :items="firstName"
+                                                label="Assign To"
+                                                required>
+                                            </v-select>
                                         </v-col>
                                     </v-row>
                                     <v-row>
                                         <v-menu ref="menu1"
-                                                v-model="menu1"
-                                                :close-on-content-click="false"
-                                                transition="scale-transition"
-                                                offset-y
-                                                max-width="290px"
-                                                min-width="290px">
+                                            v-model="menu1"
+                                            :close-on-content-click="false"
+                                            transition="scale-transition"
+                                            offset-y
+                                            max-width="290px"
+                                            min-width="290px">
                                             <template v-slot:activator="{ on, attrs }">
                                                 <v-text-field v-model="dueDate"
-                                                              label="Date"
-                                                              hint="MM/DD/YYYY format"
-                                                              persistent-hint
-                                                              prepend-icon="mdi-calendar"
-                                                              v-bind="attrs"
-
-                                                              v-on="on"></v-text-field>
+                                                    label="Date"
+                                                    hint="MM/DD/YYYY format"
+                                                    persistent-hint
+                                                    prepend-icon="mdi-calendar"
+                                                    v-bind="attrs"
+                                                    v-on="on"></v-text-field>
                                             </template>
                                             <v-date-picker v-model="dueDate"
-                                                           no-title
-                                                           @input="menu1 = false"></v-date-picker>
+                                                no-title
+                                                @input="menu1 = false"></v-date-picker>
                                         </v-menu>
                                     </v-row>
                                     <v-row></v-row>

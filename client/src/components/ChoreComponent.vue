@@ -9,13 +9,13 @@
                 Due: {{dueDate}}
             </v-row>
             <v-row v-else>
-                Due: Complete!
+                Complete!
             </v-row>
             <v-row>
-                Assigned to: {{assignedToFirstName}}
+                Completed by {{assignedToFirstName}}
             </v-row>
             <v-row>
-                Posted by: {{postedByFirstName}}
+                Posted by {{postedByFirstName}}
             </v-row>
         </v-card-text>
         <v-card-actions>
@@ -23,6 +23,7 @@
                 rounded
                 small
                 dark
+                color='indigo accent-4'
                 @click="updateChore(selfJSON(), true)"
             >
                 Mark as Complete
@@ -31,6 +32,7 @@
                 rounded
                 small
                 dark
+                color='red darken-4'
                 @click="updateChore(selfJSON(), false)"
             >
                 Mark as Incomplete
