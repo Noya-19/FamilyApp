@@ -123,15 +123,6 @@
                         </v-card>
                     </v-dialog>
                 </v-row>
-                <div class="form-popup" id="myForm">
-                    <form action="/action_page.php" class="form-container">
-                        <h1>Add New Chore</h1>
-                        <input type="text" v-model="choresName" class="choreNameText" placeholder="enter chore" id="textbox">
-                        <button type="button" class="btn" @click="createChore">Add New Chore</button>
-                        <button type="button" class="btn cancel" @click="closeForm()">Close</button>
-                    </form>
-                    <button type="button" class="btn" @click="openForm()">Add New Chore</button>
-                    </div>
                 </div>
             </div>
         </div>
