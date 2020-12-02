@@ -37,6 +37,9 @@ export default new Vuex.Store({
                 state.chores.push(chore)
             })
         },
+        setChoreCompletion (state, payload) { // payload = {choreIndex, value}\
+            state.chores[payload.choreIndex].isComplete = payload.value
+        },
         setEvents (state, events) {
             events.forEach(event => {
                 state.events.push(event)
@@ -53,6 +56,12 @@ export default new Vuex.Store({
             state.chores= [],
             state.events= [],
             state.mappedUserIds= []
+        },
+        addChore (state, chore){
+            state.chores.push(chore)
+        },
+        emptyEvents (state){
+            state.events = []
         }
     },
     actions: {
@@ -69,6 +78,9 @@ export default new Vuex.Store({
         setChores ({commit}, chores) {
             commit('setChores', chores)
         },
+        setChoreCompletion ({commit}, payload) {
+            commit('setChoreCompletion', payload)
+        },
         setEvents ({commit}, events) {
             commit('setEvents', events)
         },
@@ -80,6 +92,12 @@ export default new Vuex.Store({
         },
         emptyStore ({commit}) {
             commit('emptyStore')
+        },
+        addChore ({commit}, chore){
+            commit('addChore', chore)
+        },
+        emptyEvents({commit}){
+            commit('emptyEvents')
         }
     },
     getters: {

@@ -1,6 +1,6 @@
 <template>
   <v-layout column v-if="!$store.state.isUserLoggedIn">
-    <v-flex xs6 offset-xs3>
+    <v-container>
       <div title="Login">
         <v-text-field
           label="Email"
@@ -17,12 +17,12 @@
         <br>
         <v-btn
           dark
-          class="cyan"
+          color='indigo darken-4'
           @click="login">
           Login
         </v-btn>
       </div>
-    </v-flex>
+    </v-container>
   </v-layout>
 </template>
 
@@ -56,9 +56,8 @@ export default {
         this.$store.dispatch('setUser', response.data.user)
         await this.getAssociatedFamilyMembers(this.$store.state.user.FamilyId)
         await this.getFamilyChores(this.$store.state.family)
-          await this.getFamilyEvents(this.$store.state.family)
-          console.log(this.$store.state.events)
-        this.$router.push('/dashboard')
+        await this.getFamilyEvents(this.$store.state.family)
+        .then(this.$router.push('/dashboard'))
       } catch (error) {
         this.error = error.response.data.error
       }

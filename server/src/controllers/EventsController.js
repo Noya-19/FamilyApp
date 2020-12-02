@@ -26,6 +26,7 @@ module.exports = {
             })
         }
     },
+
     async delete (req, res) {
         try {
             const eventid = req.query.eventid
@@ -43,4 +44,5 @@ module.exports = {
             })
         }
     }
+
 }
