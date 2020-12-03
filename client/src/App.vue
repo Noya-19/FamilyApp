@@ -1,18 +1,24 @@
 <template>
   <v-app id="app" data-app app-data="true">
-    <GlobalNav/>
-    <router-view/>
+    <NavigationDrawer
+      v-if="$store.state.isUserLoggedIn"
+    />
+    <v-container fluid>
+      <router-view/>
+    </v-container>
+    <v-footer app>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
-import GlobalNav from '@/components/GlobalNav.vue'
+import NavigationDrawer from '@/components/NavigationDrawer.vue'
 
 export default {
   name: 'App',
   components: {
-    GlobalNav
-  },
+    NavigationDrawer
+  }
 }
 </script>
 

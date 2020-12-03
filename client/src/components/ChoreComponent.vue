@@ -3,7 +3,8 @@
         elevation="1"
         tile
     >
-        <v-card-title>{{title}}</v-card-title>
+        <v-card-title>{{title}}
+        </v-card-title>
         <v-card-text v-if="!isComplete">
             <v-row>
                 Due: {{dueDate}}
@@ -92,7 +93,7 @@ export default {
                     isComplete: value
                 })
                 this.$store.dispatch('setChoreCompletion', {
-                    choreIndex: choreStoreIndex, 
+                    choreIndex: choreStoreIndex,
                     value: response.data.isComplete
                 });
             } catch (err) {
@@ -104,9 +105,9 @@ export default {
         this.assignedToFirstName = this.getNameByUserId(this.assignedTo);
         this.postedByFirstName = this.getNameByUserId(this.postedBy);
     },
-}
-</script>
+    }
+    </script>
 
-<style scoped lang="scss">
+    <style scoped lang="scss">
 
-</style>
+    </style>

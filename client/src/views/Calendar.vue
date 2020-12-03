@@ -1,5 +1,5 @@
 <template>
-    <main class="calendar">
+    <v-main class="calendar">
         <h1>My Calendar</h1>
         <div id="calendar">
             <div class="calendar-controls">
@@ -34,7 +34,7 @@
                                 <v-btn class="button is-info" @click="addEvent"
                                     dark
                                     color='indigo darken-4'
-                                > 
+                                >
                                     Create Event
 
                                 </v-btn>
@@ -42,7 +42,7 @@
                                     dark
                                     color='red darken-1'
                                 >
-                                    Delete Event 
+                                    Delete Event
                                 </v-btn>
                             </div>
                         </div>
@@ -108,8 +108,7 @@
                     @input="setShowDate" />
             </calendar-view>
         </div>
-
-    </main>
+    </v-main>
 </template>
 
 <script>
