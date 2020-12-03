@@ -3,6 +3,7 @@
         elevation="1"
         tile
     >
+<<<<<<< HEAD
         <v-card-title>
             {{title}}
             <v-btn
@@ -17,6 +18,9 @@
                     mdi-minus
                 </v-icon>
             </v-btn>
+=======
+        <v-card-title>{{title}}
+>>>>>>> 1c92cfd115b2f9fbc805c5d48d672e7fa9c77520
         </v-card-title>
         <v-card-text v-if="!isComplete">
             <v-row>
@@ -106,7 +110,7 @@ export default {
                     isComplete: value
                 })
                 this.$store.dispatch('setChoreCompletion', {
-                    choreIndex: choreStoreIndex, 
+                    choreIndex: choreStoreIndex,
                     value: response.data.isComplete
                 });
             } catch (err) {
@@ -130,9 +134,9 @@ export default {
         this.assignedToFirstName = this.getNameByUserId(this.assignedTo);
         this.postedByFirstName = this.getNameByUserId(this.postedBy);
     },
-}
-</script>
+    }
+    </script>
 
-<style scoped lang="scss">
+    <style scoped lang="scss">
 
-</style>
+    </style>

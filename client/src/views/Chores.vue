@@ -1,5 +1,5 @@
 <template>
-    <main class="chores">
+    <v-main class="chores">
         <div data-app>
             <div class="grid-container">
                 <div class="left">
@@ -11,11 +11,11 @@
                         </thead>
                         <tr v-for="chore of incompletedChores" :key='chore.id'>
                             <td>
-                                <ChoreComponent 
+                                <ChoreComponent
                                     :title="chore.title"
                                     :dueDate="chore.dueDate"
                                     :assignedTo="chore.assignedTo"
-                                    :postedBy="chore.UserId" 
+                                    :postedBy="chore.UserId"
                                     :id="chore.id"
                                     :isComplete="chore.isComplete"/>
                             </td>
@@ -75,10 +75,17 @@
                                     </v-row>
                                     <v-row>
                                         <v-col cols="12"
+<<<<<<< HEAD
                                                 max-width="300px"
                                                 min-wdith="300px">
                                             <v-select 
                                                 :items="name"
+=======
+                                              max-width="300px"
+                                               min-wdith="300px">
+                                            <v-select
+                                                :items="firstName"
+>>>>>>> 1c92cfd115b2f9fbc805c5d48d672e7fa9c77520
                                                 label="Assign To"
                                                 v-model="assigned"
                                                 required>
@@ -130,7 +137,7 @@
                 </div>
             </div>
         </div>
-    </main>
+    </v-main>
 </template>
 
 <script>

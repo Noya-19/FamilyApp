@@ -5,12 +5,14 @@
         <v-text-field
           label="Email"
           v-model="email"
+          color="indigo darken-4"
         ></v-text-field>
         <br>
         <v-text-field
           label="Password"
           type="password"
           v-model="password"
+          color="indigo darken-4"
         ></v-text-field>
         <br>
         <div class="danger-alert" v-html="error" />
@@ -23,6 +25,13 @@
         </v-btn>
       </div>
     </v-container>
+     <v-btn
+        color="indigo darken-4"
+        dark
+        v-if="!$store.state.isUserLoggedIn"
+      >
+        <router-link to="/register" class="router">Register</router-link>
+      </v-btn>
   </v-layout>
 </template>
 
