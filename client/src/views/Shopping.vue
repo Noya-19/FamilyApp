@@ -46,60 +46,78 @@
                     </div>
                 </form>
             </div>
-            <div class="item2">this is the start of the new item</div>
-            <form id="recipes-list">
+            <div class="item2">
+                <h2>this is the start of the new item</h2>
+                <v-simple-table fixed-header height="300px">
+                    <template v-slot:default>
+                        <thead>
+                            <tr>
+                                <th class="text-left">Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in recipes" :key="item.recipeName">
+                                <td>{{ item.recipeName }}</td>
+                                <td>
+                                    <div class="my-2">
+                                        <v-btn small>Add</v-btn>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <v-row justify="center">
+                                <v-dialog v-model="dialog" persistent max-width="600px">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn color="primary"
+                                               dark
+                                               v-bind="attrs"
+                                               v-on="on">
+                                            Add Recipe
+                                        </v-btn>
+                                    </template>
+                                    <v-card>
+                                        <v-card-title>
+                                            <span class="headline">Recipe Ingredients</span>
+                                        </v-card-title>
+                                        <v-card-text>
+                                            <v-container>
+                                                <v-row>
+                                                    <v-col cols="12">
+                                                        <v-text-field label="Name" v-model="recipeName" required></v-text-field>
+                                                    </v-col>
+                                                </v-row>
+                                                <v-row>
+                                                    <div class="row col-md-6">
+                                                        <div class="col-md-6 form-group">
+                                                            Quantity
+                                                            <input type="number" v-model="quantityBox" class="checkbox" autofocus>
+                                                        </div>
+                                                        <div class="col-md-6 form-group">
+                                                            Name
+                                                            <input type="text" v-model="itemNameBox" class="checkbox">
+                                                        </div>
 
-                <table id="shopping-list-table" class="table table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th>Quantity</th>
-                            <th>Item</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tr v-for="(item, index) in  recipes">
-                        <td>
-                            {{item.itemName}}
-                        </td>
+                                                        <button type="button" @click="addItemRecipe" class="btn btn-primary"><i class="fa fa-plus"></i> Add  </button>
+                                                    </div>
 
-                        <td>
-                            <button type="button" class="btn btn-success" v-show="item.inEditMode" @click="editItemComplete(item)"><i class="fa fa-save"></i> Save  </button>
-                            <button type="button" class="btn btn-info" v-show="!item.inEditMode" @click="editItem(item)"><i class="fa fa-edit"></i> Edit  </button>
-                            <button type="button" class="btn btn-danger" @click="removeItem(index)"><i class="fa fa-remove"></i> Delete  </button>
-                            <button type="button" class="console" @click="info(item)"><i class="fa fa-remove"></i> info  </button>
-                        </td>
-                    </tr>
-                </table>
-
-                <h4>Add new item</h4>
-                <div class="row col-md-6">
-                    <div class="col-md-6 form-group">
-                        Quantity
-                        <input type="number" v-model="quantity" class="checkbox" autofocus>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        Name
-                        <input type="text" v-model="itemName" class="checkbox">
-                    </div>
-
-                    <button type="button" @click="addItemRec" class="btn btn-primary"><i class="fa fa-plus"></i> Add  </button>
-                </div>
-            </form>
+                                                </v-row>
+                                            </v-container>
+                                        </v-card-text>
+                                        <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+                                            <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
+                            </v-row>
+                        </tfoot>
+                    </template>
+                </v-simple-table>
+            </div>
         </div>
-        <div class="form-popup" id="myForm">
-            <form action="/action_page.php" class="form-container">
-                <h1>Add New Ingredients</h1>
-
-                <label for="email"><b>Email</b></label>
-                <input type="text" placeholder="Enter Email" name="email" required>
-
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
-
-                <button type="button" class="btn">Add Another</button>
-                <button type="button" class="btn cancel" @click="closeForm()">Done</button>
-            </form>
-        </div>
+        
     </main>
 </template>
 
@@ -125,14 +143,26 @@ export default {
                     inEditMode: false
 
                 }],
+            quantityBox: "",
+            itemNameBox:"",
             inEditMode: false,
             itemIndexStart: '',
             itemIndexEnd:"",
-            recipes: [],//hold recipices like burger or omelette
+            recipes: [
+                {
+                    recipeName: "burger",
+                    recipeList: [
+                        {
+                        quantity: 3,
+                        itemName: "patty",
+                        inEditMode: false
+                        }
+                    ]
+                },
+            ],//hold recipices like burger or omelette
             recipeName: '',//name of the recipe
             recipesList: [],//acts like itemsList inside of recipes[] holding items to make the recipe
-
-
+            dialog: false,
         }
     },
     methods: {
@@ -146,15 +176,43 @@ export default {
             });
             this.clearAll();
         },
+        addItemRecipe: function () {
+            var quantityIN = this.quantity;
+            var itemNameIN = this.itemNameBox.trim();
+            this.recipes.push(
+                {
+                    recipeName: ""
+                },
+                this.recipesList.push({
+                    quantity: quantityIN,
+                    itemName: itemNameIN,
+                    inEditMode: false
+                })
+            );
+            this.clearAll();
+        },
         clearQuantity: function () {
             this.quantity = '';
         },
         clearItemName: function () {
             this.itemName = '';
         },
+        clearQuantityDialog: function () {
+            this.quantityBox = '';
+        },
+        clearItemNameDialog: function () {
+            this.itemNameBox = '';
+        },
+        clearRecipeName: function () {
+            this.recipeName = '';
+        },
         clearAll: function () {
             this.clearQuantity();
             this.clearItemName();
+            this.clearRecipeName();
+            this.clearItemNameDialog();
+            this.clearQuantityDialog();
+            console.log(recipes);
         },
         removeItem: function (index) {
             this.itemsList.splice(index, 1); //delete 1 element from the array at the position index
@@ -174,7 +232,7 @@ export default {
         closeForm: function() {
             document.getElementById("myForm").style.display = "none";
         },
-        addItemRec: function () {
+        addToList: function () {
 
         }
 
