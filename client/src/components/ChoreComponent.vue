@@ -3,7 +3,21 @@
         elevation="1"
         tile
     >
-        <v-card-title>{{title}}</v-card-title>
+        <v-card-title>
+            {{title}}
+            <v-btn
+                class="mx-2"
+                fab
+                dark
+                small
+                color="primary"
+                @click="deleteChore(selfJSON())"
+                >
+                <v-icon dark>
+                    mdi-minus
+                </v-icon>
+            </v-btn>
+        </v-card-title>
         <v-card-text v-if="!isComplete">
             <v-row>
                 Due: {{dueDate}}
@@ -99,6 +113,18 @@ export default {
                 // error statement
             }
         },
+        async deleteChore (chore) {
+            const choreStoreIndex = this.$store.state.chores.indexOf(
+                this.$store.state.chores.find(e => e.id === chore.id))
+            try {
+                const response = await ChoreService.deleteChore({
+                    choreid: chore.id,
+                })
+                this.$store.dispatch('removeChore', choreStoreIndex)
+            } catch (err) {
+                // error statement
+            }
+        }
     },
     mounted: function() {
         this.assignedToFirstName = this.getNameByUserId(this.assignedTo);
