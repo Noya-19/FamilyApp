@@ -1,12 +1,12 @@
 <template>
-    <main class="shopping">
+    <v-main class="shopping">
       <div class="grid-container">
         <div class="header"><h1>Wallymart</h1></div>
-        <div class="left"> Shopping List</div>  
+        <div class="left"> Shopping List</div>
         <div class="right">Favorite Recipies</div>
         <div class="footer">Add/Request To Shopping List</div>
       </div>
-    </main>
+    </v-main>
 </template>
 
 <script>
@@ -29,7 +29,7 @@ export default {
     background-color: $light-gray;
     //background-color: black;
   }
-      
+
   .grid-container {
     display: grid;
     grid-template-areas:

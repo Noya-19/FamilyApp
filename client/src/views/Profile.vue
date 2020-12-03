@@ -1,12 +1,12 @@
 <template>
-    <main class="profile">
+    <v-main class="profile">
       <div class="grid-container">
         <div class="header"><h1>It's Me</h1></div>
-        <div class="left">Navigation Bar</div>  
+        <div class="left">Navigation Bar</div>
         <div class="right">Family</div>
         <div class="footer">Add Members</div>
       </div>
-    </main>
+    </v-main>
 </template>
 
 <script>
@@ -29,7 +29,7 @@ export default {
     background-color: $light-gray;
     //background-color: black;
   }
-      
+
   .grid-container {
     display: grid;
     grid-template-areas:
