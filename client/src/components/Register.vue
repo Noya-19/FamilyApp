@@ -8,14 +8,17 @@
           <v-text-field
             label="First Name"
             v-model="firstname"
+            color="indigo darken-4"
           ></v-text-field>
           <v-text-field
             label="Last Name"
             v-model="lastname"
+            color="indigo darken-4"
           ></v-text-field>
           <v-text-field
             label="Email"
             v-model="email"
+            color="indigo darken-4"
           ></v-text-field>
           <br>
           <v-text-field
@@ -23,6 +26,7 @@
             type="password"
             v-model="password"
             autocomplete="new-password"
+            color="indigo darken-4"
           ></v-text-field>
           <v-switch
             v-model="joinExistingFamily"
@@ -33,6 +37,7 @@
           <v-text-field v-if="joinExistingFamily"
             label="Family Code"
             v-model="FamilyId"
+            color="indigo darken-4"
           ></v-text-field>
         </form>
         <br>
@@ -46,6 +51,13 @@
         </v-btn>
       </div>
     </v-container>
+     <v-btn
+        color="indigo darken-4"
+        dark
+        v-if="!$store.state.isUserLoggedIn"
+      >
+        <router-link to="/login">Login</router-link>
+      </v-btn>
   </v-layout>
 </template>
 

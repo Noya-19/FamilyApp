@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
+Vue.config.devtools = true
 
 export default new Vuex.Store({
     strict: true,
@@ -59,7 +60,13 @@ export default new Vuex.Store({
         },
         addChore (state, chore){
             state.chores.push(chore)
-        }
+        },
+        emptyEvents (state){
+            state.events = []
+        },
+        removeChore (state, choreIndex){
+            state.chores.splice(choreIndex, 1)
+        },
     },
     actions: {
         // invoke actions from Vue components
@@ -75,8 +82,8 @@ export default new Vuex.Store({
         setChores ({commit}, chores) {
             commit('setChores', chores)
         },
-        setChoreCompletion ({commit}, choreIndex, value) {
-            commit('setChoreCompletion', choreIndex, value)
+        setChoreCompletion ({commit}, payload) {
+            commit('setChoreCompletion', payload)
         },
         setEvents ({commit}, events) {
             commit('setEvents', events)
@@ -92,6 +99,12 @@ export default new Vuex.Store({
         },
         addChore ({commit}, chore){
             commit('addChore', chore)
+        },
+        emptyEvents({commit}){
+            commit('emptyEvents')
+        },
+        removeChore ({commit}, chore){
+            commit('removeChore', chore)
         },
     },
     getters: {

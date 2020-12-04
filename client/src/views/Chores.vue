@@ -1,5 +1,5 @@
 <template>
-    <main class="chores">
+    <v-main class="chores">
         <div data-app>
             <div class="grid-container">
                 <div class="left">
@@ -11,11 +11,11 @@
                         </thead>
                         <tr v-for="chore of incompletedChores" :key='chore.id'>
                             <td>
-                                <ChoreComponent 
+                                <ChoreComponent
                                     :title="chore.title"
                                     :dueDate="chore.dueDate"
                                     :assignedTo="chore.assignedTo"
-                                    :postedBy="chore.UserId" 
+                                    :postedBy="chore.UserId"
                                     :id="chore.id"
                                     :isComplete="chore.isComplete"/>
                             </td>
@@ -52,7 +52,7 @@
                         max-width="400px">
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
-                                color="primary"
+                                color='indigo darken-4'
                                 dark
                                 v-bind="attrs"
                                 v-on="on"
@@ -68,16 +68,20 @@
                                                max-width="300px"
                                                min-wdith="300px">
                                             <v-text-field label="Chore Name"
-                                                          required></v-text-field>
+                                                v-model="title"
+                                                color='indigo darken-4'
+                                                required>
+                                            </v-text-field>
                                         </v-col>
                                     </v-row>
                                     <v-row>
                                         <v-col cols="12"
-                                              max-width="300px"
-                                               min-wdith="300px">
-                                            <v-select 
-                                                :items="firstName"
+                                            max-width="300px"
+                                            min-wdith="300px">
+                                            <v-select
+                                                :items="name"
                                                 label="Assign To"
+                                                v-model="assigned"
                                                 required>
                                             </v-select>
                                         </v-col>
@@ -109,14 +113,14 @@
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1"
+                                <v-btn color='indigo darken-4'
                                        text
-                                       @click="dialog = false">
+                                       @click="dialog = false; dueDate = ''; assigned = ''; title = ''">
                                     Close
                                 </v-btn>
-                                <v-btn color="blue darken-1"
+                                <v-btn color='indigo darken-4'
                                        text
-                                       @click="dialog = false">
+                                       @click="dialog = false; createChore()">
                                     Add
                                 </v-btn>
                             </v-card-actions>
@@ -126,7 +130,7 @@
                 </div>
             </div>
         </div>
-    </main>
+    </v-main>
 </template>
 
 <script>
@@ -142,27 +146,40 @@ export default {
         return {
             menu1:'',
             dueDate:"",
-            choresName: "",
+            title: "",
             assigned:"",
             choreList: [],
             dialog: false,
-            firstName:['Kyle','Josh','Renaldy','Christain'],//need someone to help fill with names
+            name:[],//need someone to help fill with names
         }
     },
     methods: {
-        async createChore(title, dueDate, assignedTo, UserId) {
+       async createChore() {
+            const dueDate = new Date(this.dueDate)
+            var assignedTo
+            this.assigned = this.assigned.split(" ")
+            this.$store.state.family.forEach(user => {
+                if(user.firstname == this.assigned[0] && user.lastname == this.assigned[1])
+                    assignedTo = user.id
+            })
             try {
                 const response = await ChoreService.createChore({
-                    title: title, // STRING
-                    dueDate: dueDate, // DATEONLY
+                    title: this.title, // STRING
+                    dueDate: Date.UTC(dueDate.getUTCFullYear(), dueDate.getUTCMonth(), dueDate.getUTCDate()+1), // DATEONLY
                     assignedTo: assignedTo, // INTEGER
-                    UserId: UserId, // INTEGER
+                    UserId: this.$store.state.user.id, // INTEGER
                     isComplete: false, // BOOLEAN
                 })
-                this.$store.dispatch('addChore', reponse.data)
-                this.choreList.push(response.data)
+                this.$store.dispatch('addChore', {
+                    id: response.data.id,
+                    title: response.data.title, // STRING
+                    dueDate: response.data.dueDate, // DATEONLY
+                    assignedTo: response.data.assignedTo, // INTEGER
+                    UserId: response.data.UserId, // INTEGER
+                    isComplete: response.data.isComplete, // BOOLEAN
+                })
             } catch (error) {
-                this.error = error.response.data.error
+
             }
         },
         referenceChores(){
@@ -188,6 +205,9 @@ export default {
     },
     mounted () {
         this.referenceChores()
+        this.$store.state.family.forEach(user => {
+                this.name.push(user.firstname + " " + user.lastname)
+            })
     }
 }
 </script>
@@ -195,7 +215,6 @@ export default {
 <style scoped lang="scss">
     @import "../scss/variables.scss";
         /* The grid container */
-
     .grid-container {
         grid-template-columns: 17rem 17rem 17rem 17rem 17rem 17rem;/*200px 200px 200px 200px 200px 200px;*/
         grid-template-rows: 2.5rem 45rem auto;
@@ -204,7 +223,6 @@ export default {
         background-color: $light-gray;
         //background-color: black;
     }
-
     .grid-container {
         display: grid;
         grid-template-areas:
@@ -213,7 +231,6 @@ export default {
         "footer footer footer footer footer footer";
         grid-column-gap: 0.625rem;
     }
-
     .left,
     .middle,
     .right {
@@ -228,30 +245,24 @@ export default {
         border-color: black;
         border-width: 0.125rem;
     }
-
     .header{
         padding-top: 1rem;
     }
-
     .left {
         grid-area: left;
     }
-
       /* Style the middle column */
     .middle {
         grid-area: middle;
     }
-
     .right{
         grid-area: right;
     }
-
         /* Style the left column */
         /* Style the footer */
     .footer {
         grid-area: footer;
         background-color: $light-blue;
-
         height: 3rem;
         padding: 0.625rem;
         text-align: center;
@@ -275,7 +286,6 @@ export default {
         margin: 4px 2px;
         cursor: pointer;
     }
-
     /* The popup form - hidden by default */
     .form-popup {
         display: none;
@@ -285,14 +295,12 @@ export default {
         border: 3px solid #f1f1f1;
         z-index: 9;
     }
-
     /* Add styles to the form container */
     .form-container {
         max-width: 300px;
         padding: 10px;
         background-color: white;
     }
-
     /* Full-width input fields */
     .form-container input[type=text], .form-container input[type=password] {
         width: 100%;
@@ -301,13 +309,11 @@ export default {
         border: none;
         background: #f1f1f1;
     }
-
     /* When the inputs get focus, do something */
     .form-container input[type=text]:focus, .form-container input[type=password]:focus {
         background-color: #ddd;
         outline: none;
     }
-
     /* Set a style for the submit/login button */
     .form-container .btn {
         background-color: #4CAF50;
@@ -319,12 +325,10 @@ export default {
         margin-bottom: 10px;
         opacity: 0.8;
     }
-
     /* Add a red background color to the cancel button */
     .form-container .cancel {
         background-color: red;
     }
-
     /* Add some hover effects to buttons */
     .form-container .btn:hover, .open-button:hover {
         opacity: 1;

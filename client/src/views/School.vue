@@ -1,14 +1,14 @@
 <template>
-    <main class="school">
+    <v-main class="school">
       <div class="grid-container">
         <div class="header"><h1>CSUN</h1></div>
 
-        <div class="left"> Everone's Assignments</div>  
+        <div class="left"> Everone's Assignments</div>
         <div class="right">School Calendar</div>
         <div class="bot-left">Linear Algebra</div>
         <div class="footer">Filter by People</div>
       </div>
-    </main>
+    </v-main>
 </template>
 
 <script>
@@ -31,7 +31,7 @@ export default {
     background-color: $light-gray;
     //background-color: black;
   }
-        
+
   .grid-container {
     display: grid;
     grid-template-areas:

@@ -19,7 +19,7 @@ module.exports = (app) => {
 
     app.get('/chores',
         ChoresController.getAllByAssignedTo)
-    app.get('/chores/delete',
+    app.delete('/chores/delete',
         ChoresController.delete)
     app.post('/chores',
         ChoresController.post)

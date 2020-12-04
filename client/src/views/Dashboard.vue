@@ -1,5 +1,5 @@
 <template>
-    <main class="dashboard">
+    <v-main class="dashboard">
         <div class="grid-container">
             <div class="header"><h1>FAMTASTIC</h1></div>
             <div class="left"> Shopping List</div>
@@ -87,7 +87,7 @@
                 </div>
             </div>
         </div>
-    </main>
+    </v-main>
 </template>
 
 <script>
