@@ -48,15 +48,15 @@
                     <v-icon
                     left
                     >
-                    mdi-baguette
+                    mdi-basket
                     </v-icon>
                     <router-link class="nav-drawer__route" v-if="$store.state.isUserLoggedIn" to="/shopping">Shopping</router-link>
                 </v-list-item>
             </v-list-item-group>
         </v-list>
         <template v-slot:append>
-            <div class="pa-2">
-                <v-btn class="nav-drawer__logout-btn" v-if="$store.state.isUserLoggedIn"
+            <div class="pa-2 nav-drawer__logout-btn">
+                <v-btn v-if="$store.state.isUserLoggedIn"
                     @click="logout"
                     color='indigo lighten-3'
                     elevation="2"
@@ -113,7 +113,7 @@ export default {
     //     color: white;
     //     font-size: 1.8rem;
     // }
-    .pa-2 {
+    &__logout-btn {
         display: flex;
         justify-content: space-evenly;
         align-content: center;

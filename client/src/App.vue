@@ -3,9 +3,9 @@
     <NavigationDrawer
       v-if="$store.state.isUserLoggedIn"
     />
-    <v-container fluid>
+    <v-content fluid>
       <router-view/>
-    </v-container>
+    </v-content>
     <v-footer app>
     </v-footer>
   </v-app>
