@@ -279,14 +279,16 @@ export default {
             document.getElementById("myForm").style.display = "none";
         },
 
-      addRecipeToList(item) {
-        console.log(item);
-      }
+        addRecipeToList(item) {
+          this.itemList.push.apply(
+              this.recipes.recipesList
+          );
+        }
     }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     body {
         padding: 1%;
         background-color: #abca
