@@ -60,7 +60,8 @@
                                 <td>{{ item.recipeName }}</td>
                                 <td>
                                     <div class="my-2">
-                                        <v-btn small>Add</v-btn>
+                                        <v-btn small
+                                         @click="addRecipeToList(item)">Add</v-btn>
                                     </div>
                                 </td>
                             </tr>
@@ -90,24 +91,56 @@
                                                 <v-row>
                                                     <div class="row col-md-6">
                                                         <div class="col-md-6 form-group">
-                                                            Quantity
-                                                            <input type="number" v-model="quantityBox" class="checkbox" autofocus>
-                                                        </div>
-                                                        <div class="col-md-6 form-group">
-                                                            Name
-                                                            <input type="text" v-model="itemNameBox" class="checkbox">
+
+                                                            <v-text-field v-model="itemNameBox"
+                                                                          label="Ingredient"
+                                                                          clearable></v-text-field>
+                                                          </div>
+                                                        <div class="col-md-6 form-group">                                                        
+                                                            <v-text-field v-model="quantityBox"
+                                                                          type="number"
+                                                                          lable="Quantity"
+                                                                          clearable></v-text-field>
                                                         </div>
 
-                                                        <button type="button" @click="addItemRecipe" class="btn btn-primary"><i class="fa fa-plus"></i> Add  </button>
-                                                    </div>
+
+                                                        <button type="button" @click="addItemRecipe" class="btn btn-primary"><i class="fa fa-plus"></i> Add Item</button>
+                                                      </div>
 
                                                 </v-row>
+                                                <v-row>
+                                                    <table id="shopping-list-table" class="table table-condensed table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                              <th>Quantity</th>
+                                                              <th>Item</th>
+                                                              <th>Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tr v-for="(item, index) in recipesItem">
+                                                            <td>
+                                                              <span v-show="!item.inEditMode">{{ item.quantity }}</span>
+                                                              <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" />
+                                                            </td>
+                                                            <td>
+                                                              <span v-show="!item.inEditMode">{{ item.itemName }}</span>
+                                                              <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
+                                                            </td>
+                                                            <td>
+                                                              <button type="button" class="btn btn-success" v-show="item.inEditMode" @click="editItemComplete(item)"><i class="fa fa-save"></i> Save  </button>
+                                                              <button type="button" class="btn btn-info" v-show="!item.inEditMode" @click="editItem(item)"><i class="fa fa-edit"></i> Edit  </button>
+                                                              <button type="button" class="btn btn-danger" @click="removeItem(index)"><i class="fa fa-remove"></i> Delete  </button>
+                                                              <button type="button" class="console" @click="info(item)"><i class="fa fa-remove"></i> info  </button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </v-row>                                                
                                             </v-container>
                                         </v-card-text>
                                         <v-card-actions>
                                             <v-spacer></v-spacer>
                                             <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                                            <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+                                            <v-btn color="blue darken-1" @click="dialog = false; addRecipe()">Add</v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
@@ -146,27 +179,16 @@ export default {
             quantityBox: "",
             itemNameBox:"",
             inEditMode: false,
-            itemIndexStart: '',
-            itemIndexEnd:"",
-            recipes: [
-                {
-                    recipeName: "burger",
-                    recipeList: [
-                        {
-                        quantity: 3,
-                        itemName: "patty",
-                        inEditMode: false
-                        }
-                    ]
-                },
-            ],//hold recipices like burger or omelette
+            recipes: [],//hold recipices like burger or omelette
             recipeName: '',//name of the recipe
-            recipesList: [],//acts like itemsList inside of recipes[] holding items to make the recipe
+            recipesItem: [],//acts like itemsList inside of recipes[] holding items to make the recipe
+            recipesList:"",
             dialog: false,
         }
     },
     methods: {
-        addItem: function () {
+
+        addItem() {//left shoppinglist
             var quantityIN = this.quantity;
             var itemNameIN = this.itemName.trim();
             this.itemsList.push({
@@ -176,66 +198,90 @@ export default {
             });
             this.clearAll();
         },
-        addItemRecipe: function () {
-            var quantityIN = this.quantity;
-            var itemNameIN = this.itemNameBox.trim();
+
+        addRecipe() {//recipeList
+            console.log(this.recipesItem);
             this.recipes.push(
                 {
-                    recipeName: this.recipeName
-                },
-                this.recipesList.push({
-                    quantity: quantityIN,
-                    itemName: itemNameIN,
-                    inEditMode: false
-                })
-            );
-            this.clearAll();
+                  recipeName: this.recipeName,
+                  recipesList: this.recipesItem,
+                },);
+            this.clearRecipeName();
         },
+
+        addItemRecipe() {//items within the recipe
+          this.recipesItem.push({
+            quantity: this.quantityBox,
+            itemName: this.itemNameBox,
+            inEditMode: false
+          })
+          this.clearItemRecipe();
+        },
+
         clearQuantity: function () {
             this.quantity = '';
         },
+
         clearItemName: function () {
             this.itemName = '';
         },
+
         clearQuantityDialog: function () {
             this.quantityBox = '';
         },
+
         clearItemNameDialog: function () {
             this.itemNameBox = '';
-        },
+       },
+
         clearRecipeName: function () {
-            this.recipeName = '';
+          this.recipeName = '';
+          this.recipesList = "";
+          this.recipesItem = [];
         },
+
         clearAll: function () {
             this.clearQuantity();
             this.clearItemName();
-            this.clearRecipeName();
-            this.clearItemNameDialog();
-            this.clearQuantityDialog();
-            console.log(recipes);
         },
+
+        clearItemRecipe() {
+          this.clearItemNameDialog();
+          this.clearQuantityDialog();
+        },
+
+        clearAllRecipe() {
+          this.clearRecipeName();
+          console.log(recipes);
+        },
+
         removeItem: function (index) {
             this.itemsList.splice(index, 1); //delete 1 element from the array at the position index
-        },
+       },
+
         editItem: function (item) {
             item.inEditMode = true;
         },
+
         editItemComplete: function (item) {
             item.inEditMode = false;
         },
+
         info: function (itemlist) {
             console.log(this.itemList.length);
         },
+
         openForm: function() {
             document.getElementById("myForm").style.display = "block";
         },
+
         closeForm: function() {
             document.getElementById("myForm").style.display = "none";
         },
-        addToList: function () {
 
-        }
-
+      addRecipeToList(item) {
+        console.log(item);
+      }
     }
 }
 </script>
