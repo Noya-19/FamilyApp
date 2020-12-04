@@ -52,7 +52,7 @@
                         max-width="400px">
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
-                                color="primary"
+                                color='indigo darken-4'
                                 dark
                                 v-bind="attrs"
                                 v-on="on"
@@ -68,7 +68,10 @@
                                                max-width="300px"
                                                min-wdith="300px">
                                             <v-text-field label="Chore Name"
-                                                          required></v-text-field>
+                                                v-model="title"
+                                                color='indigo darken-4'
+                                                required>
+                                            </v-text-field>
                                         </v-col>
                                     </v-row>
                                     <v-row>
@@ -78,6 +81,7 @@
                                             <v-select
                                                 :items="name"
                                                 label="Assign To"
+                                                v-model="assigned"
                                                 required>
                                             </v-select>
                                         </v-col>
@@ -109,14 +113,14 @@
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1"
+                                <v-btn color='indigo darken-4'
                                        text
-                                       @click="dialog = false">
+                                       @click="dialog = false; dueDate = ''; assigned = ''; title = ''">
                                     Close
                                 </v-btn>
-                                <v-btn color="blue darken-1"
+                                <v-btn color='indigo darken-4'
                                        text
-                                       @click="dialog = false">
+                                       @click="dialog = false; createChore()">
                                     Add
                                 </v-btn>
                             </v-card-actions>
@@ -142,27 +146,40 @@ export default {
         return {
             menu1:'',
             dueDate:"",
-            choresName: "",
+            title: "",
             assigned:"",
             choreList: [],
             dialog: false,
-            name:['Kyle','Josh','Renaldy','Christain'],//need someone to help fill with names
+            name:[],//need someone to help fill with names
         }
     },
     methods: {
-        async createChore(title, dueDate, assignedTo, UserId) {
+       async createChore() {
+            const dueDate = new Date(this.dueDate)
+            var assignedTo
+            this.assigned = this.assigned.split(" ")
+            this.$store.state.family.forEach(user => {
+                if(user.firstname == this.assigned[0] && user.lastname == this.assigned[1])
+                    assignedTo = user.id
+            })
             try {
                 const response = await ChoreService.createChore({
-                    title: title, // STRING
-                    dueDate: dueDate, // DATEONLY
+                    title: this.title, // STRING
+                    dueDate: Date.UTC(dueDate.getUTCFullYear(), dueDate.getUTCMonth(), dueDate.getUTCDate()+1), // DATEONLY
                     assignedTo: assignedTo, // INTEGER
-                    UserId: UserId, // INTEGER
+                    UserId: this.$store.state.user.id, // INTEGER
                     isComplete: false, // BOOLEAN
                 })
-                this.$store.dispatch('addChore', reponse.data)
-                this.choreList.push(response.data)
+                this.$store.dispatch('addChore', {
+                    id: response.data.id,
+                    title: response.data.title, // STRING
+                    dueDate: response.data.dueDate, // DATEONLY
+                    assignedTo: response.data.assignedTo, // INTEGER
+                    UserId: response.data.UserId, // INTEGER
+                    isComplete: response.data.isComplete, // BOOLEAN
+                })
             } catch (error) {
-                this.error = error.response.data.error
+
             }
         },
         referenceChores(){
@@ -188,6 +205,9 @@ export default {
     },
     mounted () {
         this.referenceChores()
+        this.$store.state.family.forEach(user => {
+                this.name.push(user.firstname + " " + user.lastname)
+            })
     }
 }
 </script>

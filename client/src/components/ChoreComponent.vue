@@ -44,17 +44,15 @@
         </v-card-text>
         <v-card-actions>
             <v-btn v-if="!isComplete"
-                rounded
                 small
                 dark
-                color='indigo accent-4'
+                color='indigo darken-4'
                 elevation="2"
                 @click="updateChore(selfJSON(), true)"
             >
                 Mark as Complete
             </v-btn>
             <v-btn v-else
-                rounded
                 small
                 dark
                 color='red darken-4'
