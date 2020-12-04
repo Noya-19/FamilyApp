@@ -181,7 +181,7 @@ export default {
             var itemNameIN = this.itemNameBox.trim();
             this.recipes.push(
                 {
-                    recipeName: ""
+                    recipeName: this.recipeName
                 },
                 this.recipesList.push({
                     quantity: quantityIN,
