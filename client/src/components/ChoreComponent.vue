@@ -3,24 +3,22 @@
         elevation="1"
         tile
     >
-<<<<<<< HEAD
         <v-card-title>
             {{title}}
-            <v-btn
-                class="mx-2"
+            <v-btn class="delete-btn"
                 fab
-                dark
+                elevation="0"
                 small
-                color="primary"
+                color="white"
                 @click="deleteChore(selfJSON())"
+            >
+                <v-icon
+                    dark
+                    color='indigo darken-4'
                 >
-                <v-icon dark>
-                    mdi-minus
+                    mdi-delete-outline
                 </v-icon>
             </v-btn>
-=======
-        <v-card-title>{{title}}
->>>>>>> 1c92cfd115b2f9fbc805c5d48d672e7fa9c77520
         </v-card-title>
         <v-card-text v-if="!isComplete">
             <v-row>
@@ -137,6 +135,8 @@ export default {
     }
     </script>
 
-    <style scoped lang="scss">
-
-    </style>
+<style scoped lang="scss">
+    .delete-btn {
+        justify-items: right;
+    }
+</style>
