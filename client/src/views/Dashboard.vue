@@ -76,6 +76,10 @@
                                 <tr v-for="item in choreList" :key="item.choresName">
                                     <td>{{item.title}}</td>
                                     <td>{{item.dueDate}}</td>
+                                    <td><v-btn elevation="2"
+                                            @click="completedChore"
+                                            x-small>Completed</v-btn>
+                                    </td>
                                 </tr>
                             </tbody>
                         </template>
@@ -116,7 +120,11 @@
                 weeklyEvents: [],
                 heightOfCalTable: '300px',
                 choreList: [],
-                dueDate:'',
+                dueDate: '',
+                today: "",
+                weekStart: "",
+                weekEnd: "",
+                dayEnd:'',
             }
         },
         computed: {
@@ -173,19 +181,30 @@
                 this.choreList = this.$store.state.chores
             },
             fillWeekly() {
+                //var today = new Date.now();
+                //console.log(d);
+                //const dayEnd = mil;
+               // var weekEnd = new Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), dayEnd);
+                //console.log(Date.U(d.getUTCFullYear(), d.getUTCMonth(), dayEnd));
                 this.items.forEach(item => {
                     this.weeklyEvents.push(item)
                 })
                 this.weeklyEvents = this.weeklyEvents.sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate));
                 this.weeklyEvents = this.weeklyEvents.reverse();
+                console.log(this.weeklyEvents)
+                //this.weeklyEvents = this.weeklyEvents.filter(a => a.startDate.getDate() >= weekStart && a.startDate.getDate() <= weekEnd)
+                console.log(this.weeklyEvents)
             },
+            completedChore() {
+                //need help making this complete chore from dashboard
+            }
 
         },
 
-        mounted: function () {
-            this.referenceEvents()
-            this.fillWeekly();
-            this.referenceChores()
+        async mounted(){
+            await this.referenceEvents()
+            await this.fillWeekly();
+            await this.referenceChores()
         }
     }
 </script>
