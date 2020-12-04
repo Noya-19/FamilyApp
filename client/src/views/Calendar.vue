@@ -15,7 +15,9 @@
                         </div>
                         <div class="box">
                             <div class="field">
-                                <label class="label">Name of event</label>
+                                <label class="eventlabel">
+                                    Name of event
+                                </label>
                                 <div class="control">
                                     <input type="text" class="input" v-model="title" id="title"/>
                                 </div>
@@ -119,15 +121,11 @@
     require("vue-simple-calendar/static/css/default.css")
     require("vue-simple-calendar/static/css/holidays-us.css")
     var eventColors = ["aqua" , "#67A4E1", "pink", "yellow", "green", "gray", "white", "lightgreen"]
-
-
     export default {
         name: 'Calendar',
         title: 'Calendar',
         props: {
-
         },
-
         data: function () {
             return {
                 showDate: new Date(),
@@ -250,12 +248,9 @@
             }
         }
     }
-
-
 </script>
 
 <style lang="scss" scoped>
-
     .cv-item.custom-date-class-red {
         background-color: #ff6666;
     }
