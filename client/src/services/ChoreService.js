@@ -10,7 +10,7 @@ export default {
         return Api().post('chores', payload)
     },
     deleteChore (choreid) {
-        return Api().get('chores/delete', {
+        return Api().delete('chores/delete', {
             params: choreid
         })
     },

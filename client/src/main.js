@@ -7,6 +7,7 @@ import titleMixin from './mixins/title-mixin'
 import Vuetify from 'vuetify'
 import { sync } from 'vuex-router-sync'
 import 'vuetify/dist/vuetify.min.css'
+import '@mdi/font/css/materialdesignicons.css'
 import store from '@/store/store'
 
 Vue.config.productionTip = false
@@ -21,7 +22,11 @@ new Vue({
   el: '#app',
   router,
   store,
-  vuetify: new Vuetify(),
+  vuetify: new Vuetify({
+    icons: {
+      iconfont: 'mdiSvg'
+    }
+  }),
   components: { App },
   template: '<App/>'
 })

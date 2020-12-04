@@ -3,7 +3,23 @@
         elevation="1"
         tile
     >
-        <v-card-title>{{title}}</v-card-title>
+        <v-card-title>
+            {{title}}
+            <v-btn class="delete-btn"
+                fab
+                elevation="0"
+                small
+                color="white"
+                @click="deleteChore(selfJSON())"
+            >
+                <v-icon
+                    dark
+                    color='indigo darken-4'
+                >
+                    mdi-delete-outline
+                </v-icon>
+            </v-btn>
+        </v-card-title>
         <v-card-text v-if="!isComplete">
             <v-row>
                 Due: {{dueDate}}
@@ -28,17 +44,15 @@
         </v-card-text>
         <v-card-actions>
             <v-btn v-if="!isComplete"
-                rounded
                 small
                 dark
-                color='indigo accent-4'
+                color='indigo darken-4'
                 elevation="2"
                 @click="updateChore(selfJSON(), true)"
             >
                 Mark as Complete
             </v-btn>
             <v-btn v-else
-                rounded
                 small
                 dark
                 color='red darken-4'
@@ -92,21 +106,35 @@ export default {
                     isComplete: value
                 })
                 this.$store.dispatch('setChoreCompletion', {
-                    choreIndex: choreStoreIndex, 
+                    choreIndex: choreStoreIndex,
                     value: response.data.isComplete
                 });
             } catch (err) {
                 // error statement
             }
         },
+        async deleteChore (chore) {
+            const choreStoreIndex = this.$store.state.chores.indexOf(
+                this.$store.state.chores.find(e => e.id === chore.id))
+            try {
+                const response = await ChoreService.deleteChore({
+                    choreid: chore.id,
+                })
+                this.$store.dispatch('removeChore', choreStoreIndex)
+            } catch (err) {
+                // error statement
+            }
+        }
     },
     mounted: function() {
         this.assignedToFirstName = this.getNameByUserId(this.assignedTo);
         this.postedByFirstName = this.getNameByUserId(this.postedBy);
     },
-}
-</script>
+    }
+    </script>
 
 <style scoped lang="scss">
-
+    .delete-btn {
+        justify-items: right;
+    }
 </style>

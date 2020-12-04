@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
+Vue.config.devtools = true
 
 export default new Vuex.Store({
     strict: true,
@@ -62,7 +63,10 @@ export default new Vuex.Store({
         },
         emptyEvents (state){
             state.events = []
-        }
+        },
+        removeChore (state, choreIndex){
+            state.chores.splice(choreIndex, 1)
+        },
     },
     actions: {
         // invoke actions from Vue components
@@ -98,7 +102,10 @@ export default new Vuex.Store({
         },
         emptyEvents({commit}){
             commit('emptyEvents')
-        }
+        },
+        removeChore ({commit}, chore){
+            commit('removeChore', chore)
+        },
     },
     getters: {
         getChores: state => {

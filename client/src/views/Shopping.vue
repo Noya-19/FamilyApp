@@ -1,5 +1,5 @@
 <template>
-    <main class="shopping">
+    <v-main class="shopping">
         <h2>Shopping List</h2>
         <div class="grid-container">
             <div class="item1">
@@ -117,8 +117,8 @@
                 </v-simple-table>
             </div>
         </div>
-        
-    </main>
+
+    </v-main>
 </template>
 
 <script>
@@ -343,5 +343,5 @@ export default {
       border-color: black;
       border-width: 0.125rem;
     }*/
-    
+
 </style>

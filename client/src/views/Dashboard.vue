@@ -1,16 +1,13 @@
 <template>
-    <main class="dashboard">
+    <v-main class="dashboard">
         <div class="grid-container">
         <div class="header"><h1>FAMTASTIC</h1></div>
-        <div class="left"> Shopping List</div>  
-        <div class="right">
-            <h2 >Calendar</h2>
-            
-        </div>
+        <div class="left"> Shopping List</div>
+        <div class="right">Calendar</div>
         <div class="bot-left">People</div>
         <div class="footer">Chore List</div>
       </div>
-    </main>
+    </v-main>
 </template>
 
 <script>
@@ -44,7 +41,7 @@ export default {
     background-color: $light-gray;
     //background-color: black;
   }
-      
+
   .grid-container {
     display: grid;
     grid-template-areas:

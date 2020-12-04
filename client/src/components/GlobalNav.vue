@@ -5,7 +5,7 @@
         <!--/router-link-->
 
         <ul class="global-nav__links" :class="isNavOpen ? 'global-nav__links--active' : ''">
-            <li v-if="$store.state.isUserLoggedIn" class="global-nav__element"><router-link to="/dashboard">Dashboard</router-link></li>
+            <li v-if="$store.state.isUserLoggedIn" class="global-nav__element "><router-link to="/dashboard">Dashboard</router-link></li>
             <li v-if="$store.state.isUserLoggedIn" class="global-nav__element"><router-link to="/calendar">Calendar</router-link></li>
             <li v-if="$store.state.isUserLoggedIn" class="global-nav__element"><router-link to="/chores">Chores</router-link></li>
             <li v-if="$store.state.isUserLoggedIn" class="global-nav__element"><router-link to="/school">School</router-link></li>
@@ -60,14 +60,13 @@ export default {
 
 <style lang="scss">
 @import "../scss/variables.scss";
-
     .global-nav{
         width: 100%;
         background: white;
         display: flex;
         justify-content: space-between;
         padding: 1rem 1.75rem;
-        box-sizing: border-box;
+        box-sizing: border-box;        
     }
 
     ul {
@@ -82,25 +81,25 @@ export default {
 
     li {
         float: left;
-        justify-content: space-evenly;
+        justify-content: space-evenly;         
     }
 
-        li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 0.625rem 5rem;
-            text-decoration: none;
-        }
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 0.625rem 5rem;
+        text-decoration: none!important;
+    }
 
-            li a:hover:not(.active) {
-                background-color: #67A4E1;
-            }
+    li a:hover:not(.active) {
+        background-color: #67A4E1;
+    }
 
-            li a.active {
-                color: white;
-                background-color: #E1EDF9;
-            }
+    li a.active {
+       color: white;
+        background-color: #E1EDF9;
+    }
 
 @media screen and (min-width: map-get($break-point , "lg")) {
     .global-nav{
