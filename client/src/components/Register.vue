@@ -1,5 +1,27 @@
 <template>
-  <v-layout column v-if="!$store.state.isUserLoggedIn">
+  <v-card v-if="!$store.state.isUserLoggedIn"
+    class="mx-auto"
+    max-width="700"
+  >
+    <v-toolbar
+      color="indigo darken-4"
+      dark
+    >
+      <v-toolbar-title>Register</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <span>Already an existing user?</span>
+      <v-btn
+        color="indigo darken-4"
+        dark
+        text
+        v-if="!$store.state.isUserLoggedIn"
+      >
+        <router-link to="/login">Login</router-link>
+      </v-btn>
+    </v-toolbar>
+    <img class="home__img"
+      src="../assets/logo_size.jpg"
+    />
     <v-container>
       <div title="Register">
         <form
@@ -51,14 +73,7 @@
         </v-btn>
       </div>
     </v-container>
-     <v-btn
-        color="indigo darken-4"
-        dark
-        v-if="!$store.state.isUserLoggedIn"
-      >
-        <router-link to="/login">Login</router-link>
-      </v-btn>
-  </v-layout>
+  </v-card>
 </template>
 
 <script>
@@ -146,5 +161,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+a, span{
+    color: white;
+}
 </style>

@@ -3,25 +3,31 @@
       <v-card
         elevation="4"
         outlined
+        class="mx-auto"
+        max-width="25rem"
       >
-      <v-card-title>HouseHolder</v-card-title>
+      <v-container class="home__container">
+      <img class="home__img"
+        src="../assets/logo_size.jpg"
+      />
       <v-card-actions>
       <v-btn
         color="indigo darken-4"
         dark
         v-if="!$store.state.isUserLoggedIn"
       >
-        <router-link to="/register">Register</router-link>
+        <router-link class="home__route" to="/register">Register</router-link>
       </v-btn>
       <v-btn
         color="indigo darken-4"
         dark
         v-if="!$store.state.isUserLoggedIn"
       >
-        <router-link to="/login">Login</router-link>
+        <router-link class="home__route" to="/login">Login</router-link>
       </v-btn>
     </v-card-actions>
-      </v-card>
+    </v-container>
+    </v-card>
     </v-main>
 </template>
 
@@ -47,5 +53,13 @@ export default {
 
 <style scoped lang="scss">
 @import '../scss/variables.scss';
-
+.home {
+  &__container{
+    display: flex;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+  }
+}
 </style>
