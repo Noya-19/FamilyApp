@@ -56,12 +56,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in recipes" :key="item.recipeName">
+                            <tr v-for="(item,index) in recipes" :key="item.recipeName">
                                 <td>{{ item.recipeName }}</td>
                                 <td>
                                     <div class="my-2">
                                         <v-btn small
-                                         @click="addRecipeToList(item)">Add</v-btn>
+                                         @click="addRecipeToList(index)">Add</v-btn>
                                     </div>
                                 </td>
                             </tr>
@@ -164,18 +164,7 @@ export default {
         return {
             quantity: '',
             itemName: '',
-            itemsList: [
-                {
-                    quantity: 3,
-                    itemName: "Apples",
-                    inEditMode: false
-                },
-                {
-                    quantity: 6,
-                    itemName: "Pears",
-                    inEditMode: false
-
-                }],
+            itemsList: [],
             quantityBox: "",
             itemNameBox:"",
             inEditMode: false,
@@ -212,7 +201,7 @@ export default {
         addItemRecipe() {//items within the recipe
           this.recipesItem.push({
             quantity: this.quantityBox,
-            itemName: this.itemNameBox,
+            itemName: this.itemNameBox.trim(),
             inEditMode: false
           })
           this.clearItemRecipe();
@@ -252,7 +241,6 @@ export default {
 
         clearAllRecipe() {
           this.clearRecipeName();
-          console.log(recipes);
         },
 
         removeItem: function (index) {
@@ -279,10 +267,10 @@ export default {
             document.getElementById("myForm").style.display = "none";
         },
 
-        addRecipeToList(item) {
-          this.itemList.push.apply(
-              this.recipes.recipesList
-          );
+        addRecipeToList(index) {
+          console.log(this.itemsList)
+          this.itemsList.push(this.recipes[index].recipesList);
+          console.log(this.itemsList)
         }
     }
 }
