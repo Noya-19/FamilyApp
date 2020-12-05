@@ -28,16 +28,17 @@
                                             <v-container>
                                                 <v-row>
                                                     <v-col cols="12">
-                                                        <v-text-field label="Name" v-model="itemName" required></v-text-field>
+                                                        <v-text-field label="Name"
+                                                                      v-model="itemName"
+                                                                      required clearable>
+                                                        </v-text-field>
                                                     </v-col>
                                                 </v-row>
                                                 <v-row
                                                     <div class="col-md-6 form-group">                                                        
-                                                        <v-text-field v-model="quantity"
-                                                                      type="number"
-                                                                      lable="Quantity"
-                                                                      clearable>
-
+                                                        <v-text-field label="Quantity"
+                                                                      v-model="quantity"
+                                                                      required clearable>
                                                         </v-text-field>
                                                     </div>                                                                                                      
                                                 </v-row>                                               
@@ -144,8 +145,6 @@
                                                                           lable="Quantity"
                                                                           clearable></v-text-field>
                                                         </div>
-
-
                                                         <button type="button" @click="addItemRecipe" class="btn btn-primary"><i class="fa fa-plus"></i> Add Item</button>
                                                       </div>
 
@@ -171,8 +170,7 @@
                                                             <td>
                                                               <button type="button" class="btn btn-success" v-show="item.inEditMode" @click="editItemComplete(item)"><i class="fa fa-save"></i> Save  </button>
                                                               <button type="button" class="btn btn-info" v-show="!item.inEditMode" @click="editItem(item)"><i class="fa fa-edit"></i> Edit  </button>
-                                                              <button type="button" class="btn btn-danger" @click="removeItem(index)"><i class="fa fa-remove"></i> Delete  </button>
-                                                              <button type="button" class="console" @click="info(item)"><i class="fa fa-remove"></i> info  </button>
+                                                              <button type="button" class="btn btn-danger" @click="removeItem(index)"><i class="fa fa-remove"></i> Delete  </button>                                                             
                                                             </td>
                                                         </tr>
                                                     </table>
