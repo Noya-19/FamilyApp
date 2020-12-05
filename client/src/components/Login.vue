@@ -1,5 +1,27 @@
 <template>
-  <v-layout column v-if="!$store.state.isUserLoggedIn">
+  <v-card v-if="!$store.state.isUserLoggedIn"
+    class="mx-auto"
+    max-width="700"
+  >
+    <v-toolbar
+      color="indigo darken-4"
+      dark
+    >
+      <v-toolbar-title>Login</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <span>New to HouseHolder?</span>
+      <v-btn
+        color="indigo darken-4"
+        dark
+        text
+        v-if="!$store.state.isUserLoggedIn"
+      >
+        <router-link to="/register" class="router">Register here</router-link>
+      </v-btn>
+    </v-toolbar>
+    <img class="home__img"
+      src="../assets/logo_size.jpg"
+    />
     <v-container>
       <div title="Login">
         <v-text-field
@@ -25,14 +47,7 @@
         </v-btn>
       </div>
     </v-container>
-     <v-btn
-        color="indigo darken-4"
-        dark
-        v-if="!$store.state.isUserLoggedIn"
-      >
-        <router-link to="/register" class="router">Register</router-link>
-      </v-btn>
-  </v-layout>
+  </v-card>
 </template>
 
 <script>
@@ -115,4 +130,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+a {
+    color: white;
+  }
 </style>
