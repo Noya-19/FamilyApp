@@ -5,12 +5,51 @@
             <div class="item1">
                 <form id="shopping-list">
 
-                    <table id="shopping-list-table" class="table table-condensed table-hover">
+                    <v-simple-table id="shopping-list-table" fixed-header height="300px">
                         <thead>
                             <tr>
                                 <th>Quantity</th>
                                 <th>Item</th>
                                 <th>Actions</th>
+                                <th><v-dialog v-model="dialogleft" persistent max-width="600px">
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn color="primary"
+                                               dark
+                                               v-bind="attrs"
+                                               v-on="on">
+                                            Add Item
+                                        </v-btn>
+                                    </template>
+                                    <v-card>
+                                        <v-card-title>
+                                            <span class="headline">Items</span>
+                                        </v-card-title>
+                                        <v-card-text>
+                                            <v-container>
+                                                <v-row>
+                                                    <v-col cols="12">
+                                                        <v-text-field label="Name" v-model="itemName" required></v-text-field>
+                                                    </v-col>
+                                                </v-row>
+                                                <v-row
+                                                    <div class="col-md-6 form-group">                                                        
+                                                        <v-text-field v-model="quantity"
+                                                                      type="number"
+                                                                      lable="Quantity"
+                                                                      clearable>
+
+                                                        </v-text-field>
+                                                    </div>                                                                                                      
+                                                </v-row>                                               
+                                            </v-container>
+                                        </v-card-text>
+                                        <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="blue darken-1" text @click="dialogleft = false">Close</v-btn>
+                                            <v-btn color="blue darken-1" @click="dialogleft = false; addItem()">Add</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog></th>
                             </tr>
                         </thead>
                         <tr v-for="(item, index) in itemsList">
@@ -22,28 +61,31 @@
                                 <span v-show="!item.inEditMode">{{ item.itemName }}</span>
                                 <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
                             </td>
-                            <td>
-                                <button type="button" class="btn btn-success" v-show="item.inEditMode" @click="editItemComplete(item)"><i class="fa fa-save"></i> Save  </button>
-                                <button type="button" class="btn btn-info" v-show="!item.inEditMode" @click="editItem(item)"><i class="fa fa-edit"></i> Edit  </button>
-                                <button type="button" class="btn btn-danger" @click="removeItem(index)"><i class="fa fa-remove"></i> Delete  </button>
-                                <button type="button" class="console" @click="info(item)"><i class="fa fa-remove"></i> info  </button>
+                            <td>                               
+                                <v-icon small
+                                        class="mr-2"
+                                        @click="editItem(item)"
+                                        v-show="!item.inEditMode">
+                                        mdi-pencil
+                                </v-icon>
+                                <v-icon small
+                                        class="mr-2"
+                                        @click="editItemComplete(item)"
+                                        v-show="item.inEditMode">
+                                        mdi-book-open
+                                </v-icon>
+                                <br />
+                                <v-icon small
+                                        class="mr-2"
+                                        @click="removeItem(index)">
+                                        mdi-delete
+                                </v-icon>
+                                                                
+                            </td>
+                            <td>                               
                             </td>
                         </tr>
-                    </table>
-
-                    <h4>Add new item</h4>
-                    <div class="row col-md-6">
-                        <div class="col-md-6 form-group">
-                            Quantity
-                            <input type="number" v-model="quantity" class="checkbox" autofocus>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            Name
-                            <input type="text" v-model="itemName" class="checkbox">
-                        </div>
-
-                        <button type="button" @click="addItem" class="btn btn-primary"><i class="fa fa-plus"></i> Add  </button>
-                    </div>
+                    </v-simple-table>                    
                 </form>
             </div>
             <div class="item2">
@@ -95,7 +137,7 @@
                                                             <v-text-field v-model="itemNameBox"
                                                                           label="Ingredient"
                                                                           clearable></v-text-field>
-                                                          </div>
+                                                        </div>
                                                         <div class="col-md-6 form-group">                                                        
                                                             <v-text-field v-model="quantityBox"
                                                                           type="number"
@@ -171,8 +213,9 @@ export default {
             recipes: [],//hold recipices like burger or omelette
             recipeName: '',//name of the recipe
             recipesItem: [],//acts like itemsList inside of recipes[] holding items to make the recipe
-            recipesList:"",
+            recipesList:"",//what gets stored into recipies[]
             dialog: false,
+            dialogleft:false
         }
     },
     methods: {
@@ -285,11 +328,6 @@ export default {
     }
 
 
-    #shopping-list-table {
-        table-layout: fixed;
-        width: 50%;
-        vertical-align: middle;
-    }
 
     button {
         margin-left: 2%;

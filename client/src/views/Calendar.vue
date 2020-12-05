@@ -206,8 +206,7 @@
                 //adding data to items array
                 const startDay = new Date(this.startDay);
                 const endDay = new Date(this.endDay);
-                const title = this.title;
-                console.log(this.$store.state.mappedUserIds.indexOf(this.$store.state.user.id));
+                const title = this.title;                
                 const eventToAdd = {
                     title: title,
                     startDate: Date.UTC(startDay.getUTCFullYear(), startDay.getUTCMonth(), startDay.getUTCDate()+1),
