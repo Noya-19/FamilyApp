@@ -55,8 +55,6 @@ export default {
     border-color: black;
     border-width: 0.125rem;
   }
-
-
   .header{
     padding-top: 1rem;
   }

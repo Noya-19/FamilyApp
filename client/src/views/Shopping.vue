@@ -1,92 +1,159 @@
 <template>
     <v-main class="shopping">
-        <h2>Shopping List</h2>
         <div class="grid-container">
             <div class="item1">
                 <form id="shopping-list">
+                    <v-card
+                        max-width="700"
+                        tile
+                    >
+                        <v-toolbar
+                        color="indigo darken-4"
+                        dark
+                        >
+                        <v-toolbar-title>Add Item to list</v-toolbar-title>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="indigo darken-4"
+                            dark
+                            text
+                        >
+                        Add
+                        </v-btn>
+                        </v-toolbar>
+                        <v-container>
+                        <div title="Shopping List">
+                            <v-text-field
+                                label="Item name"
+                                type="text"
+                                v-model="itemName"
+                                color="indigo darken-4"
+                            ></v-text-field>
+                            <br>
+                            <v-text-field
+                                type="number"
+                                label="Amount"
+                                v-model="quantity"
+                                color="indigo darken-4"
+                            ></v-text-field>
+                            <br>
+                            <div class="danger-alert" v-html="error" />
+                            <br>
+                            <v-btn
+                                dark
+                                color='indigo darken-4'
+                                @click="addItem"
+                            >
+                                Add
+                            </v-btn>
+                        </div>
+                        </v-container>
+                    </v-card>
+                    <v-card
+                        max-width="700"
+                        tile
+                    >
+                        <v-toolbar
+                        color="indigo darken-4"
+                        dark
+                        >
+                        <v-toolbar-title>Shopping List</v-toolbar-title>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="indigo darken-4"
+                            dark
+                            text
+                        >
+                        Add new item
+                        </v-btn>
+                        </v-toolbar>
+                        <v-container>
+                            <v-simple-table id="shopping-list-table" fixed-header height="300px">
+                                <thead>
+                                    <tr>
+                                        <th>Quantity</th>
+                                        <th>Item</th>
+                                        <th>Actions</th>
+                                        <th>
+                                            <v-dialog v-model="dialogleft" persistent max-width="600px">
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-btn color="primary"
+                                                           dark
+                                                           v-bind="attrs"
+                                                           v-on="on">
+                                                      Add Item
+                                                    </v-btn>
+                                                </template>
+                                                <v-card>
+                                                    <v-card-title>
+                                                      <span class="headline">Items</span>
+                                                    </v-card-title>
+                                                    <v-card-text>
+                                                        <v-container>
+                                                            <v-row>
+                                                                <v-col cols="12">
+                                                                    <v-text-field label="Name"
+                                                                                  v-model="itemName"
+                                                                                  required clearable>
+                                                                    </v-text-field>
+                                                                </v-col>
+                                                            </v-row>
+                                                            <v-row
+                                                                <div class="col-md-6 form-group">
+                                                                    <v-text-field label="Quantity"
+                                                                                  v-model="quantity"
+                                                                                  required clearable>
+                                                                    </v-text-field>
+                                                                </div>
+                                                             </v-row>
+                                                        </v-container>
+                                                    </v-card-text>
+                                                    <v-card-actions>
+                                                      <v-spacer></v-spacer>
+                                                      <v-btn color="blue darken-1" text @click="dialogleft = false">Close</v-btn>
+                                                      <v-btn color="blue darken-1" @click="dialogleft = false; addItem()">Add</v-btn>
+                                                    </v-card-actions>
+                                                </v-card>
+                                            </v-dialog>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tr v-for="(item, index) in itemsList">
+                                  <td>
+                                    <span v-show="!item.inEditMode">{{ item.quantity }}</span>
+                                    <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" />
+                                  </td>
+                                  <td>
+                                    <span v-show="!item.inEditMode">{{ item.itemName }}</span>
+                                    <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
+                                  </td>
+                                  <td>
+                                    <v-icon small
+                                            class="mr-2"
+                                            @click="editItem(item)"
+                                            v-show="!item.inEditMode">
+                                      mdi-pencil
+                                    </v-icon>
+                                    <v-icon small
+                                            class="mr-2"
+                                            @click="editItemComplete(item)"
+                                            v-show="item.inEditMode">
+                                      mdi-book-open
+                                    </v-icon>
+                                    <br />
+                                    <v-icon small
+                                            class="mr-2"
+                                            @click="removeItem(index)">
+                                      mdi-delete
+                                    </v-icon>
 
-                    <v-simple-table id="shopping-list-table" fixed-header height="300px">
-                        <thead>
-                            <tr>
-                                <th>Quantity</th>
-                                <th>Item</th>
-                                <th>Actions</th>
-                                <th><v-dialog v-model="dialogleft" persistent max-width="600px">
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-btn color="primary"
-                                               dark
-                                               v-bind="attrs"
-                                               v-on="on">
-                                            Add Item
-                                        </v-btn>
-                                    </template>
-                                    <v-card>
-                                        <v-card-title>
-                                            <span class="headline">Items</span>
-                                        </v-card-title>
-                                        <v-card-text>
-                                            <v-container>
-                                                <v-row>
-                                                    <v-col cols="12">
-                                                        <v-text-field label="Name"
-                                                                      v-model="itemName"
-                                                                      required clearable>
-                                                        </v-text-field>
-                                                    </v-col>
-                                                </v-row>
-                                                <v-row
-                                                    <div class="col-md-6 form-group">                                                        
-                                                        <v-text-field label="Quantity"
-                                                                      v-model="quantity"
-                                                                      required clearable>
-                                                        </v-text-field>
-                                                    </div>                                                                                                      
-                                                </v-row>                                               
-                                            </v-container>
-                                        </v-card-text>
-                                        <v-card-actions>
-                                            <v-spacer></v-spacer>
-                                            <v-btn color="blue darken-1" text @click="dialogleft = false">Close</v-btn>
-                                            <v-btn color="blue darken-1" @click="dialogleft = false; addItem()">Add</v-btn>
-                                        </v-card-actions>
-                                    </v-card>
-                                </v-dialog></th>
-                            </tr>
-                        </thead>
-                        <tr v-for="(item, index) in itemsList">
-                            <td>
-                                <span v-show="!item.inEditMode">{{ item.quantity }}</span>
-                                <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" />
-                            </td>
-                            <td>
-                                <span v-show="!item.inEditMode">{{ item.itemName }}</span>
-                                <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
-                            </td>
-                            <td>                               
-                                <v-icon small
-                                        class="mr-2"
-                                        @click="editItem(item)"
-                                        v-show="!item.inEditMode">
-                                        mdi-pencil
-                                </v-icon>
-                                <v-icon small
-                                        class="mr-2"
-                                        @click="editItemComplete(item)"
-                                        v-show="item.inEditMode">
-                                        mdi-book-open
-                                </v-icon>
-                                <br />
-                                <v-icon small
-                                        class="mr-2"
-                                        @click="removeItem(index)">
-                                        mdi-delete
-                                </v-icon>
-                                                                
-                            </td>
-                            <td>                               
-                            </td>
-                        </tr>
-                    </v-simple-table>                    
+                                  </td>
+                                  <td>
+                                  </td>
+                                </tr>
+                            </v-simple-table>
+                        </v-container>
+                    </v-card>
                 </form>
             </div>
             <div class="item2">
@@ -104,7 +171,8 @@
                                 <td>
                                     <div class="my-2">
                                         <v-btn small
-                                         @click="addRecipeToItemList(index)">Add</v-btn>
+                                        color='indigo darken-4'
+                                        @click="addRecipeToItemList(index)">Add</v-btn>
                                     </div>
                                 </td>
                             </tr>
@@ -113,7 +181,7 @@
                             <v-row justify="center">
                                 <v-dialog v-model="dialog" persistent max-width="600px">
                                     <template v-slot:activator="{ on, attrs }">
-                                        <v-btn color="primary"
+                                        <v-btn color='indigo darken-4'
                                                dark
                                                v-bind="attrs"
                                                v-on="on">
@@ -128,7 +196,11 @@
                                             <v-container>
                                                 <v-row>
                                                     <v-col cols="12">
-                                                        <v-text-field label="Name" v-model="recipeName" required></v-text-field>
+                                                        <v-text-field label="Name"
+                                                            v-model="recipeName"
+                                                            required
+                                                            color='indigo darken-4'
+                                                        ></v-text-field>
                                                     </v-col>
                                                 </v-row>
                                                 <v-row>
@@ -136,14 +208,19 @@
                                                         <div class="col-md-6 form-group">
 
                                                             <v-text-field v-model="itemNameBox"
-                                                                          label="Ingredient"
-                                                                          clearable></v-text-field>
-                                                        </div>
-                                                        <div class="col-md-6 form-group">                                                        
+                                                                label="Ingredient"
+                                                                clearable
+                                                                color='indigo darken-4'
+                                                            >
+                                                            </v-text-field>
+                                                          </div>
+                                                        <div class="col-md-6 form-group">
                                                             <v-text-field v-model="quantityBox"
-                                                                          type="number"
-                                                                          lable="Quantity"
-                                                                          clearable></v-text-field>
+                                                                type="number"
+                                                                lable="Quantity"
+                                                                clearable
+                                                                color='indigo darken-4'
+                                                            ></v-text-field>
                                                         </div>
                                                         <button type="button" @click="addItemRecipe" class="btn btn-primary"><i class="fa fa-plus"></i> Add Item</button>
                                                       </div>
@@ -170,17 +247,17 @@
                                                             <td>
                                                               <button type="button" class="btn btn-success" v-show="item.inEditMode" @click="editItemComplete(item)"><i class="fa fa-save"></i> Save  </button>
                                                               <button type="button" class="btn btn-info" v-show="!item.inEditMode" @click="editItem(item)"><i class="fa fa-edit"></i> Edit  </button>
-                                                              <button type="button" class="btn btn-danger" @click="removeItem(index)"><i class="fa fa-remove"></i> Delete  </button>                                                             
+                                                              <button type="button" class="btn btn-danger" @click="removeItem(index)"><i class="fa fa-remove"></i> Delete  </button>
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                </v-row>                                                
+                                                </v-row>
                                             </v-container>
                                         </v-card-text>
                                         <v-card-actions>
                                             <v-spacer></v-spacer>
-                                            <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                                            <v-btn color="blue darken-1" @click="dialog = false; addRecipe()">Add</v-btn>
+                                            <v-btn color="indigo darken-4" text @click="dialog = false">Close</v-btn>
+                                            <v-btn color="indigo darken-4" @click="dialog = false; addRecipe()">Add</v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
@@ -308,8 +385,8 @@ export default {
             document.getElementById("myForm").style.display = "none";
         },
 
-        addRecipeToItemList(index) {          
-          this.itemsList.push.apply(this.itemsList,this.recipes[index].recipesList);          
+        addRecipeToItemList(index) {
+          this.itemsList.push.apply(this.itemsList,this.recipes[index].recipesList);
         }
     }
 }

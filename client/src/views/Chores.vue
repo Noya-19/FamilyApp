@@ -324,11 +324,4 @@ export default {
 
 <style scoped lang="scss">
     @import "../scss/variables.scss";
-
-    .chores{
-        background-color: green;
-        &__container {
-            background-color: red;
-        }
-    }
 </style>
