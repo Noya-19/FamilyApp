@@ -1,11 +1,74 @@
 <template>
     <v-main class="shopping">
-        <h2>Shopping List</h2>
         <div class="grid-container">
             <div class="item1">
                 <form id="shopping-list">
-
-                    <table id="shopping-list-table" class="table table-condensed table-hover">
+                    <v-card
+                        max-width="700"
+                        tile
+                    >
+                        <v-toolbar
+                        color="indigo darken-4"
+                        dark
+                        >
+                        <v-toolbar-title>Add Item to list</v-toolbar-title>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="indigo darken-4"
+                            dark
+                            text
+                        >
+                        Add
+                        </v-btn>
+                        </v-toolbar>
+                        <v-container>
+                        <div title="Shopping List">
+                            <v-text-field
+                                label="Item name"
+                                type="text"
+                                v-model="itemName"
+                                color="indigo darken-4"
+                            ></v-text-field>
+                            <br>
+                            <v-text-field
+                                type="number"
+                                label="Amount"
+                                v-model="quantity"
+                                color="indigo darken-4"
+                            ></v-text-field>
+                            <br>
+                            <div class="danger-alert" v-html="error" />
+                            <br>
+                            <v-btn
+                                dark
+                                color='indigo darken-4'
+                                @click="addItem"
+                            >
+                                Add
+                            </v-btn>
+                        </div>
+                        </v-container>
+                    </v-card>
+                    <v-card
+                        max-width="700"
+                        tile
+                    >
+                        <v-toolbar
+                        color="indigo darken-4"
+                        dark
+                        >
+                        <v-toolbar-title>Shopping List</v-toolbar-title>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="indigo darken-4"
+                            dark
+                            text
+                        >
+                        Add new item
+                        </v-btn>
+                        </v-toolbar>
+                        <v-container>
+                            <table id="shopping-list-table" class="table table-condensed table-hover">
                         <thead>
                             <tr>
                                 <th>Quantity</th>
@@ -30,20 +93,8 @@
                             </td>
                         </tr>
                     </table>
-
-                    <h4>Add new item</h4>
-                    <div class="row col-md-6">
-                        <div class="col-md-6 form-group">
-                            Quantity
-                            <input type="number" v-model="quantity" class="checkbox" autofocus>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            Name
-                            <input type="text" v-model="itemName" class="checkbox">
-                        </div>
-
-                        <button type="button" @click="addItem" class="btn btn-primary"><i class="fa fa-plus"></i> Add  </button>
-                    </div>
+                        </v-container>
+                    </v-card>
                 </form>
             </div>
             <div class="item2">
