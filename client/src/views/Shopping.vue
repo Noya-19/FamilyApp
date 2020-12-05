@@ -61,7 +61,7 @@
                                 <td>
                                     <div class="my-2">
                                         <v-btn small
-                                         @click="addRecipeToList(index)">Add</v-btn>
+                                         @click="addRecipeToItemList(index)">Add</v-btn>
                                     </div>
                                 </td>
                             </tr>
@@ -256,7 +256,7 @@ export default {
         },
 
         info: function (itemlist) {
-            console.log(this.itemList.length);
+            console.log(this.itemsList.length);
         },
 
         openForm: function() {
@@ -267,10 +267,8 @@ export default {
             document.getElementById("myForm").style.display = "none";
         },
 
-        addRecipeToList(index) {
-          console.log(this.itemsList)
-          this.itemsList.push(this.recipes[index].recipesList);
-          console.log(this.itemsList)
+        addRecipeToItemList(index) {          
+          this.itemsList.push.apply(this.itemsList,this.recipes[index].recipesList);          
         }
     }
 }
