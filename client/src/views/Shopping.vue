@@ -61,7 +61,8 @@
                                 <td>
                                     <div class="my-2">
                                         <v-btn small
-                                         @click="addRecipeToItemList(index)">Add</v-btn>
+                                        color='indigo darken-4'
+                                        @click="addRecipeToItemList(index)">Add</v-btn>
                                     </div>
                                 </td>
                             </tr>
@@ -70,7 +71,7 @@
                             <v-row justify="center">
                                 <v-dialog v-model="dialog" persistent max-width="600px">
                                     <template v-slot:activator="{ on, attrs }">
-                                        <v-btn color="primary"
+                                        <v-btn color='indigo darken-4'
                                                dark
                                                v-bind="attrs"
                                                v-on="on">
@@ -85,7 +86,11 @@
                                             <v-container>
                                                 <v-row>
                                                     <v-col cols="12">
-                                                        <v-text-field label="Name" v-model="recipeName" required></v-text-field>
+                                                        <v-text-field label="Name"
+                                                            v-model="recipeName"
+                                                            required
+                                                            color='indigo darken-4'
+                                                        ></v-text-field>
                                                     </v-col>
                                                 </v-row>
                                                 <v-row>
@@ -93,14 +98,19 @@
                                                         <div class="col-md-6 form-group">
 
                                                             <v-text-field v-model="itemNameBox"
-                                                                          label="Ingredient"
-                                                                          clearable></v-text-field>
+                                                                label="Ingredient"
+                                                                clearable
+                                                                color='indigo darken-4'
+                                                            >
+                                                            </v-text-field>
                                                           </div>
-                                                        <div class="col-md-6 form-group">                                                        
+                                                        <div class="col-md-6 form-group">
                                                             <v-text-field v-model="quantityBox"
-                                                                          type="number"
-                                                                          lable="Quantity"
-                                                                          clearable></v-text-field>
+                                                                type="number"
+                                                                lable="Quantity"
+                                                                clearable
+                                                                color='indigo darken-4'
+                                                            ></v-text-field>
                                                         </div>
 
 
@@ -134,13 +144,13 @@
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                </v-row>                                                
+                                                </v-row>
                                             </v-container>
                                         </v-card-text>
                                         <v-card-actions>
                                             <v-spacer></v-spacer>
-                                            <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                                            <v-btn color="blue darken-1" @click="dialog = false; addRecipe()">Add</v-btn>
+                                            <v-btn color="indigo darken-4" text @click="dialog = false">Close</v-btn>
+                                            <v-btn color="indigo darken-4" @click="dialog = false; addRecipe()">Add</v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
@@ -267,8 +277,8 @@ export default {
             document.getElementById("myForm").style.display = "none";
         },
 
-        addRecipeToItemList(index) {          
-          this.itemsList.push.apply(this.itemsList,this.recipes[index].recipesList);          
+        addRecipeToItemList(index) {
+          this.itemsList.push.apply(this.itemsList,this.recipes[index].recipesList);
         }
     }
 }
