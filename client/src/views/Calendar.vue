@@ -7,10 +7,12 @@
                     <div class="control">
                         <div class="box">
                             <div class="select">
-                                <select v-model="displayVariable">
-                                    <option value="month">month</option>
-                                    <option value="week">week</option>
-                                </select>
+                                <v-select
+                                          v-model="displayVariable"
+                                          :items="option"
+                                          label="View">
+                                    
+                                </v-select>
                             </div>
                         </div>
                         <div class="box">
@@ -141,7 +143,8 @@
                 endDay: "",
                 title:"",
                 displayVariable: "month",
-                selectedEvent: {},
+                selectedEvent: {},               
+                option: ['month', 'week'],
             }
         },
         computed: {
