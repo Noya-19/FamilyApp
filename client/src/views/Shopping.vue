@@ -1,54 +1,6 @@
 <template>
     <v-main class="shopping">
-        <div class="grid-container">
-            <div class="item1">
                 <form id="shopping-list">
-                    <v-card
-                        max-width="700"
-                        tile
-                    >
-                        <v-toolbar
-                        color="indigo darken-4"
-                        dark
-                        >
-                        <v-toolbar-title>Add Item to list</v-toolbar-title>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                            color="indigo darken-4"
-                            dark
-                            text
-                        >
-                        Add
-                        </v-btn>
-                        </v-toolbar>
-                        <v-container>
-                        <div title="Shopping List">
-                            <v-text-field
-                                label="Item name"
-                                type="text"
-                                v-model="itemName"
-                                color="indigo darken-4"
-                            ></v-text-field>
-                            <br>
-                            <v-text-field
-                                type="number"
-                                label="Amount"
-                                v-model="quantity"
-                                color="indigo darken-4"
-                            ></v-text-field>
-                            <br>
-                            <div class="danger-alert" v-html="error" />
-                            <br>
-                            <v-btn
-                                dark
-                                color='indigo darken-4'
-                                @click="addItem"
-                            >
-                                Add
-                            </v-btn>
-                        </div>
-                        </v-container>
-                    </v-card>
                     <v-card
                         max-width="700"
                         tile
@@ -59,62 +11,70 @@
                         >
                         <v-toolbar-title>Shopping List</v-toolbar-title>
                         <v-spacer></v-spacer>
-                        <v-btn
-                            color="indigo darken-4"
-                            dark
-                            text
-                        >
-                        Add new item
-                        </v-btn>
+                        <v-dialog v-model="dialogleft" persistent max-width="600px">
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-btn color="white"
+                                        dark
+                                        text
+                                        v-bind="attrs"
+                                        v-on="on">
+                                    Add Item
+                                </v-btn>
+                            </template>
+                            <v-card>
+                                <v-card-title>
+                                    <span class="headline">Items</span>
+                                </v-card-title>
+                                <v-container>
+                                    <div title="Shopping List">
+                                <v-text-field
+                                    label="Item name"
+                                    type="text"
+                                    v-model="itemName"
+                                    color="indigo darken-4"
+                                ></v-text-field>
+                                <br>
+                                <v-text-field
+                                    type="number"
+                                    label="Amount"
+                                    v-model="quantity"
+                                    color="indigo darken-4"
+                                ></v-text-field>
+                                <br>
+                                <div class="danger-alert" v-html="error" />
+                                <br>
+                                <v-btn
+                                    color="indigo darken-4"
+                                    text
+                                    dark
+                                    @click="dialogleft = false"
+                                >Close
+                                </v-btn>
+                                <v-btn
+                                    dark
+                                    color="indigo darken-4"
+                                    @click="dialogleft = false;
+                                    addItem()"
+                                >
+                                    Add
+                                </v-btn>
+                            </div>
+                            </v-container>
+                            </v-card>
+                        </v-dialog>
                         </v-toolbar>
-                        <v-container>
-                            <v-simple-table id="shopping-list-table" fixed-header height="300px">
+                        <v-container
+                            justify-space-between
+                        >
+                            <v-simple-table id="shopping-list-table"
+                                fixed-header height="300px"
+                            >
                                 <thead>
                                     <tr>
                                         <th>Quantity</th>
                                         <th>Item</th>
                                         <th>Actions</th>
                                         <th>
-                                            <v-dialog v-model="dialogleft" persistent max-width="600px">
-                                                <template v-slot:activator="{ on, attrs }">
-                                                    <v-btn color="primary"
-                                                           dark
-                                                           v-bind="attrs"
-                                                           v-on="on">
-                                                      Add Item
-                                                    </v-btn>
-                                                </template>
-                                                <v-card>
-                                                    <v-card-title>
-                                                      <span class="headline">Items</span>
-                                                    </v-card-title>
-                                                    <v-card-text>
-                                                        <v-container>
-                                                            <v-row>
-                                                                <v-col cols="12">
-                                                                    <v-text-field label="Name"
-                                                                                  v-model="itemName"
-                                                                                  required clearable>
-                                                                    </v-text-field>
-                                                                </v-col>
-                                                            </v-row>
-                                                            <v-row
-                                                                <div class="col-md-6 form-group">
-                                                                    <v-text-field label="Quantity"
-                                                                                  v-model="quantity"
-                                                                                  required clearable>
-                                                                    </v-text-field>
-                                                                </div>
-                                                             </v-row>
-                                                        </v-container>
-                                                    </v-card-text>
-                                                    <v-card-actions>
-                                                      <v-spacer></v-spacer>
-                                                      <v-btn color="blue darken-1" text @click="dialogleft = false">Close</v-btn>
-                                                      <v-btn color="blue darken-1" @click="dialogleft = false; addItem()">Add</v-btn>
-                                                    </v-card-actions>
-                                                </v-card>
-                                            </v-dialog>
                                         </th>
                                     </tr>
                                 </thead>
@@ -140,21 +100,18 @@
                                                 v-show="item.inEditMode">
                                           mdi-book-open
                                         </v-icon>
-                                        <br />
+                                        <br/>
                                         <v-icon small
                                                 class="mr-2"
                                                 @click="removeItem(index)">
                                           mdi-delete
-                                        </v-icon
+                                        </v-icon>
                                     </td>
-                                  <td>
-                                  </td>
                                 </tr>
                             </v-simple-table>
                         </v-container>
                     </v-card>
                 </form>
-            </div>
             <div class="item2">
                 <h2>this is the start of the new item</h2>
                 <v-simple-table fixed-header height="300px">
@@ -392,6 +349,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    
+
 
 </style>
