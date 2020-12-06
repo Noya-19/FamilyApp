@@ -11,7 +11,7 @@
                 height="100%"
                 
               >
-              Shopping List
+              <h2> Shopping List </h2>
               <v-container class="home__container">
               <v-card-actions></v-card-actions>
               </v-container>
@@ -19,8 +19,18 @@
             </div>
             
             <div class="right">
-                <h2>Calendar</h2>
-                <div id="calendar" class="calView">
+
+              <v-card
+                elevation="4"
+                outlined
+                class="mx-auto"
+                width="100%"
+                height="100%"
+                
+              >
+              <h2>Calendar</h2>
+
+              <div id="calendar" class="calView">
                     <calendar-view v-if="displayVariable ==='month'"
                                    :show-date="showDate"
                                    :enableDragDrop="true"
@@ -72,6 +82,14 @@
                     </v-simple-table>
                 </div>
 
+              <v-container class="home__container">
+              <v-card-actions></v-card-actions>
+              </v-container>
+              </v-card>
+
+                
+                
+
             </div>
 
             <div class="bot-left">
@@ -83,7 +101,7 @@
                 height="100%"
                 
               >
-              People
+              <h2>People</h2>
               <v-container class="home__container">
               <v-card-actions></v-card-actions>
               </v-container>
