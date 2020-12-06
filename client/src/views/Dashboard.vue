@@ -19,17 +19,14 @@ export default {
   },
 
   data () {
-    return {
+      return {
+
     }
   },
-
   methods: {
 
   },
 
-  mounted: function () {
-
-  }
 }
 </script>
 
@@ -53,6 +50,7 @@ export default {
     "bot-left footer right right";
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
+    text-align:center;
   }
 
   .left,
