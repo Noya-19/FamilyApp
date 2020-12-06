@@ -2,7 +2,22 @@
     <v-main class="dashboard">
         <div class="grid-container">
             <div class="header"><h1>FAMTASTIC</h1></div>
-            <div class="left"> Shopping List</div>
+            <div class="left">
+              <v-card
+                elevation="4"
+                outlined
+                class="mx-auto"
+                width="100%"
+                height="100%"
+                
+              >
+              Shopping List
+              <v-container class="home__container">
+              <v-card-actions></v-card-actions>
+              </v-container>
+              </v-card>
+            </div>
+            
             <div class="right">
                 <h2>Calendar</h2>
                 <div id="calendar" class="calView">
@@ -58,7 +73,23 @@
                 </div>
 
             </div>
-            <div class="bot-left">People</div>
+
+            <div class="bot-left">
+              <v-card
+                elevation="4"
+                outlined
+                class="mx-auto"
+                width="100%"
+                height="100%"
+                
+              >
+              People
+              <v-container class="home__container">
+              <v-card-actions></v-card-actions>
+              </v-container>
+              </v-card>
+            </div>
+
             <div class="footer">
                 <h2>Chores List</h2>
                 <div id="choresTable">
@@ -86,6 +117,7 @@
                     </v-simple-table>
                 </div>
             </div>
+
         </div>
     </v-main>
 </template>
@@ -231,7 +263,7 @@
     }
 
     .grid-container {
-        grid-template-columns: 25.5rem 25.5rem 25.5rem 25.5rem; /*200px 200px 200px 200px 200px 200px;*/
+        grid-template-columns: 25% 25% 25% 25%; //200px 200px 200px 200px 200px 200px;
         grid-template-rows: 2.5rem 25rem auto;
         padding-left: $lg-gutter;
         padding-right: $lg-gutter;
@@ -267,19 +299,19 @@
         padding-top: 1rem;
     }
 
-    /* Style the left column */
+    // Style the left column 
     .left {
         grid-area: left;
         height: 25rem;
     }
 
-    /* Style the middle column */
+    // Style the middle column 
     .right {
         grid-area: right;
         height: 51rem;
     }
 
-    /* Style the bot-left column */
+    // Style the bot-left column
     .bot-left {
         grid-area: bot-left;
         height: 23.5rem;
@@ -294,7 +326,7 @@
         border-width: 0.125rem;
     }
 
-    /* Style the footer */
+    // Style the footer
     .footer {
         grid-area: footer;
         height: 23.5rem;
@@ -308,5 +340,5 @@
         border-radius: 0.625rem;
         border-color: black;
         border-width: 0.125rem;
-    }
+    }/**/
 </style>
