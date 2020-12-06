@@ -1,7 +1,6 @@
 <template>
     <v-main class="dashboard">
         <div class="grid-container">
-            <div class="header"><h1>FAMTASTIC</h1></div>
             <div class="left">
               <v-card
                 elevation="4"
@@ -11,7 +10,13 @@
                 height="100%"
                 
               >
+              <v-toolbar
+                color="indigo darken-4"
+                dark
+              >
               <h2> Shopping List </h2>
+              <v-spacer></v-spacer>
+              </v-toolbar>
               <v-container class="home__container">
               <v-card-actions></v-card-actions>
               </v-container>
@@ -27,8 +32,14 @@
                 width="100%"
                 height="100%"
                 
+              >              
+              <v-toolbar
+                color="indigo darken-4"
+                dark
               >
               <h2>Calendar</h2>
+              <v-spacer></v-spacer>
+              </v-toolbar>
 
               <div id="calendar" class="calView">
                     <calendar-view v-if="displayVariable ==='month'"
@@ -101,7 +112,15 @@
                 height="100%"
                 
               >
+
+              <v-toolbar
+                color="indigo darken-4"
+                dark
+              >
               <h2>People</h2>
+              <v-spacer></v-spacer>
+              </v-toolbar>   
+
               <v-container class="home__container">
               <v-card-actions></v-card-actions>
               </v-container>
@@ -109,27 +128,48 @@
             </div>
 
             <div class="footer">
-                <h2>Chores List</h2>
-                <div id="choresTable">
-                    <v-simple-table :height="heightOfCalTable"
-                                    :fixed-header="true">
-                        <template v-slot:default>
-                            <thead>
-                                <tr>
-                                    <th class="text-left">Chore</th>
-                                    <th class="text-left">Due Date</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="item in incompletedChores" :key="item.choresName">
-                                    <td>{{item.title}}</td>
-                                    <td>{{item.dueDate}}</td>
-                                </tr>
-                            </tbody>
-                        </template>
-                    </v-simple-table>
-                </div>
+                
+              <v-card
+              elevation="4"
+              outlined
+              class="mx-auto"
+              width="100%"
+              height="100%"
+              >
+              <v-toolbar
+                color="indigo darken-4"
+                dark                
+              >
+              <h2>Chores List</h2>
+              <v-spacer></v-spacer>
+              </v-toolbar>                
+                <div id="choresTable">
+                <v-simple-table :height="heightOfCalTable"
+                                :fixed-header="true">
+                    <template v-slot:default>
+                        <thead>
+                            <tr>
+                                <th class>Chore</th>
+                                <th class>Due Date</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in incompletedChores" :key="item.choresName">
+                                <td>{{item.title}}</td>
+                                <td>{{item.dueDate}}</td>
+                            </tr>
+                        </tbody>
+                    </template>
+                </v-simple-table>
+            </div>
+
+              <v-container class="home__container">
+              <v-card-actions></v-card-actions>
+              </v-container>
+              </v-card>
+                
             </div>
 
         </div>
@@ -289,8 +329,7 @@
 
     .grid-container {
         grid-template-columns: 25% 25% 25% 25%; //200px 200px 200px 200px 200px 200px;
-        grid-template-rows: 2.5rem 25rem auto;
-        padding-left: $lg-gutter;
+        grid-template-rows: 25rem auto;
         padding-right: $lg-gutter;
         background-color: $light-gray;
         //background-color: black;
@@ -298,7 +337,7 @@
 
     .grid-container {
         display: grid;
-        grid-template-areas: "header header header header" "left left right right" "bot-left footer right right";
+        grid-template-areas: "left left right right" "bot-left footer right right";
         grid-column-gap: 2rem;
         grid-row-gap: 2rem;
         text-align: center;
@@ -311,59 +350,30 @@
         margin-top: 0.625rem;
         //height: 50rem;
         padding: 0.625rem;
-        color: black;
-        border: 0.0625rem solid $border-white;
-        border-color: black;
-        border-radius: 0.625rem;
-        background-color: #F8F8F8;
-        border-color: black;
-        border-width: 0.125rem;
-    }
-
-    .header {
-        padding-top: 1rem;
     }
 
     // Style the left column 
     .left {
         grid-area: left;
-        height: 25rem;
+        //height: 25rem;
     }
 
     // Style the middle column 
     .right {
         grid-area: right;
-        height: 51rem;
+        //height: 51rem;
     }
 
-    // Style the bot-left column
-    .bot-left {
-        grid-area: bot-left;
-        height: 23.5rem;
-        padding: 0.625rem;
-        text-align: center;
-        margin-top: 1.25rem;
-        color: black;
-        border: 0.0625rem solid $border-white;
-        border-color: black;
-        border-radius: 0.625rem;
-        border-color: black;
-        border-width: 0.125rem;
+    .bot-left{
+      grid-area: bot-left;
     }
 
-    // Style the footer
-    .footer {
-        grid-area: footer;
-        height: 23.5rem;
-        //background-color: #67A4E1;
-        padding: 0.625rem;
-        text-align: center;
-        margin-top: 1.25rem;
-        color: black;
-        border: 0.0625rem solid $border-white;
-        border-color: black;
-        border-radius: 0.625rem;
-        border-color: black;
-        border-width: 0.125rem;
-    }/**/
+    .footer{
+      grid-area: footer;
+    }
+
+    h2{
+      text-align: center;
+      
+    }
 </style>
