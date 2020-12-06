@@ -7,10 +7,12 @@
                     <div class="control">
                         <div class="box">
                             <div class="select">
-                                <select v-model="displayVariable">
-                                    <option value="month">month</option>
-                                    <option value="week">week</option>
-                                </select>
+                                <v-select
+                                          v-model="displayVariable"
+                                          :items="option"
+                                          label="View">
+                                    
+                                </v-select>
                             </div>
                         </div>
                         <div class="box">
@@ -139,7 +141,8 @@
                 endDay: "",
                 title:"",
                 displayVariable: "month",
-                selectedEvent: {},
+                selectedEvent: {},               
+                option: ['month', 'week'],
             }
         },
         computed: {
@@ -204,7 +207,7 @@
                 //adding data to items array
                 const startDay = new Date(this.startDay);
                 const endDay = new Date(this.endDay);
-                const title = this.title;
+                const title = this.title;                
                 const eventToAdd = {
                     title: title,
                     startDate: Date.UTC(startDay.getUTCFullYear(), startDay.getUTCMonth(), startDay.getUTCDate()+1),
@@ -260,7 +263,7 @@
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         color: #2c3e50;
         height: 67vh;
-        width: 90vw;
+        width: auto;
         margin-left: auto;
         margin-right: auto;
     }
