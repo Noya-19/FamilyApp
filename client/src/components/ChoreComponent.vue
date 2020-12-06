@@ -2,23 +2,11 @@
     <v-card
         elevation="1"
         tile
+        outlined
+        max-width="200"
     >
-        <v-card-title>
+        <v-card-title class="no-wrap">
             {{title}}
-            <v-btn class="delete-btn"
-                fab
-                elevation="0"
-                small
-                color="white"
-                @click="deleteChore(selfJSON())"
-            >
-                <v-icon
-                    dark
-                    color='indigo darken-4'
-                >
-                    mdi-delete-outline
-                </v-icon>
-            </v-btn>
         </v-card-title>
         <v-card-text v-if="!isComplete">
             <v-row>
@@ -42,24 +30,39 @@
                 Posted by {{postedByFirstName}}
             </v-row>
         </v-card-text>
-        <v-card-actions>
-            <v-btn v-if="!isComplete"
+        <v-card-actions
+        >
+            <v-btn v-if="!isComplete" class="completion-btn"
                 small
                 dark
                 color='indigo darken-4'
                 elevation="2"
                 @click="updateChore(selfJSON(), true)"
             >
-                Mark as Complete
+                Finish
             </v-btn>
-            <v-btn v-else
+            <v-btn v-else class="completion-btn"
                 small
                 dark
                 color='red darken-4'
                 elevation="2"
                 @click="updateChore(selfJSON(), false)"
             >
-                Mark as Incomplete
+                Not Done
+            </v-btn>
+            <v-btn class="delete-btn"
+                fab
+                elevation="0"
+                small
+                color="white"
+                @click="deleteChore(selfJSON())"
+            >
+                <v-icon
+                    dark
+                    color='red darken-4'
+                >
+                    mdi-delete-outline
+                </v-icon>
             </v-btn>
         </v-card-actions>
     </v-card>
@@ -135,6 +138,9 @@ export default {
 
 <style scoped lang="scss">
     .delete-btn {
-        justify-items: right;
+        padding-right: 2rem;
+    }
+    .completion-btn {
+
     }
 </style>
