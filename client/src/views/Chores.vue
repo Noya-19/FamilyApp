@@ -204,10 +204,11 @@ export default {
         }
     },
     mounted () {
+        
         this.referenceChores()
         this.$store.state.family.forEach(user => {
-                this.name.push(user.firstname + " " + user.lastname)
-            })
+            this.name.push(user.firstname + " " + user.lastname)
+        })
     }
 }
 </script>

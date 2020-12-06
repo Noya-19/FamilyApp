@@ -73,13 +73,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="item in choreList" :key="item.choresName">
+                                <tr v-for="item in incompletedChores" :key="item.choresName">
                                     <td>{{item.title}}</td>
                                     <td>{{item.dueDate}}</td>
-                                    <td><v-btn elevation="2"
-                                            @click="completedChore"
-                                            x-small>Completed</v-btn>
-                                    </td>
                                 </tr>
                             </tbody>
                         </template>
@@ -120,6 +116,7 @@
                 weeklyEvents: [],
                 heightOfCalTable: '300px',
                 choreList: [],
+                incompletedChores:[],
                 dueDate: '',
                 today: "",
                 weekStart: "",
@@ -180,32 +177,42 @@
             referenceChores() {
                 this.choreList = this.$store.state.chores
             },
-            fillWeekly() {
-                //var today = new Date.now();
-                //console.log(d);
-                //const dayEnd = mil;
-               // var weekEnd = new Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), dayEnd);
-                //console.log(Date.U(d.getUTCFullYear(), d.getUTCMonth(), dayEnd));
-                this.items.forEach(item => {
-                    this.weeklyEvents.push(item)
-                })
-                this.weeklyEvents = this.weeklyEvents.sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate));
-                this.weeklyEvents = this.weeklyEvents.reverse();
-                console.log(this.weeklyEvents)
-                //this.weeklyEvents = this.weeklyEvents.filter(a => a.startDate.getDate() >= weekStart && a.startDate.getDate() <= weekEnd)
-                console.log(this.weeklyEvents)
-            },
-            completedChore() {
-                //need help making this complete chore from dashboard
-            }
+            fillDash() {
+              var today = new Date()
+              today = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
+              today = Date.parse(today)
 
+              this.weeklyEvents = []
+              this.items.forEach(item => {
+                  this.weeklyEvents.push(item)
+              })
+              this.weeklyEvents = this.weeklyEvents.sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate));
+              this.weeklyEvents = this.weeklyEvents.reverse();
+              var index = 0
+              this.weeklyEvents.forEach((event) => {
+                if(Date.parse(event.startDate) >= today){
+                  this.weeklyEvents = this.weeklyEvents.splice(index)
+                  return
+                }
+                index++
+              })
+              this.incompletedChores = []
+              this.incompletedChores = this.choreList.filter(function(e) {
+                return !e.isComplete
+              })
+            },
         },
 
         async mounted(){
-            await this.referenceEvents()
-            await this.fillWeekly();
-            await this.referenceChores()
-        }
+          //Data doesn't load in properly if chores referenced second. Might be because of the amount of data in events
+          await this.referenceChores()
+          await this.referenceEvents()
+        },
+        
+        async updated(){
+          //Currently goes through many loops on load
+          await this.fillDash();
+        },
     }
 </script>
 
