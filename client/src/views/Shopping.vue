@@ -119,35 +119,34 @@
                                     </tr>
                                 </thead>
                                 <tr v-for="(item, index) in itemsList">
-                                  <td>
-                                    <span v-show="!item.inEditMode">{{ item.quantity }}</span>
-                                    <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" />
-                                  </td>
-                                  <td>
-                                    <span v-show="!item.inEditMode">{{ item.itemName }}</span>
-                                    <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
-                                  </td>
-                                  <td>
-                                    <v-icon small
-                                            class="mr-2"
-                                            @click="editItem(item)"
-                                            v-show="!item.inEditMode">
-                                      mdi-pencil
-                                    </v-icon>
-                                    <v-icon small
-                                            class="mr-2"
-                                            @click="editItemComplete(item)"
-                                            v-show="item.inEditMode">
-                                      mdi-book-open
-                                    </v-icon>
-                                    <br />
-                                    <v-icon small
-                                            class="mr-2"
-                                            @click="removeItem(index)">
-                                      mdi-delete
-                                    </v-icon>
-
-                                  </td>
+                                    <td>
+                                        <span v-show="!item.inEditMode">{{ item.quantity }}</span>
+                                        <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" />
+                                      </td>
+                                    <td>
+                                        <span v-show="!item.inEditMode">{{ item.itemName }}</span>
+                                        <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
+                                    </td>
+                                    <td>
+                                        <v-icon small
+                                                class="mr-2"
+                                                @click="editItem(item)"
+                                                v-show="!item.inEditMode">
+                                          mdi-pencil
+                                        </v-icon>
+                                        <v-icon small
+                                                class="mr-2"
+                                                @click="editItemComplete(item)"
+                                                v-show="item.inEditMode">
+                                          mdi-book-open
+                                        </v-icon>
+                                        <br />
+                                        <v-icon small
+                                                class="mr-2"
+                                                @click="removeItem(index)">
+                                          mdi-delete
+                                        </v-icon
+                                    </td>
                                   <td>
                                   </td>
                                 </tr>
@@ -393,102 +392,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    body {
-        padding: 1%;
-        background-color: #abca
-    }
-
-    h2, h4 {
-        font-family: 'Nunito', sans-serif;
-    }
-
-
-
-    button {
-        margin-left: 2%;
-    }
-    .grid-container {
-        display: grid;
-        height: 400px;
-        align-content: center;
-        grid-template-rows: 1.5fr 0 1.5fr;
-        grid-gap: 10px;
-        background-color: white;
-        padding: 10px;
-    }
-    .item1 {
-        grid-row-start: 1;
-        grid-row-end: 2;
-        grid-column-start:1;
-        grid-column-end:2;
-    }
-    .item {
-        grid-row-start: 2;
-        grid-row-end: 3;
-        grid-column-start:2;
-        grid-column-end:3;
-    }
-
-    /*.grid-container {
-      grid-template-columns: 19.4rem 19.4rem 19.4rem 19.4rem 19.4rem;*//*200px 200px 200px 200px 200px 200px;*/
-      /*grid-template-rows: 2.5rem 45rem auto;
-      padding-left: $lg-gutter;
-      padding-right: $lg-gutter;
-      background-color: $light-gray;
-      //background-color: black;
-    }
-
-    .grid-container {
-      display: grid;
-      grid-template-areas:
-      " header header header header header"
-      "left left left right right"
-      " footer footer footer empty empty";
-      grid-column-gap: 2rem;
-    }
-
-    .left,
-    .right {
-      margin-top: 0.625rem;
-      height: 45rem;
-      padding: 0.625rem;
-      color: black;
-      border: 0.0625rem solid $border-white;
-      border-color: black;
-      border-radius: 0.625rem;
-      background-color:#F8F8F8;
-      border-color: black;
-      border-width: 0.125rem;
-    }
-
-    .header{
-      padding-top: 1rem;;
-    }*/
-
-        /* Style the left column */
-    /*.left {
-      grid-area: left;
-    }*/
-
-        /* Style the right column */
-    /*.right {
-      grid-area: right;
-    }*/
-
-        /* Style the footer */
-    /*.footer {
-      grid-area: footer;
-      background-color: $light-blue;
-      height: 3rem;
-      padding: 0.625rem;
-      text-align: center;
-      margin-top: 1.25rem;
-      color: black;
-      border: 0.0625rem solid $border-white;
-      border-color: black;
-      border-radius: 0.625rem;
-      border-color: black;
-      border-width: 0.125rem;
-    }*/
+    
 
 </style>
