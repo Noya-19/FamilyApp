@@ -357,7 +357,7 @@ export default {
          removeRecipeItem: function (index) {
           this.recipesItem.splice(index, 1); //delete 1 element from the array at the position index
          },
-        removeRecipeItem: function (index) {
+        removeRecipe: function (index) {
           this.recipes.splice(index, 1); //delete 1 element from the array at the position index
         },
         editItem: function (item) {
