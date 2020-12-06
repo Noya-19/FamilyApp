@@ -81,7 +81,7 @@ export default {
         await this.getAssociatedFamilyMembers(this.$store.state.user.FamilyId)
         await this.getFamilyChores(this.$store.state.family)
         await this.getFamilyEvents(this.$store.state.family)
-        .then(this.$router.push('/dashboard'))
+        this.$router.push('/dashboard')
       } catch (error) {
         this.error = error.response.data.error
       }
@@ -125,7 +125,7 @@ export default {
           this.error = error.response.data.error
         }
     }
-  }
+  },
 }
 </script>
 

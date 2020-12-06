@@ -16,7 +16,11 @@ export default {
   name: 'School',
   title: 'School',
   props: {
-  }
+  },
+  mounted() {
+    console.log(this.$store.state.events)
+    console.log(this.$store.state.chores)
+  } 
 }
 </script>
 
