@@ -21,7 +21,6 @@ sync(store, router)
 new Vue({
   el: '#app',
   router,
-  vuetify: new Vuetify(),
   store,
   vuetify: new Vuetify({
     icons: {

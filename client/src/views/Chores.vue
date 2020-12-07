@@ -315,7 +315,7 @@ export default {
             return this.choreList.filter(function(e) {
                 return !e.isComplete
             })
-        },
+        },  
         completedChores: function() {
             return this.choreList.filter(function(e) {
                 return e.isComplete
