@@ -112,7 +112,7 @@
                 </v-container>
             </v-card>
         </form>
-        <br/>  
+        <br/>
         <v-card max-width="700"
                 tile>
             <v-toolbar color="indigo darken-4"
@@ -143,7 +143,6 @@
                                     </v-col>
                                 </v-row>
                                 <v-row>
-                      
                                     <div class="col-md-6 form-group">
 
                                       <v-text-field v-model="itemNameBox"
@@ -227,7 +226,7 @@
             </v-toolbar>
 
             <v-simple-table fixed-header height="300px">
-            
+
                 <thead>
                   <tr>
                     <th class="text-left">Name</th>
@@ -237,7 +236,7 @@
                 <tbody>
                     <tr v-for="(item,index) in recipes" :key="item.recipeName">
                         <td>{{ item.recipeName }}</td>
-                        <td>                    
+                        <td>
                             <v-btn elevation="2"
                                    small
                                    @click=" addRecipeToItemList(index)"
@@ -255,7 +254,7 @@
                         </td>
                   </tr>
                 </tbody>
-            
+
             </v-simple-table>
         </v-card>
     </v-main>

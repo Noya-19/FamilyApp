@@ -10,7 +10,7 @@
                     style="height: 300px;"
                 >
                     <v-toolbar
-                        color="indigo"
+                        color="indigo darken-4"
                         dark
                     >
                         <v-toolbar-title>Daily Chores</v-toolbar-title>
@@ -116,7 +116,7 @@
                     style="height: 300px;"
                 >
                     <v-toolbar
-                        color="indigo"
+                        color="indigo darken-4"
                         dark
                     >
                         <v-toolbar-title>Chores</v-toolbar-title>
@@ -222,7 +222,7 @@
                     style="height: 300px;"
                 >
                     <v-toolbar
-                        color="indigo"
+                        color="indigo darken-4"
                         dark
                     >
                         <v-toolbar-title>Completed Chores</v-toolbar-title>
