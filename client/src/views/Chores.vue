@@ -294,7 +294,21 @@ export default {
         },
         referenceChores(){
             this.choreList = this.$store.state.chores
-        }
+        },
+        async getFamilyChores(family) {
+            try {
+            family.forEach(user => {
+                    const response = ChoreService.index({
+                    UserId: user.id
+                })
+                response.then((value)=>{
+                    this.$store.dispatch('setChores', value.data)
+                })
+            })
+            } catch (error) {
+                this.error = error.response.data.error
+            }
+        },
     },
     computed: {
         incompletedChores: function () {
@@ -313,9 +327,10 @@ export default {
             this.referenceChores()
         }
     },
-    mounted () {
-        
-        this.referenceChores()
+    mounted: async function () {
+        this.$store.dispatch('emptyChores')
+        await this.getFamilyChores(this.$store.state.family)
+        await this.referenceChores()
         this.$store.state.family.forEach(user => {
             this.name.push(user.firstname + " " + user.lastname)
         })
