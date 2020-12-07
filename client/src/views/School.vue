@@ -16,7 +16,9 @@ export default {
   name: 'School',
   title: 'School',
   props: {
-  }
+  },
+  mounted() {
+  } 
 }
 </script>
 

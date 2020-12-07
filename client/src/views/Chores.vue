@@ -10,7 +10,7 @@
                     style="height: 300px;"
                 >
                     <v-toolbar
-                        color="indigo"
+                        color="indigo darken-4"
                         dark
                     >
                         <v-toolbar-title>Daily Chores</v-toolbar-title>
@@ -116,7 +116,7 @@
                     style="height: 300px;"
                 >
                     <v-toolbar
-                        color="indigo"
+                        color="indigo darken-4"
                         dark
                     >
                         <v-toolbar-title>Chores</v-toolbar-title>
@@ -222,7 +222,7 @@
                     style="height: 300px;"
                 >
                     <v-toolbar
-                        color="indigo"
+                        color="indigo darken-4"
                         dark
                     >
                         <v-toolbar-title>Completed Chores</v-toolbar-title>
@@ -315,7 +315,7 @@ export default {
             return this.choreList.filter(function(e) {
                 return !e.isComplete
             })
-        },
+        },  
         completedChores: function() {
             return this.choreList.filter(function(e) {
                 return e.isComplete
@@ -332,8 +332,8 @@ export default {
         await this.getFamilyChores(this.$store.state.family)
         await this.referenceChores()
         this.$store.state.family.forEach(user => {
-                this.name.push(user.firstname + " " + user.lastname)
-            })
+            this.name.push(user.firstname + " " + user.lastname)
+        })
     }
 }
 </script>
