@@ -296,7 +296,6 @@ export default {
         },
 
         addRecipe() {//recipeList
-            console.log(this.recipesItem);
             this.recipes.push(
                 {
                   recipeName: this.recipeName,
@@ -386,6 +385,14 @@ export default {
 
         addRecipeToItemList(index) {
           this.itemsList.push.apply(this.itemsList,this.recipes[index].recipesList);
+        }
+    },
+    watch: {
+        //Remove once backend is completed
+        itemsList: function () {
+            this.$store.dispatch("setItemList", this.itemsList)
+            console.log(this.itemsList)
+            console.log(this.$store.state.itemList)
         }
     }
 }

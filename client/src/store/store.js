@@ -13,7 +13,8 @@ export default new Vuex.Store({
         family: {},
         chores: [],
         events: [],
-        mappedUserIds: []
+        mappedUserIds: [],
+        itemList: [],
     },
     mutations: {
         setToken (state, token) {
@@ -56,7 +57,8 @@ export default new Vuex.Store({
             state.family= {},
             state.chores= [],
             state.events= [],
-            state.mappedUserIds= []
+            state.mappedUserIds= [],
+            state.itemList = []
         },
         addChore (state, chore){
             state.chores.push(chore)
@@ -70,6 +72,12 @@ export default new Vuex.Store({
         emptyChores (state){
             state.chores = []
         },
+        setItemList (state, items){
+            state.itemList = []
+            items.forEach(item => {
+                state.itemList.push(item)
+            })
+        }
     },
     actions: {
         // invoke actions from Vue components
@@ -112,6 +120,9 @@ export default new Vuex.Store({
         emptyChores({commit}){
             commit('emptyChores')
         },
+        setItemList({commit}, items){
+            commit('setItemList', items)
+        }
     },
     getters: {
         getChores: state => {
