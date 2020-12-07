@@ -67,6 +67,9 @@ export default new Vuex.Store({
         removeChore (state, choreIndex){
             state.chores.splice(choreIndex, 1)
         },
+        emptyChores (state){
+            state.chores = []
+        },
     },
     actions: {
         // invoke actions from Vue components
@@ -105,6 +108,9 @@ export default new Vuex.Store({
         },
         removeChore ({commit}, chore){
             commit('removeChore', chore)
+        },
+        emptyChores({commit}){
+            commit('emptyChores')
         },
     },
     getters: {

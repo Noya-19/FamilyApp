@@ -10,14 +10,18 @@
                                 <v-select
                                           v-model="displayVariable"
                                           :items="option"
-                                          label="View">
-                                    
+                                          label="View"
+                                          color='indigo darken-4'
+                                          >
+
                                 </v-select>
                             </div>
                         </div>
                         <div class="box">
                             <div class="field">
-                                <label class="label">Name of event</label>
+                                <label class="eventlabel">
+                                    Name of event
+                                </label>
                                 <div class="control">
                                     <input type="text" class="input" v-model="title" id="title"/>
                                 </div>
@@ -120,16 +124,12 @@
     import EventService from '@/services/EventService'
     require("vue-simple-calendar/static/css/default.css")
     require("vue-simple-calendar/static/css/holidays-us.css")
-    var eventColors = ["aqua" , "#67A4E1", "pink", "yellow", "green", "gray", "white", "lightgreen"]
-
-
+    var eventColors = ["#5661DC", "#A9CEF4", "#D0FFD6", "#EEB4B3", "#FFBE86", "#D1FFC6", "#E8F8C1", "#D6D1B1"]
     export default {
         name: 'Calendar',
         title: 'Calendar',
         props: {
-
         },
-
         data: function () {
             return {
                 showDate: new Date(),
@@ -143,13 +143,13 @@
                 endDay: "",
                 title:"",
                 displayVariable: "month",
-                selectedEvent: {},               
-                option: ['month', 'week'],
+                selectedEvent: {},
+                option: ['month', 'week']
             }
         },
         computed: {
             themeOptions() {
-                return this.theme == "gcal"
+                return this.theme === "gcal"
                     ? {
                         top: "2.6em",
                         height: "2.1em",
@@ -186,7 +186,7 @@
                 this.selectedEvent = event
             },
             async deleteEvent () {
-                if(!this.selectedEvent){
+                if(!this.selectedEvent) {
                     console.log('Please select an event.')
                 } else {
                     try {
@@ -198,7 +198,7 @@
                         )
                         this.selectedEvent = {}
                     } catch (error) {
-                        this.error = error.response.data.error;
+                        this.error = error.response.data.error
                     }
                 }
             },
@@ -209,7 +209,7 @@
                 //adding data to items array
                 const startDay = new Date(this.startDay);
                 const endDay = new Date(this.endDay);
-                const title = this.title;                
+                const title = this.title;
                 const eventToAdd = {
                     title: title,
                     startDate: Date.UTC(startDay.getUTCFullYear(), startDay.getUTCMonth(), startDay.getUTCDate()+1),
@@ -253,12 +253,9 @@
             }
         }
     }
-
-
 </script>
 
 <style lang="scss" scoped>
-
     .cv-item.custom-date-class-red {
         background-color: #ff6666;
     }
