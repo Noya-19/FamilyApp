@@ -18,7 +18,29 @@
               <v-spacer></v-spacer>
               </v-toolbar>
               <v-container class="home__container">
-              <v-card-actions></v-card-actions>
+                <v-card-actions></v-card-actions>
+                <v-simple-table id="shopping-list-table"
+                                fixed-header>
+                  <thead>
+                    <tr>
+                      <th>Quantity</th>
+                      <th>Item</th>
+                      <th>Actions</th>
+                      <th>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tr v-for="(item, index) in itemsList">
+                    <td>
+                      <span v-show="!item.inEditMode">{{ item.quantity }}</span>
+                      <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" />
+                    </td>
+                    <td>
+                      <span v-show="!item.inEditMode">{{ item.itemName }}</span>
+                      <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
+                    </td>                    
+                  </tr>
+                </v-simple-table>
               </v-container>
               </v-card>
             </div>
@@ -211,7 +233,8 @@
                 today: "",
                 weekStart: "",
                 weekEnd: "",
-                dayEnd:'',
+                dayEnd: '',
+                itemsList:[],
             }
         },
         computed: {
@@ -291,12 +314,16 @@
                 return !e.isComplete
               })
             },
+            fillItemsList() {
+              this.itemsList = this.$store.state.itemList;
+            }
         },
 
         async mounted(){
           //Data doesn't load in properly if chores referenced second. Might be because of the amount of data in events
           await this.referenceChores()
           await this.referenceEvents()
+          await this.fillItemsList();
         },
         
         async updated(){
