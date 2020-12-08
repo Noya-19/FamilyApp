@@ -124,7 +124,7 @@
     import EventService from '@/services/EventService'
     require("vue-simple-calendar/static/css/default.css")
     require("vue-simple-calendar/static/css/holidays-us.css")
-    var eventColors = ["#5661DC", "#A9CEF4", "#D0FFD6", "#EEB4B3", "#FFBE86", "#D1FFC6", "#E8F8C1", "#D6D1B1"]
+    var eventColors = ["rgba(86, 97, 220, .5)", "#A9CEF4", "#D0FFD6", "#EEB4B3", "#FFBE86", "#D1FFC6", "#E8F8C1", "#D6D1B1"]
     export default {
         name: 'Calendar',
         title: 'Calendar',

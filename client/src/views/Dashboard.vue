@@ -126,26 +126,35 @@
             </div>
 
             <div class="bot-left">
-              <v-card
-                elevation="4"
-                outlined
-                class="mx-auto"
-                width="100%"
-                height="100%"
-                
-              >
+              <v-card elevation="4"
+                      outlined
+                      class="mx-auto"
+                      width="100%"
+                      height="100%">
 
-              <v-toolbar
-                color="indigo darken-4"
-                dark
-              >
-              <h2>People</h2>
-              <v-spacer></v-spacer>
-              </v-toolbar>   
-
-              <v-container class="home__container">
-              <v-card-actions></v-card-actions>
-              </v-container>
+                <v-toolbar color="indigo darken-4"
+                           dark>
+                  <h2>People</h2>
+                  <v-spacer></v-spacer>
+                </v-toolbar>
+                <v-simple-table :height="heightOfCalTable"
+                                :fixed-header="true">
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">User</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="item in people" :key="item">
+                        <td>{{ item }}</td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+                <v-container class="home__container">
+                  <v-card-actions></v-card-actions>
+                </v-container>
               </v-card>
             </div>
 
@@ -234,7 +243,9 @@
                 weekStart: "",
                 weekEnd: "",
                 dayEnd: '',
-                itemsList:[],
+                itemsList: [],
+                name: "",
+                people:[],
             }
         },
         computed: {
@@ -316,6 +327,11 @@
             },
             fillItemsList() {
               this.itemsList = this.$store.state.itemList;
+            },
+            fillPeople() {
+              this.$store.state.family.forEach(user => {
+                this.people.push(user.firstname + " " + user.lastname)
+              })
             }
         },
 
@@ -324,6 +340,7 @@
           await this.referenceChores()
           await this.referenceEvents()
           await this.fillItemsList();
+          await this.fillPeople()
         },
         
         async updated(){
