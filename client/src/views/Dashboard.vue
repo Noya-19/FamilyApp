@@ -137,14 +137,8 @@
                   <h2>People</h2>
                   <v-spacer></v-spacer>
                 </v-toolbar>
-                <v-simple-table :height="heightOfCalTable"
-                                :fixed-header="true">
+                <v-simple-table :height="heightOfCalTable">
                   <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left">User</th>
-                      </tr>
-                    </thead>
                     <tbody>
                       <tr v-for="item in people" :key="item">
                         <td>{{ item }}</td>
