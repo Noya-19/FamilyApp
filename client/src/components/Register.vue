@@ -98,12 +98,14 @@ export default {
   },
   methods: {
     async register () {
+      if(this.creatingNewFamily != true)
+        this.FamilyId = -1
       try {
         const response = await AuthenticationService.register({
           email: this.email,
           password: this.password,
           creatingNewFamily: !this.joinExistingFamily,
-          familyid: this.FamilyId.parseInt(),
+          familyid: parseInt(this.FamilyId),
           firstname: this.firstname,
           lastname: this.lastname
         })

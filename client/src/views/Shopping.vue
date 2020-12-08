@@ -121,9 +121,10 @@
                 <v-spacer></v-spacer>
                 <v-dialog v-model="dialog" persistent max-width="600px">
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn color='indigo darken-4'
+                      <v-btn color='white'
                              dark
                              v-bind="attrs"
+                             text
                              v-on="on">
                         Add Recipe
                       </v-btn>
