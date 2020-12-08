@@ -25,8 +25,6 @@
                     <tr>
                       <th>Quantity</th>
                       <th>Item</th>
-                      <th>Actions</th>
-                      <th>
                       </th>
                     </tr>
                   </thead>
@@ -237,7 +235,24 @@
                 weekStart: "",
                 weekEnd: "",
                 dayEnd: '',
-                itemsList: [],
+                itemsList:[],
+                tempList: [
+                  {
+                    quantity: "12",
+                    itemName: 'Eggs',
+                    inEditMode: false,
+                  },
+                  {
+                    quantity: "1",
+                    itemName: 'Milk',
+                    inEditMode: false,
+                  },
+                  {
+                    quantity: "1",
+                    itemName: 'FFVII',
+                    inEditMode: false,
+                  },
+                ],
                 name: "",
                 people:[],
             }
@@ -320,7 +335,11 @@
               })
             },
             fillItemsList() {
+
               this.itemsList = this.$store.state.itemList;
+              if (this.itemsList.length === 0) {
+                this.itemList.push.apply(this.itemsList, this.tempList);
+              }            
             },
             fillPeople() {
               this.$store.state.family.forEach(user => {

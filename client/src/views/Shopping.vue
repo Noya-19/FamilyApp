@@ -271,11 +271,49 @@ export default {
         return {
             quantity: '',
             itemName: '',
-            itemsList: [],
+            itemsList: [
+              {
+                quantity: "12",
+                itemName: 'Eggs',
+                inEditMode: false,
+              },
+              {
+                quantity: "1",
+                itemName: 'Milk',
+                inEditMode: false,
+              },
+              {
+                quantity: "1",
+                itemName: 'FFVII',
+                inEditMode: false,
+              },
+            ],
             quantityBox: "",
             itemNameBox:"",
             inEditMode: false,
-            recipes: [],//hold recipices like burger or omelette
+            recipes: [
+              {
+                recipeName: 'Sandwich',
+                recipesItem: [
+                  {
+                    quantity: "1",
+                    itemName: 'soup',
+                    inEditMode: false,
+                  },
+                ],
+              },
+              {
+                recipeName: 'Omelette',
+                recipesItem: [
+                  {
+                    quantity: "12",
+                    itemName: 'Eggs',
+                    inEditMode: false,
+                  },
+                ],
+              },
+              
+            ],//hold recipices like burger or omelette
             recipeName: '',//name of the recipe
             recipesItem: [],//acts like itemsList inside of recipes[] holding items to make the recipe
             recipesList:"",//what gets stored into recipies[]
