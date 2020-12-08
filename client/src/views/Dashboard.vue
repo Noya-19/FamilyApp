@@ -339,7 +339,8 @@
 
               this.itemsList = this.$store.state.itemList;
               if (this.itemsList.length === 0) {
-                this.itemList.push.apply(this.itemsList, this.tempList);
+                this.itemsList.push.apply(this.itemsList, this.tempList);
+                console.log(this.itemsList)
               }            
             },
             fillPeople() {
