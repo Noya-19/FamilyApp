@@ -2,8 +2,43 @@
     <v-main class="school">
       <div class="grid-container">
         <div class="header"><h1>CSUN</h1></div>
-
-        <div class="left"> Everone's Assignments</div>
+        <div class="left">
+          <v-card
+                elevation="4"
+                outlined
+                class="mx-auto"
+                width="100%"
+                height="100%"
+          >
+          <v-toolbar
+                color="indigo darken-4"
+                dark
+          >
+           <h2>Upcoming Assignemets</h2>
+              <v-spacer></v-spacer>
+          </v-toolbar>
+          <template>
+            <v-card>
+              <v-card-title>
+                Class
+                <v-spacer></v-spacer>
+                <v-text-field
+                  v-model="search"
+                  append-icon="mdi-magnify"
+                  label="Search"
+                  single-line
+                  hide-details
+                ></v-text-field>
+              </v-card-title>
+              <v-data-table
+                :headers="headers"
+                :items="assignments"
+                :search="search"
+              ></v-data-table>
+            </v-card>
+          </template>   
+          </v-card>  
+        </div>
         <div class="right">School Calendar</div>
         <div class="bot-left">Linear Algebra</div>
         <div class="footer">Filter by People</div>
@@ -15,8 +50,31 @@
 export default {
   name: 'School',
   title: 'School',
-  props: {
+  components: {
   },
+  data(){
+    return{
+      search: '',
+      headers: [
+        {
+          text: 'Assignments',
+          align: 'start',
+          sortable: false,
+          value: 'name',
+        },
+        { text: 'Class', value: 'class' },
+        { text: 'Due Date', value: 'dueDate' },
+      ],
+      assignments: [
+        {
+          name: 'Lab 1',
+          class: 'Physics',
+          dueDate: '2/5/21',
+        }
+      ],
+    }
+  },
+  
   mounted() {
   } 
 }
