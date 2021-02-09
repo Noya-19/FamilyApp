@@ -39,7 +39,54 @@
           </template>   
           </v-card>  
         </div>
-        <div class="right">School Calendar</div>
+        <div class="right">
+              <v-card
+                elevation="4"
+                outlined
+                class="mx-auto"
+                width="100%"
+                height="100%"
+                
+              >              
+              <v-toolbar
+                color="indigo darken-4"
+                dark
+              >
+              <h2>School Calendar</h2>
+              <v-spacer></v-spacer>
+              </v-toolbar>
+
+                <div id="calendar" class="calView">
+                      <calendar-view v-if="displayVariable ==='month'"
+                                    :show-date="showDate"
+                                    :enableDragDrop="true"
+                                    :items="schoolItems"
+                                    displayPeriodUom="month"
+                                    :enable-date-selection="true"
+                                    :selection-start="selectionStart"
+                                    :selection-end="selectionEnd"
+                                    :display-week-numbers="false"
+                                    :item-top="themeOptions.top"
+                                    :item-content-height="themeOptions.height"
+                                    :item-border-height="themeOptions.border"
+                                    :current-period-label="themeOptions.currentPeriodLabel"
+                                    class="holiday-us-traditional holiday-us-official"
+                                    @date-selection-start="setSelection"
+                                    @date-selection="setSelection"
+                                    @date-selection-finish="finishSelection"
+                                    @click-item="selectEvent">
+                          <calendar-view-header slot="header"
+                                                slot-scope="{ headerProps }"
+                                                :header-props="headerProps"
+                                                :previous-year-label="themeOptions.previousYearLabel"
+                                                :previous-period-label="themeOptions.previousPeriodLabel"
+                                                :next-period-label="themeOptions.nextPeriodLabel"
+                                                :next-year-label="themeOptions.nextYearLabel"
+                                                @input="setShowDate" />
+                      </calendar-view>
+                </div>
+              </v-card>
+        </div>
         <div class="bot-left">Linear Algebra</div>
         <div class="footer">Filter by People</div>
       </div>
@@ -47,6 +94,13 @@
 </template>
 
 <script>
+    import { CalendarView, CalendarViewHeader } from "vue-simple-calendar"
+    // The next two lines are processed by webpack. If you're using the component without webpack compilation,
+    // you should just create <link> elements for these. Both are optional, you can create your own theme if you prefer.
+    import EventService from '@/services/EventService'
+    require("vue-simple-calendar/static/css/default.css")
+    require("vue-simple-calendar/static/css/holidays-us.css")
+    var eventColors = ["aqua", "#67A4E1", "pink", "yellow", "green", "gray", "white", "lightgreen"]
 export default {
   name: 'School',
   title: 'School',
@@ -70,8 +124,18 @@ export default {
           name: 'Lab 1',
           class: 'Physics',
           dueDate: '2/5/21',
-        }
+        },
+        {
+          name: 'Senior Project',
+          class: 'Comp 490',
+          dueDate: '2/7/21',
+        },
       ],
+      schoolItems:[],//items for school calendar
+      showDate: new Date(),
+      selectionStart: null,
+      selectionEnd: null,
+       theme: "gcal",
     }
   },
   
