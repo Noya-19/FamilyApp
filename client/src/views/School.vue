@@ -56,33 +56,33 @@
               </v-toolbar>
 
                 <div id="calendar" class="calView">
-                      <calendar-view v-if="displayVariable ==='month'"
-                                    :show-date="showDate"
-                                    :enableDragDrop="true"
-                                    :items="schoolItems"
-                                    displayPeriodUom="month"
-                                    :enable-date-selection="true"
-                                    :selection-start="selectionStart"
-                                    :selection-end="selectionEnd"
-                                    :display-week-numbers="false"
-                                    :item-top="themeOptions.top"
-                                    :item-content-height="themeOptions.height"
-                                    :item-border-height="themeOptions.border"
-                                    :current-period-label="themeOptions.currentPeriodLabel"
-                                    class="holiday-us-traditional holiday-us-official"
-                                    @date-selection-start="setSelection"
-                                    @date-selection="setSelection"
-                                    @date-selection-finish="finishSelection"
-                                    @click-item="selectEvent">
-                          <calendar-view-header slot="header"
-                                                slot-scope="{ headerProps }"
-                                                :header-props="headerProps"
-                                                :previous-year-label="themeOptions.previousYearLabel"
-                                                :previous-period-label="themeOptions.previousPeriodLabel"
-                                                :next-period-label="themeOptions.nextPeriodLabel"
-                                                :next-year-label="themeOptions.nextYearLabel"
-                                                @input="setShowDate" />
-                      </calendar-view>
+                    <calendar-view v-if="displayVariable ==='month'"
+                                  :show-date="showDate"
+                                  :enableDragDrop="true"
+                                  :items="schoolItems"
+                                  displayPeriodUom="month"
+                                  :enable-date-selection="true"
+                                  :selection-start="selectionStart"
+                                  :selection-end="selectionEnd"
+                                  :display-week-numbers="false"
+                                  :item-top="themeOptions.top"
+                                  :item-content-height="themeOptions.height"
+                                  :item-border-height="themeOptions.border"
+                                  :current-period-label="themeOptions.currentPeriodLabel"
+                                  class="holiday-us-traditional holiday-us-official"
+                                  @date-selection-start="setSelection"
+                                  @date-selection="setSelection"
+                                  @date-selection-finish="finishSelection"
+                                  @click-item="selectEvent">
+                      <calendar-view-header slot="header"
+                                              slot-scope="{ headerProps }"
+                                              :header-props="headerProps"
+                                              :previous-year-label="themeOptions.previousYearLabel"
+                                              :previous-period-label="themeOptions.previousPeriodLabel"
+                                              :next-period-label="themeOptions.nextPeriodLabel"
+                                              :next-year-label="themeOptions.nextYearLabel"
+                                              @input="setShowDate" />
+                    </calendar-view>
                 </div>
               </v-card>
         </div>
@@ -143,11 +143,12 @@
     import EventService from '@/services/EventService'
     require("vue-simple-calendar/static/css/default.css")
     require("vue-simple-calendar/static/css/holidays-us.css")
-    var eventColors = ["aqua", "#67A4E1", "pink", "yellow", "green", "gray", "white", "lightgreen"]
 export default {
   name: 'School',
   title: 'School',
   components: {
+     CalendarView,
+     CalendarViewHeader,
   },
   data(){
     return{
@@ -162,26 +163,72 @@ export default {
         { text: 'Class', value: 'class' },
         { text: 'Due Date', value: 'dueDate' },
       ],
-      assignments: [
-        {
-          name: 'Lab 1',
-          class: 'Physics',
-          dueDate: '2/5/21',
-        },
-        {
-          name: 'Senior Project',
-          class: 'Comp 490',
-          dueDate: '2/7/21',
-        },
-      ],
+      assignments: [],// list view of assignments in left box
       schoolItems:[],//items for school calendar
       showDate: new Date(),
       selectionStart: null,
       selectionEnd: null,
-       theme: "gcal",
+      theme: "gcal",
+      startDay: "",
+      endDay: "",
+      title: "",
+      displayVariable: "month",
+
     }
   },
-  
+  computed: {
+      themeOptions() {
+        return this.theme == "gcal"
+            ? {
+                top: "2.6em",
+                height: "2.1em",
+                border: "0px",
+                previousYearLabel: "\uE5CB\uE5CB",
+                previousPeriodLabel: "\uE5CB",
+                nextPeriodLabel: "\uE5CC",
+                nextYearLabel: "\uE5CC\uE5CC",
+                currentPeriodLabel: "Today",
+              }
+            : {
+                top: "1.4em",
+                height: "1.4em",
+                border: "2px",
+                previousYearLabel: "<<",
+                previousPeriodLabel: "<",
+                nextPeriodLabel: ">",
+                nextYearLabel: ">>",
+                currentPeriodLabel: "",
+              }
+      }
+    },
+  methods:{
+    selectEvent(event) {
+      this.selectedEvent = event
+    },
+    setShowDate(d) {
+			this.showDate = d
+		},
+		setSelection(dateRange) {
+			this.selectionEnd = dateRange[1]
+			this.selectionStart = dateRange[0]
+		},
+		finishSelection(dateRange) {
+			this.setSelection(dateRange)
+		},
+		getRandomEvent(index){
+			const startDay = Math.floor(Math.random() * 28 + 1)
+			const endDay = Math.floor(Math.random() * 4) + startDay
+			var d = new Date()
+			var i = {
+				id: index.toString(),
+				title: "Event " + (index + 1),
+				startDate: new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), startDay)),
+				endDate: new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), endDay)),
+				classes: Math.random() > 0.9 ? ["custom-date-class-red"] : null,
+			}
+			return i
+		},
+  },
   mounted() {
   } 
 }
