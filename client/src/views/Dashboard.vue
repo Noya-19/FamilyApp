@@ -337,7 +337,8 @@
 
     .grid-container {
         display: grid;
-        grid-template-areas: "left left right right" "bot-left footer right right";
+        grid-template-areas: "left left right right" 
+                             "bot-left footer right right";
         grid-column-gap: 2rem;
         grid-row-gap: 2rem;
         text-align: center;
