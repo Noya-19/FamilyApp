@@ -34,7 +34,7 @@ module.exports = {
                         FamilyId: req.body.familyid
                     })
                     const userJson = user.toJSON()
-                    res.send({
+                    res.status(200).send({
                         user: userJson,
                         token: jwtSignUser(userJson)
                     })
@@ -52,7 +52,7 @@ module.exports = {
                     FamilyId: family.id
                 })
                 const userJson = user.toJSON()
-                res.send({
+                res.status(200).send({
                     user: userJson,
                     token: jwtSignUser(userJson)
                 })
@@ -93,6 +93,37 @@ module.exports = {
         } catch (err) {
             res.status(500).send({
                 error: 'An error has occurred trying to log in.'
+            })
+        }
+    },
+    async checkAuth (req, res) {
+        try {
+            if (req.headers.authorization === 'undefined') {
+                res.sendStatus(403)
+            } else {
+                const decoded = jwt.verify(req.headers.authorization, config.authentication.jwtSecret)
+                const USER_EMAIL = decoded.email
+                const USER = await User.findOne({
+                    where: {
+                        email: USER_EMAIL
+                    }
+                })
+                if (!USER) {
+                    res.status(404).send({
+                        user: {},
+                        statusText: 'User not found.'
+                    })
+                } else {
+                    res.status(200).send({
+                        user: {
+                            email: USER.email
+                        }
+                    })
+                }
+            }
+        } catch (err) {
+            res.status(500).send({
+                error: 'An error has occurred trying to fetch user.'
             })
         }
     }

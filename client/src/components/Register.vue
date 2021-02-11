@@ -1,12 +1,6 @@
 <template>
-  <v-card v-if="!$store.state.isUserLoggedIn"
-    class="mx-auto"
-    max-width="700"
-  >
-    <v-toolbar
-      color="indigo darken-4"
-      dark
-    >
+  <v-card v-if="!$store.state.isUserLoggedIn" class="mx-auto" max-width="700">
+    <v-toolbar color="indigo darken-4" dark>
       <v-toolbar-title>Register</v-toolbar-title>
       <v-spacer></v-spacer>
       <span>Already an existing user?</span>
@@ -19,14 +13,10 @@
         <router-link to="/login">Login</router-link>
       </v-btn>
     </v-toolbar>
-    <img class="home__img"
-      src="../assets/logo_size.jpg"
-    />
+    <img class="home__img" src="../assets/logo_size.jpg" />
     <v-container>
       <div title="Register">
-        <form
-          name="family-app-form"
-          autocomplete="off">
+        <form name="family-app-form" autocomplete="off">
           <v-text-field
             label="First Name"
             v-model="firstname"
@@ -42,7 +32,7 @@
             v-model="email"
             color="indigo darken-4"
           ></v-text-field>
-          <br>
+          <br />
           <v-text-field
             label="Password"
             type="password"
@@ -53,22 +43,20 @@
           <v-switch
             v-model="joinExistingFamily"
             :label="'Join existing family'"
-            color='indigo lighten-1'
-            default=false
+            color="indigo lighten-1"
+            default="false"
           ></v-switch>
-          <v-text-field v-if="joinExistingFamily"
+          <v-text-field
+            v-if="joinExistingFamily"
             label="Family Code"
             v-model="FamilyId"
             color="indigo darken-4"
           ></v-text-field>
         </form>
-        <br>
+        <br />
         <div class="danger-alert" v-html="error" />
-        <br>
-        <v-btn
-          dark
-          color='indigo darken-4'
-          @click="register">
+        <br />
+        <v-btn dark color="indigo darken-4" @click="register">
           Register
         </v-btn>
       </div>
@@ -77,7 +65,7 @@
 </template>
 
 <script>
-import AuthenticationService from '@/services/AuthenticationService'
+import { REGISTER } from '@/store/actions.type'
 import FamilyService from '@/services/FamilyService'
 import ChoreService from '@/services/ChoreService'
 import EventService from '@/services/EventService'
@@ -98,10 +86,9 @@ export default {
   },
   methods: {
     async register () {
-      if(this.creatingNewFamily != true)
-        this.FamilyId = -1
+      if (this.creatingNewFamily !== true) this.FamilyId = -1
       try {
-        const response = await AuthenticationService.register({
+        const response = await this.$store.dispatch(REGISTER, {
           email: this.email,
           password: this.password,
           creatingNewFamily: !this.joinExistingFamily,
@@ -119,51 +106,52 @@ export default {
         this.error = error.response.data.error
       }
     },
-    async getAssociatedFamilyMembers(familyid) {
-        try {
-          const response = await FamilyService.getFamilyUsers({
-            FamilyId: familyid
-          })
-          this.$store.dispatch('setFamily', response.data)
-          //this.$store.state.family.forEach(user => console.log(user.id)) print out all user ids in the family
-        } catch (error) {
-          this.error = error.response.data.error
-        }
+    async getAssociatedFamilyMembers (familyid) {
+      try {
+        const response = await FamilyService.getFamilyUsers({
+          FamilyId: familyid
+        })
+        this.$store.dispatch('setFamily', response.data)
+        // this.$store.state.family.forEach(user => console.log(user.id)) print out all user ids in the family
+      } catch (error) {
+        this.error = error.response.data.error
+      }
     },
-    async getFamilyChores(family) {
-        try {
-          family.forEach(user => {
-            const response = ChoreService.index({
-              UserId: user.id
-            })
-            response.then((value)=>{
-              this.$store.dispatch('setChores', value.data)
-            })
+    async getFamilyChores (family) {
+      try {
+        family.forEach(user => {
+          const response = ChoreService.index({
+            UserId: user.id
           })
-        } catch (error) {
-          this.error = error.response.data.error
-        }
+          response.then(value => {
+            this.$store.dispatch('setChores', value.data)
+          })
+        })
+      } catch (error) {
+        this.error = error.response.data.error
+      }
     },
-    async getFamilyEvents(family) {
-        try {
-          family.forEach(user => {
-            const response = EventService.index({
-              UserId: user.id
-            })
-            response.then((value)=>{
-              this.$store.dispatch('setEvents', value.data)
-            })
+    async getFamilyEvents (family) {
+      try {
+        family.forEach(user => {
+          const response = EventService.index({
+            UserId: user.id
           })
-        } catch (error) {
-          this.error = error.response.data.error
-        }
+          response.then(value => {
+            this.$store.dispatch('setEvents', value.data)
+          })
+        })
+      } catch (error) {
+        this.error = error.response.data.error
+      }
     }
-  },
+  }
 }
 </script>
 
 <style scoped lang="scss">
-a, span{
-    color: white;
+a,
+span {
+  color: white;
 }
 </style>
