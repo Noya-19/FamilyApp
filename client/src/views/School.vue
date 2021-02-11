@@ -239,7 +239,7 @@ export default {
 
   .grid-container {
         grid-template-columns: 25% 25% 25% 25%; //200px 200px 200px 200px 200px 200px;
-        grid-template-rows: 25rem auto;
+        grid-template-rows: 33.5rem auto;
         padding-right: $lg-gutter;
         //background-color: $light-gray;
         //background-color: black;
