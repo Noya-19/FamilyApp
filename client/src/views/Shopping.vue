@@ -41,8 +41,6 @@
                             color="indigo darken-4"
                         ></v-text-field>
                         <br>
-                        <div class="danger-alert" v-html="error" />
-                        <br>
                         <v-btn
                             color="indigo darken-4"
                             text
@@ -71,36 +69,37 @@
                     >
                         <thead>
                             <tr>
-                                <th>Quantity</th>
-                                <th>Item</th>
-                                <th>Actions</th>
-                                <th>
-                                </th>
+                                <th style="text-align:center">Quantity</th>
+                                <th style="text-align:center">Item</th>
+                                <th style="text-align:center">Edit</th>
+                                <th style="text-align:center">Delete</th>
                             </tr>
                         </thead>
                         <tr v-for="(item, index) in itemsList">
-                            <td>
+                            <td style="text-align:center">
                                 <span v-show="!item.inEditMode">{{ item.quantity }}</span>
                                 <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" />
                               </td>
-                            <td>
+                            <td style="text-align:center">
                                 <span v-show="!item.inEditMode">{{ item.itemName }}</span>
                                 <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
                             </td>
-                            <td>
+                            <td style="text-align:center">
                                 <v-icon small
                                         class="mr-2"
                                         @click="editItem(item)"
                                         v-show="!item.inEditMode">
                                   mdi-pencil
                                 </v-icon>
+                              
                                 <v-icon small
                                         class="mr-2"
                                         @click="editItemComplete(item)"
                                         v-show="item.inEditMode">
                                   mdi-book-open
                                 </v-icon>
-                                <br/>
+                              </td>  
+                              <td style="text-align:center">  
                                 <v-icon small
                                         class="mr-2"
                                         @click="removeItem(index)">
@@ -177,9 +176,8 @@
                                                 <tr>
                                                   <th>Quantity</th>
                                                   <th>Item</th>
-                                                  <th>Actions</th>
-                                                  <th>
-                                                  </th>
+                                                  <th>Edit</th>
+                                                  <th>Delete</th>
                                                 </tr>
                                             </thead>
                                             <tr v-for="(item, index) in recipesItem">
@@ -204,7 +202,8 @@
                                                           v-show="item.inEditMode">
                                                     mdi-book-open
                                                   </v-icon>
-                                                  <br />
+                                                </td>  
+                                                <td>
                                                   <v-icon small
                                                           class="mr-2"
                                                           @click=" removeRecipeItem(index)">
@@ -231,21 +230,33 @@
                 <thead>
                   <tr>
                     <th class="text-left">Name</th>
-                    <th>Actions</th>
+                    <th>Add To Shopping List</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(item,index) in recipes" :key="item.recipeName">
-                        <td>{{ item.recipeName }}</td>
+                        <td style="text-align:center">{{ item.recipeName }} </td>
                         <td>
+                            <v-icon small
+                              class="mr-2"
+                              @click=" addRecipeToItemList(index)" >
+                             mdi-pencil
+                            </v-icon>
+                          </td>
+                          <td>
+                          </td>
+                          <td>
                             <v-btn elevation="2"
-                                   small
-                                   @click=" addRecipeToItemList(index)"
-                                   color="indigo darken-4"
-                                   dark>
-                              Add to <br/> Shopping list
-                            </v-btn>
-                            <br />
+                                          normal
+                                           color="indigo darken-4"
+                                           dark
+                                             @click="addItemRecipe">
+                                      Add Ingredient
+                                    </v-btn>
+                          </td>
+                          <td>
                             <v-icon small
                                     class="mr-2"
                                     @click=" removeRecipe(index)"
@@ -271,7 +282,48 @@ export default {
         return {
             quantity: '',
             itemName: '',
-            itemsList: [],
+            itemsList: [
+                {
+                quantity: "12",
+                itemName: 'Eggs',
+                inEditMode: false,
+              },
+              {
+                quantity: "1",
+                itemName: 'Milk',
+                inEditMode: false,
+              },
+              {
+                quantity: "1",
+                itemName: 'FFVII',
+                inEditMode: false,
+              },
+            ],
+            quantityBox: "",
+            itemNameBox:"",
+            inEditMode: false,
+            recipes: [
+              {
+                recipeName: 'Sandwich',
+                recipesItem: [
+                  {
+                    quantity: "1",
+                    itemName: 'soup',
+                    inEditMode: false,
+                  },
+                ],
+              },
+              {
+                recipeName: 'Omelette',
+                recipesItem: [
+                  {
+                    quantity: "12",
+                    itemName: 'Eggs',
+                    inEditMode: false,
+                  },
+                ],
+              },
+            ],
             quantityBox: "",
             itemNameBox:"",
             inEditMode: false,
@@ -386,8 +438,28 @@ export default {
         },
 
         addRecipeToItemList(index) {
+
           this.itemsList.push.apply(this.itemsList,this.recipes[index].recipesList);
-        }
+          //loops through entire itemsList
+          for (let i = 0; i < this.itemsList.length; i++) {//grabs first item
+            console.log(this.itemsList.length)
+            console.log("first" +  i)
+            for(let j = i+1; j < this.itemsList.length;j++){//checks with all items after it
+              console.log("j="+j)
+              // console.log(this.itemsList[i].itemName)
+              // console.log(this.itemsList[j].itemName)
+              if(this.itemsList[i].itemName.toLowerCase() == this.itemsList[j].itemName.toLowerCase()){//if duplicate is found add the quanities and delete the second
+                console.log('true')
+                this.itemsList[i].quantity = Number(this.itemsList[i].quantity) +  Number(this.itemsList[j].quantity);
+                this.itemsList.splice(j,1);
+                console.log(this.itemsList)
+              }//end if
+            }//end for
+            console.log(i)
+          }//end for
+          console.log('out of loop')
+          console.log(this.itemsList.length)
+        },
     }
 }
 </script>
