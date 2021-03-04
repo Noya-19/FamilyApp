@@ -104,12 +104,12 @@
               <v-spacer></v-spacer>
               </v-toolbar>   
 
-              <v-container class="home__container">
+              <v-container class="school__container">
               <v-card-actions></v-card-actions>
               </v-container>
               </v-card>
         </div>
-        <div class="footer">
+        <div class="bot-right">
           <v-card
                 elevation="4"
                 outlined
@@ -126,10 +126,27 @@
               <h2>Filter by People</h2>
               <v-spacer></v-spacer>
               </v-toolbar>   
+              
+                <!--<template v-slot:default>
+                    <tbody>
+                      <tr v-for="(item, index) in people" :key="index">
+                        <td>
+                          <v-icon
+                          >mdi-account-box
+                          </v-icon>
+                          {{ item }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </template>-->
+              
+                
+              
 
-              <v-container class="home__container">
+              <v-container class="school__container">
               <v-card-actions></v-card-actions>
               </v-container>
+              
               </v-card>
         </div>
       </div>
@@ -238,18 +255,16 @@ export default {
   @import "../scss/variables.scss";
 
   .grid-container {
-        grid-template-columns: 25% 25% 25% 25%; //200px 200px 200px 200px 200px 200px;
+        grid-template-columns: 25% 25% 25% 25%;
         grid-template-rows: 33.5rem auto;
         padding-right: $lg-gutter;
-        //background-color: $light-gray;
-        //background-color: black;
   }
 
   .grid-container {
     display: grid;
     grid-template-areas:
     "left left right right right"
-    "bot-left bot-left footer footer footer";
+    "bot-left bot-left bot-right bot-right bot-right";
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
     text-align: center;
@@ -257,9 +272,8 @@ export default {
 
   .left,
   .right,
-  .bot-left {
+  .bot-left, .bot-right {
     margin-top: 0.625rem;
-    //height: 50rem;
     padding: 0.625rem;
   }
 
@@ -267,18 +281,16 @@ export default {
     grid-area: left;
   }
 
-        /* Style the middle column */
   .right {
     grid-area: right;
   }
 
-        /* Style the right column */
   .bot-left {
     grid-area: bot-left;
   }
 
-  .footer {
-    grid-area: footer;
+  .bot-right {
+    grid-area: bot-right;
   }
 
 </style>

@@ -331,7 +331,7 @@
         grid-template-columns: 25% 25% 25% 25%; //200px 200px 200px 200px 200px 200px;
         grid-template-rows: 25rem auto;
         padding-right: $lg-gutter;
-        background-color: $light-gray;
+        //background-color: $light-gray;
         //background-color: black;
     }
 
