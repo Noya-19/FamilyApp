@@ -11,7 +11,7 @@
                 >
                 <v-toolbar-title>Shopping List</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-dialog v-model="dialogleft" persistent max-width="600px">
+                <v-dialog v-model="shoppingListDisplay" persistent max-width="600px">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn color="white"
                                 dark
@@ -45,13 +45,13 @@
                             color="indigo darken-4"
                             text
                             dark
-                            @click="dialogleft = false"
+                            @click="shoppingListDisplay = false"
                         >Close
                         </v-btn>
                         <v-btn
                             dark
                             color="indigo darken-4"
-                            @click="dialogleft = false;
+                            @click="shoppingListDisplay = false;
                             addItem()"
                         >
                             Add
@@ -118,7 +118,7 @@
                        dark>
               <v-toolbar-title>Recipe List</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-dialog v-model="dialog" persistent max-width="600px">
+                <v-dialog v-model="recipeListDisplay" persistent max-width="600px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn color='white'
                              dark
@@ -218,8 +218,8 @@
                         </v-card-text>
                         <v-card-actions>
                           <v-spacer></v-spacer>
-                          <v-btn color="indigo darken-4" text @click="dialog = false">Close</v-btn>
-                          <v-btn color="indigo darken-4" dark @click="dialog = false; addRecipe()">Add</v-btn>
+                          <v-btn color="indigo darken-4" text @click="recipeListDisplay = false">Close</v-btn>
+                          <v-btn color="indigo darken-4" dark @click="recipeListDisplay = false; addRecipe()">Add</v-btn>
                           </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -236,30 +236,128 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item,index) in recipes" :key="item.recipeName">
-                        <td style="text-align:center">{{ item.recipeName }} </td>
+                    <tr v-for="(outerItem,outerIndex) in recipes" :key="outerItem.recipeName">
+                        <td style="text-align:center">{{ outerItem.recipeName }} </td>
                         <td>
                             <v-icon small
                               class="mr-2"
-                              @click=" addRecipeToItemList(index)" >
-                             mdi-pencil
+                              @click=" addRecipeToItemList(outerIndex)" >
+                             mdi-plus
                             </v-icon>
+                            
                           </td>
                           <td>
-                          </td>
-                          <td>
-                            <v-btn elevation="2"
-                                          normal
-                                           color="indigo darken-4"
-                                           dark
-                                             @click="addItemRecipe">
-                                      Add Ingredient
-                                    </v-btn>
+                             <v-dialog v-model="editdialog" persistent max-width="600px">
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-icon color='blue'
+                                      dark
+                                      v-bind="attrs"
+                                      class="mr-2"
+                                      
+                                      v-on="on">
+                                  mdi-pencil
+                                </v-icon>
+                              </template>
+                              <v-card>
+                                  <v-card-title>
+                                    <span class="headline">Recipe Ingredients</span>
+                                  </v-card-title>
+                                  <v-card-text>
+                                      <v-container>
+                                          <v-row>
+                                              <v-col cols="12">
+                                                  <v-text-field label= outerItem.recipeName
+                                                    v-model="recipeName"
+                                                    required
+                                                    color='indigo darken-4'></v-text-field>
+                                              </v-col>
+                                          </v-row>
+                                          <v-row>
+                                              <div class="col-md-6 form-group">
+
+                                                <v-text-field v-model="itemNameBox"
+                                                              label="Ingredient"
+                                                              clearable
+                                                              color='indigo darken-4'>
+                                                </v-text-field>
+                                              </div>
+
+                                              <div class="col-md-6 form-group">
+                                                <v-text-field type="number"
+                                                              label="Amount"
+                                                              v-model="quantityBox"
+                                                              color="indigo darken-4"></v-text-field>
+                                              </div>
+                                              <v-btn elevation="2"
+                                                    normal
+                                                    color="indigo darken-4"
+                                                    dark
+                                                      @click="addItemRecipe">
+                                                Add Ingredient
+                                              </v-btn>
+                                              <br/>
+
+                                          </v-row>
+                                          <v-row>
+                                              <v-card min-width="550" class="addItemRecipeCard">
+                                                  <v-simple-table id="shopping-list-table"
+                                                                  fixed-header height="300px">
+                                                      <thead>
+                                                          <tr>
+                                                            <th>Quantity</th>
+                                                            <th>Item</th>
+                                                            <th>Edit</th>
+                                                            <th>Delete</th>
+                                                          </tr>
+                                                      </thead>
+                                                      <tr v-for="(item, index) in outerItem">
+                                                          <td>
+                                                            <span v-show="!item.inEditMode">{{ item.quantity }}</span>
+                                                            <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" class="col-md-6 form-group" />
+                                                          </td>
+                                                          <td>
+                                                            <span v-show="!item.inEditMode">{{ item.itemName }}</span>
+                                                            <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" class="col-md-6 form-group" />
+                                                          </td>
+                                                          <td>
+                                                            <v-icon small
+                                                                    class="mr-2"
+                                                                    @click=" editRecipeItem(item)"
+                                                                    v-show="!item.inEditMode">
+                                                              mdi-pencil
+                                                            </v-icon>
+                                                            <v-icon small
+                                                                    class="mr-2"
+                                                                    @click="editRecipeItemComplete(item)"
+                                                                    v-show="item.inEditMode">
+                                                              mdi-book-open
+                                                            </v-icon>
+                                                          </td>  
+                                                          <td>
+                                                            <v-icon small
+                                                                    class="mr-2"
+                                                                    @click=" removeRecipeItem(index)">
+                                                              mdi-delete
+                                                            </v-icon>
+                                                        </td>
+                                                      </tr>
+                                                  </v-simple-table>
+                                              </v-card>
+                                          </v-row>
+                                      </v-container>
+                                  </v-card-text>
+                                  <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="indigo darken-4" text @click="editDialog = false">Close</v-btn>
+                                    <v-btn color="indigo darken-4" dark @click="editDialog = false; addRecipe()">Add</v-btn>
+                                    </v-card-actions>
+                              </v-card>
+                            </v-dialog>
                           </td>
                           <td>
                             <v-icon small
                                     class="mr-2"
-                                    @click=" removeRecipe(index)"
+                                    @click=" removeRecipe(outerIndex)"
                                     vertical-align: middle>
                               mdi-delete
                             </v-icon>
@@ -331,8 +429,9 @@ export default {
             recipeName: '',//name of the recipe
             recipesItem: [],//acts like itemsList inside of recipes[] holding items to make the recipe
             recipesList:"",//what gets stored into recipies[]
-            dialog: false,
-            dialogleft:false
+            shoppingListDisplay: false,
+            recipeListDisplay:false,
+            editDialog:false,
         }
     },
     methods: {
