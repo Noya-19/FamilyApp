@@ -110,24 +110,19 @@
               </v-card>
         </div>
         <div class="bot-right">
-          <v-card
-                elevation="4"
-                outlined
-                class="mx-auto"
-                width="100%"
-                height="100%"
-                
-              >
+          <v-card elevation="4"
+                      outlined
+                      class="mx-auto"
+                      width="100%"
+                      height="100%">
 
-              <v-toolbar
-                color="indigo darken-4"
-                dark
-              >
-              <h2>Filter by People</h2>
-              <v-spacer></v-spacer>
-              </v-toolbar>   
-              
-                <!--<template v-slot:default>
+                <v-toolbar color="indigo darken-4"
+                           dark>
+                  <h2>People</h2>
+                  <v-spacer></v-spacer>
+                </v-toolbar>
+                <v-simple-table :height="heightOfCalTable">
+                  <template v-slot:default>
                     <tbody>
                       <tr v-for="(item, index) in people" :key="index">
                         <td>
@@ -138,15 +133,11 @@
                         </td>
                       </tr>
                     </tbody>
-                  </template>-->
-              
-                
-              
-
-              <v-container class="school__container">
-              <v-card-actions></v-card-actions>
-              </v-container>
-              
+                  </template>
+                </v-simple-table>
+                <v-container class="home__container">
+                  <v-card-actions></v-card-actions>
+                </v-container>
               </v-card>
         </div>
       </div>
@@ -182,30 +173,32 @@ export default {
       ],
       assignments: [
         {
-          person: "Kyle",
+          name: "Kyle",
           class: "Comp 440",
           assignment: "Data Management Application",
           due: "03/19/21",
         },
         {
-          person: "Renaldy",
+          name: "Renaldy",
           class: "Comp 429",
           assignment: "Quiz 2",
           due: "03/12/21"
         },
         {
-          person: "Christian",
+          name: "Christian",
           class: "Comp 565",
           assignment: "OpenGL assignment 1",
           due: "03/29/21",
         },
         {
-          person: "Josh",
+          name: "Josh",
           class: "Comp 482",
           assignment: "Quiz 5",
           due: "03/31/21"
         },
       ],// list view of assignments in left box
+      name: "",
+      people:[],
       schoolItems:[],//items for school calendar
       showDate: new Date(),
       selectionStart: null,
@@ -270,8 +263,14 @@ export default {
 			}
 			return i
 		},
+     fillPeople() {
+              this.$store.state.family.forEach(user => {
+                this.people.push(user.firstname + " " + user.lastname)
+              })
+            },
   },
-  mounted() {
+  async mounted() {
+     await this.fillPeople()
   } 
 }
 </script>
