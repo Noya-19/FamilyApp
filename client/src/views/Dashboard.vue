@@ -8,7 +8,7 @@
                 class="mx-auto"
                 width="100%"
                 height="100%"
-                
+
               >
               <v-toolbar
                 color="indigo darken-4"
@@ -18,11 +18,29 @@
               <v-spacer></v-spacer>
               </v-toolbar>
               <v-container class="home__container">
-              <v-card-actions></v-card-actions>
+                <v-card-actions></v-card-actions>
+                <v-simple-table id="shopping-list-table"
+                                fixed-header>
+                  <thead>
+                    <tr>
+                      <th>Quantity</th>
+                      <th>Item</th>
+                      
+                    </tr>
+                  </thead>
+                  <tr v-for="(item, index) in itemsList">
+                    <td>
+                      
+                    </td>
+                    <td>
+                    
+                    </td>
+                  </tr>
+                </v-simple-table>
               </v-container>
               </v-card>
             </div>
-            
+
             <div class="right">
 
               <v-card
@@ -31,8 +49,8 @@
                 class="mx-auto"
                 width="100%"
                 height="100%"
-                
-              >              
+
+              >
               <v-toolbar
                 color="indigo darken-4"
                 dark
@@ -98,38 +116,43 @@
               </v-container>
               </v-card>
 
-                
-                
+
+
 
             </div>
 
             <div class="bot-left">
-              <v-card
-                elevation="4"
-                outlined
-                class="mx-auto"
-                width="100%"
-                height="100%"
-                
-              >
+              <v-card elevation="4"
+                      outlined
+                      class="mx-auto"
+                      width="100%"
+                      height="100%">
 
-              <v-toolbar
-                color="indigo darken-4"
-                dark
-              >
-              <h2>People</h2>
-              <v-spacer></v-spacer>
-              </v-toolbar>   
-
-              <v-container class="home__container">
-              <v-card-actions></v-card-actions>
-              </v-container>
+                <v-toolbar color="indigo darken-4"
+                           dark>
+                  <h2>People</h2>
+                  <v-spacer></v-spacer>
+                </v-toolbar>
+                <v-simple-table :height="heightOfCalTable">
+                  <template v-slot:default>
+                    <tbody>
+                      <tr v-for="(item, index) in people" :key="index">
+                        <td>
+                          <v-icon
+                          >mdi-account-box
+                          </v-icon>
+                          {{ item }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+                <v-container class="home__container">
+                  <v-card-actions></v-card-actions>
+                </v-container>
               </v-card>
             </div>
-
             <div class="footer">
-
-                
               <v-card
               elevation="4"
               outlined
@@ -139,11 +162,11 @@
               >
               <v-toolbar
                 color="indigo darken-4"
-                dark                
+                dark
               >
               <h2>Chores List</h2>
               <v-spacer></v-spacer>
-              </v-toolbar>                
+              </v-toolbar>
                 <div id="choresTable">
                 <v-simple-table :height="heightOfCalTable"
                                 :fixed-header="true">
@@ -169,7 +192,7 @@
               <v-card-actions></v-card-actions>
               </v-container>
               </v-card>
-                
+
             </div>
 
         </div>
@@ -183,7 +206,6 @@
     import EventService from '@/services/EventService'
     require("vue-simple-calendar/static/css/default.css")
     require("vue-simple-calendar/static/css/holidays-us.css")
-    var eventColors = ["aqua", "#67A4E1", "pink", "yellow", "green", "gray", "white", "lightgreen"]
 
     export default {
         name: 'Dashboard',
@@ -211,7 +233,27 @@
                 today: "",
                 weekStart: "",
                 weekEnd: "",
-                dayEnd:'',
+                dayEnd: '',
+                itemsList:[],
+                tempList: [
+                  {
+                    quantity: "12",
+                    itemName: 'Eggs',
+                    inEditMode: false,
+                  },
+                  {
+                    quantity: "1",
+                    itemName: 'Milk',
+                    inEditMode: false,
+                  },
+                  {
+                    quantity: "1",
+                    itemName: 'FFVII',
+                    inEditMode: false,
+                  },
+                ],
+                name: "",
+                people:[],
             }
         },
         computed: {
@@ -290,6 +332,11 @@
               this.incompletedChores = this.choreList.filter(function(e) {
                 return !e.isComplete
               })
+            },          
+            fillPeople() {
+              this.$store.state.family.forEach(user => {
+                this.people.push(user.firstname + " " + user.lastname)
+              })
             },
         },
 
@@ -297,8 +344,9 @@
           //Data doesn't load in properly if chores referenced second. Might be because of the amount of data in events
           await this.referenceChores()
           await this.referenceEvents()
+          await this.fillPeople()
         },
-        
+
         async updated(){
           //Currently goes through many loops on load
           await this.fillDash();
@@ -331,14 +379,13 @@
         grid-template-columns: 25% 25% 25% 25%; //200px 200px 200px 200px 200px 200px;
         grid-template-rows: 25rem auto;
         padding-right: $lg-gutter;
-        //background-color: $light-gray;
+        background-color: $light-gray;
         //background-color: black;
     }
 
     .grid-container {
         display: grid;
-        grid-template-areas: "left left right right" 
-                             "bot-left footer right right";
+        grid-template-areas: "left left right right" "bot-left footer right right";
         grid-column-gap: 2rem;
         grid-row-gap: 2rem;
         text-align: center;
@@ -353,13 +400,13 @@
         padding: 0.625rem;
     }
 
-    // Style the left column 
+    // Style the left column
     .left {
         grid-area: left;
         //height: 25rem;
     }
 
-    // Style the middle column 
+    // Style the middle column
     .right {
         grid-area: right;
         //height: 51rem;
@@ -375,6 +422,6 @@
 
     h2{
       text-align: center;
-      
+
     }
 </style>
