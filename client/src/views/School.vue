@@ -180,7 +180,32 @@ export default {
         { text: 'Class', value: 'class' },
         { text: 'Due Date', value: 'dueDate' },
       ],
-      assignments: [],// list view of assignments in left box
+      assignments: [
+        {
+          person: "Kyle",
+          class: "Comp 440",
+          assignment: "Data Management Application",
+          due: "03/19/21",
+        },
+        {
+          person: "Renaldy",
+          class: "Comp 429",
+          assignment: "Quiz 2",
+          due: "03/12/21"
+        },
+        {
+          person: "Christian",
+          class: "Comp 565",
+          assignment: "OpenGL assignment 1",
+          due: "03/29/21",
+        },
+        {
+          person: "Josh",
+          class: "Comp 482",
+          assignment: "Quiz 5",
+          due: "03/31/21"
+        },
+      ],// list view of assignments in left box
       schoolItems:[],//items for school calendar
       showDate: new Date(),
       selectionStart: null,
