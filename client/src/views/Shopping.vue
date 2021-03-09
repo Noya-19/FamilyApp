@@ -224,19 +224,19 @@
                     </v-card>
                 </v-dialog>
             </v-toolbar>
-
+            <!-- table for recipieslist -->
             <v-simple-table fixed-header height="300px">
 
                 <thead>
                   <tr>
-                    <th class="text-left">Name</th>
-                    <th>Add To Shopping List</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th class="text-center">Name</th>
+                    <th style="text-align:center" >Add To Shopping List</th>
+                    <th style="text-align:center" >Edit</th>
+                    <th style="text-align:center" >Delete</th>
                   </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(outerItem,outerIndex) in recipes" :key="outerItem.recipeName">
+                    <tr v-for="(outerItem,outerIndex) in recipes">
                         <td style="text-align:center">{{ outerItem.recipeName }} </td>
                         <td>
                             <v-icon small
@@ -246,14 +246,14 @@
                             </v-icon>
                             
                           </td>
+                          <!-- This opens dialog box for editing recipies -->
                           <td>
-                             <v-dialog v-model="editdialog" persistent max-width="600px">
+                             <v-dialog v-model="editDialog" persistent max-width="600px">
                               <template v-slot:activator="{ on, attrs }">
                                 <v-icon color='blue'
                                       dark
                                       v-bind="attrs"
                                       class="mr-2"
-                                      
                                       v-on="on">
                                   mdi-pencil
                                 </v-icon>
@@ -266,8 +266,8 @@
                                       <v-container>
                                           <v-row>
                                               <v-col cols="12">
-                                                  <v-text-field label= outerItem.recipeName
-                                                    v-model="recipeName"
+                                                  <v-text-field label= Name
+                                                    v-model="outerItem.recipeName"
                                                     required
                                                     color='indigo darken-4'></v-text-field>
                                               </v-col>
@@ -300,7 +300,7 @@
                                           </v-row>
                                           <v-row>
                                               <v-card min-width="550" class="addItemRecipeCard">
-                                                  <v-simple-table id="shopping-list-table"
+                                                  <v-simple-table id="recipies-edit-table"
                                                                   fixed-header height="300px">
                                                       <thead>
                                                           <tr>
@@ -310,33 +310,35 @@
                                                             <th>Delete</th>
                                                           </tr>
                                                       </thead>
-                                                      <tr v-for="(item, index) in outerItem">
+                                                      <tr v-for="(innerItem, innerIndex) in recipes[outerIndex].recipesItem">
                                                           <td>
-                                                            <span v-show="!item.inEditMode">{{ item.quantity }}</span>
-                                                            <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" class="col-md-6 form-group" />
+                                                            <span v-show="!innerItem.inEditMode">{{ innerItem.quantity }}</span>
+                                                            <input type="number" v-bind:placeholder="innerItem.quantity" v-show="innerItem.inEditMode" v-model="innerItem.quantity" class="col-md-6 form-group" />
                                                           </td>
+                                                          
                                                           <td>
-                                                            <span v-show="!item.inEditMode">{{ item.itemName }}</span>
-                                                            <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" class="col-md-6 form-group" />
+                                                            <span v-show="!innerItem.inEditMode">{{ innerItem.itemName }}</span>
+                                                            <input v-bind:placeholder="innerItem.itemName" v-show="innerItem.inEditMode" v-model="innerItem.itemName" class="col-md-6 form-group" />
                                                           </td>
                                                           <td>
                                                             <v-icon small
                                                                     class="mr-2"
-                                                                    @click=" editRecipeItem(item)"
-                                                                    v-show="!item.inEditMode">
+                                                                    
+                                                                    @click=" editRecipeItem(innerItem)"
+                                                                    v-show="!innerItem.inEditMode">
                                                               mdi-pencil
                                                             </v-icon>
                                                             <v-icon small
                                                                     class="mr-2"
-                                                                    @click="editRecipeItemComplete(item)"
-                                                                    v-show="item.inEditMode">
+                                                                    @click="editRecipeItemComplete(innerItem)"
+                                                                    v-show="innerItem.inEditMode">
                                                               mdi-book-open
                                                             </v-icon>
                                                           </td>  
                                                           <td>
                                                             <v-icon small
                                                                     class="mr-2"
-                                                                    @click=" removeRecipeItem(index)">
+                                                                    @click=" removeRecipeItem(innerIndex)">
                                                               mdi-delete
                                                             </v-icon>
                                                         </td>
@@ -349,7 +351,8 @@
                                   <v-card-actions>
                                     <v-spacer></v-spacer>
                                     <v-btn color="indigo darken-4" text @click="editDialog = false">Close</v-btn>
-                                    <v-btn color="indigo darken-4" dark @click="editDialog = false; addRecipe()">Add</v-btn>
+                                    <!-- need to add update recipie method -->
+                                    <v-btn color="indigo darken-4" dark @click="editDialog = false; updateRecipie()">Add</v-btn>
                                     </v-card-actions>
                               </v-card>
                             </v-dialog>
@@ -515,6 +518,7 @@ export default {
             item.inEditMode = true;
         },
         editRecipeItem: function (item) {
+
             item.inEditMode = true;
         },
         editItemComplete: function (item) {
@@ -545,8 +549,6 @@ export default {
             console.log("first" +  i)
             for(let j = i+1; j < this.itemsList.length;j++){//checks with all items after it
               console.log("j="+j)
-              // console.log(this.itemsList[i].itemName)
-              // console.log(this.itemsList[j].itemName)
               if(this.itemsList[i].itemName.toLowerCase() == this.itemsList[j].itemName.toLowerCase()){//if duplicate is found add the quanities and delete the second
                 console.log('true')
                 this.itemsList[i].quantity = Number(this.itemsList[i].quantity) +  Number(this.itemsList[j].quantity);
@@ -559,6 +561,10 @@ export default {
           console.log('out of loop')
           console.log(this.itemsList.length)
         },
+
+        tryMe(item){
+          console.log(item);
+        }
     }
 }
 </script>
