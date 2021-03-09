@@ -23,18 +23,18 @@
                                     Name of event
                                 </label>
                                 <div class="control">
-                                    <input type="text" class="input" v-model="title" id="title"/>
+                                    <input type="text" class="input" v-model="title" id="title" required/>
                                 </div>
                                 <div class="field">
                                     <label class="label">Start date</label>
                                     <div class="control">
-                                        <input type="date" class="input" v-model="startDay" id="startDate"/>
+                                        <input type="date" class="input" v-model="startDay" id="startDate" required/>
                                     </div>
                                 </div>
                                 <div class="field">
                                     <label class="label">End date</label>
                                     <div class="control">
-                                        <input type="date" class="input" v-model="endDay" />
+                                        <input type="date" class="input" v-model="endDay" required/>
                                     </div>
                                 </div>
                                 <v-btn class="button is-info" @click="addEvent"
