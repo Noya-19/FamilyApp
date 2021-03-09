@@ -1,7 +1,56 @@
 <template>
     <v-main class="school">
       <div class="grid-container">
-        <div class="left">
+       
+        <div class="right">
+              <v-card
+                elevation="4"
+                outlined
+                class="mx-auto"
+                width="100%"
+                height="100%"
+                
+              >              
+              <v-toolbar
+                color="indigo darken-4"
+                dark
+              >
+              <h2>School Calendar</h2>
+              <v-spacer></v-spacer>
+              </v-toolbar>
+
+                <div id="calendar" class="calView">
+                    <calendar-view v-if="displayVariable ==='month'"
+                                  :show-date="showDate"
+                                  :enableDragDrop="true"
+                                  :items="assignments"
+                                  displayPeriodUom="month"
+                                  :enable-date-selection="true"
+                                  :selection-start="selectionStart"
+                                  :selection-end="selectionEnd"
+                                  :display-week-numbers="false"
+                                  :item-top="themeOptions.top"
+                                  :item-content-height="themeOptions.height"
+                                  :item-border-height="themeOptions.border"
+                                  :current-period-label="themeOptions.currentPeriodLabel"
+                                  class="holiday-us-traditional holiday-us-official"
+                                  @date-selection-start="setSelection"
+                                  @date-selection="setSelection"
+                                  @date-selection-finish="finishSelection"
+                                  @click-item="selectEvent">
+                      <calendar-view-header slot="header"
+                                              slot-scope="{ headerProps }"
+                                              :header-props="headerProps"
+                                              :previous-year-label="themeOptions.previousYearLabel"
+                                              :previous-period-label="themeOptions.previousPeriodLabel"
+                                              :next-period-label="themeOptions.nextPeriodLabel"
+                                              :next-year-label="themeOptions.nextYearLabel"
+                                              @input="setShowDate" />
+                    </calendar-view>
+                </div>
+              </v-card>
+        </div>
+         <div class="bot-left">
           <v-card
                 elevation="4"
                 outlined
@@ -37,77 +86,6 @@
             </v-card>
           </template>   
           </v-card>  
-        </div>
-        <div class="right">
-              <v-card
-                elevation="4"
-                outlined
-                class="mx-auto"
-                width="100%"
-                height="100%"
-                
-              >              
-              <v-toolbar
-                color="indigo darken-4"
-                dark
-              >
-              <h2>School Calendar</h2>
-              <v-spacer></v-spacer>
-              </v-toolbar>
-
-                <div id="calendar" class="calView">
-                    <calendar-view v-if="displayVariable ==='month'"
-                                  :show-date="showDate"
-                                  :enableDragDrop="true"
-                                  :items="schoolItems"
-                                  displayPeriodUom="month"
-                                  :enable-date-selection="true"
-                                  :selection-start="selectionStart"
-                                  :selection-end="selectionEnd"
-                                  :display-week-numbers="false"
-                                  :item-top="themeOptions.top"
-                                  :item-content-height="themeOptions.height"
-                                  :item-border-height="themeOptions.border"
-                                  :current-period-label="themeOptions.currentPeriodLabel"
-                                  class="holiday-us-traditional holiday-us-official"
-                                  @date-selection-start="setSelection"
-                                  @date-selection="setSelection"
-                                  @date-selection-finish="finishSelection"
-                                  @click-item="selectEvent">
-                      <calendar-view-header slot="header"
-                                              slot-scope="{ headerProps }"
-                                              :header-props="headerProps"
-                                              :previous-year-label="themeOptions.previousYearLabel"
-                                              :previous-period-label="themeOptions.previousPeriodLabel"
-                                              :next-period-label="themeOptions.nextPeriodLabel"
-                                              :next-year-label="themeOptions.nextYearLabel"
-                                              @input="setShowDate" />
-                    </calendar-view>
-                </div>
-              </v-card>
-        </div>
-        <div class="bot-left">
-          <v-card
-                elevation="4"
-                outlined
-                class="mx-auto"
-                width="100%"
-                height="100%"
-                
-              >
-
-              <v-toolbar
-                color="indigo darken-4"
-                dark
-              >
-              <h2>Linear Algebra</h2>
-              <v-spacer></v-spacer>
-              </v-toolbar>   
-
-              <v-container class="school__container">
-              <v-card-actions></v-card-actions>
-              </v-container>
-              </v-card>
         </div>
         <div class="bot-right">
           <v-card elevation="4"
@@ -163,43 +141,55 @@ export default {
       search: '',
       headers: [
         {
-          text: 'Assignments',
+          text: 'Name',
           align: 'start',
           sortable: false,
           value: 'name',
         },
         { text: 'Class', value: 'class' },
-        { text: 'Due Date', value: 'dueDate' },
+        {text: 'Assignment', value:'title'},
+        { text: 'Due Date', value: 'endDate1' },
       ],
       assignments: [
         {
           name: "Kyle",
           class: "Comp 440",
-          assignment: "Data Management Application",
-          due: "03/19/21",
+          title: "Data Management Application",
+          startDate: new Date(Date.UTC(2021,2 , 19)),
+				  endDate: new Date(Date.UTC(2021, 2, 19)), 
+           endDate1: "3/19/2021",
+          id: 1,
         },
         {
           name: "Renaldy",
           class: "Comp 429",
-          assignment: "Quiz 2",
-          due: "03/12/21"
+          title: "Quiz 2",
+          startDate: new Date(Date.UTC(2021,2 , 22)),
+				  endDate: new Date(Date.UTC(2021, 2, 22)), 
+          endDate1: "3/22/2021",
+           id: 2,
         },
         {
           name: "Christian",
           class: "Comp 565",
-          assignment: "OpenGL assignment 1",
-          due: "03/29/21",
+          title: "OpenGL assignment 1",
+          startDate: new Date(Date.UTC(2021,2 , 29)),
+				  endDate: new Date(Date.UTC(2021, 2, 29)), 
+          endDate1: "3/29/2021",
+          id: 3,
         },
         {
           name: "Josh",
           class: "Comp 482",
-          assignment: "Quiz 5",
-          due: "03/31/21"
+          title: "Quiz 5",
+         startDate: new Date(Date.UTC(2021,2 , 13)),
+				  endDate: new Date(Date.UTC(2021, 2, 13)),
+           endDate1: "3/13/2021", 
+          id: 4,
         },
       ],// list view of assignments in left box
       name: "",
       people:[],
-      schoolItems:[],//items for school calendar
       showDate: new Date(),
       selectionStart: null,
       selectionEnd: null,
@@ -208,6 +198,8 @@ export default {
       endDay: "",
       title: "",
       displayVariable: "month",
+      heightOfCalTable: '300px',
+
 
     }
   },
@@ -261,6 +253,7 @@ export default {
 				endDate: new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), endDay)),
 				classes: Math.random() > 0.9 ? ["custom-date-class-red"] : null,
 			}
+      console.log(i);
 			return i
 		},
      fillPeople() {
@@ -287,15 +280,15 @@ export default {
   .grid-container {
     display: grid;
     grid-template-areas:
-    "left left right right right"
+    "right right right right right"
     "bot-left bot-left bot-right bot-right bot-right";
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
     text-align: center;
   }
 
-  .left,
-  .right,
+
+  .left,.right,
   .bot-left, .bot-right {
     margin-top: 0.625rem;
     padding: 0.625rem;
