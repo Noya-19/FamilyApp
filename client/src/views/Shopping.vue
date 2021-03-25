@@ -161,7 +161,7 @@
                     normal
                     color="indigo darken-4"
                     dark
-                    @click="addItemRecipe"
+                    @click="addItemToRecipeList"
                   >
                     Add Ingredient
                   </v-btn>
@@ -361,7 +361,7 @@
                             <!-- try makeing this an array = to .recipiesItem -->
                             <tr
                               v-for="(innerItem,
-                              innerIndex) in dupRecipiesItems"
+                              innerIndex) in dupRecipesItems"
                             >
                               <td>
                                 <span v-show="!innerItem.inEditMode">{{
@@ -521,7 +521,7 @@ export default {
       shoppingListDisplay: false,
       recipeListDisplay: false,
       editDialog: false,
-      dupRecipiesItems: ""
+      dupRecipesItems: Array(0)
     };
   },
   methods: {
@@ -550,7 +550,7 @@ export default {
       }
     },
 
-    addItemRecipe() {
+    addItemToRecipeList() {
       //items within the recipe
       
       this.recipesItem.push({
@@ -562,7 +562,7 @@ export default {
     },
     //adds items to the edit recipies list
     editAddItemRecipe() {
-      this.dupRecipiesItems.push({
+      this.dupRecipesItems.push({
         quantity: this.quantityBox,
         itemName: this.itemNameBox.trim(),
         inEditMode: false
@@ -628,7 +628,7 @@ export default {
       item.inEditMode = false;
     },
     editRemoveRecipeItem(index){
-      this.dupRecipiesItems.splice(index,1)
+      this.dupRecipesItems.splice(index,1)
     },
 
     // info: function(itemlist) {
@@ -665,13 +665,15 @@ export default {
           } //end if
         } //end for
       } //end for
+
     },
 
     duplicateRecipiesItems(index) {
-      this.dupRecipiesItems = this.recipes[index].recipesList;
+      this.dupRecipesItems = this.recipes[index].recipesList;
     },
     updateRecipie(index) {
-      this.recipies[index].recipesList = dupRecipiesItems;
+      this.recipes[index].recipesList = this.dupRecipesItems;
+      console.log(this.recipes)
     }
   }
 };
