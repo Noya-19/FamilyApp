@@ -41,9 +41,14 @@
                     </v-icon>
                     <router-link class="nav-drawer__route" v-if="$store.state.isUserLoggedIn" to="/chores">Chores</router-link>
                 </v-list-item>
-                <!-- <v-list-item>
+                <v-list-item>
+                    <v-icon
+                    left
+                    >
+                     mdi-school
+                    </v-icon>
                     <router-link v-if="$store.state.isUserLoggedIn" to="/school">School</router-link>
-                </v-list-item> -->
+                </v-list-item> 
                 <v-list-item>
                     <v-icon
                     left

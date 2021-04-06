@@ -335,13 +335,18 @@
                 return !e.isComplete
               })
             },
+            fillPeople() {
+              this.$store.state.family.forEach(user => {
+                this.people.push(user.firstname + " " + user.lastname)
+              })
+            },
             fillItemsList() {
 
               this.itemsList = this.$store.state.itemList;
               if (this.itemsList.length === 0) {
                 this.itemsList.push.apply(this.itemsList, this.tempList);
                 console.log(this.itemsList)
-              }            
+              }
             },
             fillPeople() {
               this.$store.state.family.forEach(user => {
