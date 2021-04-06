@@ -18,6 +18,7 @@ module.exports = {
     },
     async post (req, res) {
         try {
+            console.log(req.body)
             const chore = await Chore.create(req.body,)
             res.status(200).send(chore)
         } catch (err) {

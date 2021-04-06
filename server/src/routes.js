@@ -2,6 +2,8 @@ const AuthenticationController = require('./controllers/AuthenticationController
 const ChoresController = require('./controllers/ChoresController')
 const FamilyController = require('./controllers/FamilyController')
 const EventsController = require('./controllers/EventsController')
+const ShoppingListController = require('./controllers/ShoppingListController')
+
 
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 
@@ -32,4 +34,9 @@ module.exports = (app) => {
         EventsController.delete)
     app.post('/events',
         EventsController.post)
+
+    app.post('/shoppinglist/items',
+        ShoppingListController.postItem)
+    app.post('/shoppinglist/recipes',
+        ShoppingListController.postRecipe)
 }
