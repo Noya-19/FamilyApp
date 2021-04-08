@@ -1,110 +1,93 @@
 <template>
     <v-main class="calendar">
-        <h1>My Calendar</h1>
-        <div id="calendar">
-            <div class="calendar-controls">
-                <div>
-                    <div class="control">
-                        <div class="box">
-                            <div class="select">
-                                <v-select
-                                          v-model="displayVariable"
-                                          :items="option"
-                                          label="View"
-                                          color='indigo darken-4'
-                                          >
+        <v-card
+        elevation="4"
+        outlined
+        class="mx-auto"
+        width="100%"
+        height="100%">
+        <v-toolbar
+        color="indigo darken-4"
+        dark
+        >
+        <v-toolbar-title> My Calendar </v-toolbar-title>
+        <v-spacer></v-spacer>
+        </v-toolbar>
+            <div id="calendar">
+                <div class="calendar-controls">
+                    <div>
+                        <div class="control">
+                            <div class="box">
+                                <div class="select">
+                                    <v-select
+                                            v-model="displayVariable"
+                                            :items="option"
+                                            label="View"
+                                            color='indigo darken-4'
+                                            >
 
-                                </v-select>
+                                    </v-select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="box">
-                            <div class="field">
-                                <label class="eventlabel">
-                                    Name of event
-                                </label>
-                                <div class="control">
-                                    <input type="text" class="input" v-model="title" id="title" required/>
-                                </div>
+                            <div class="box">
                                 <div class="field">
-                                    <label class="label">Start date</label>
+                                    <label class="eventlabel">
+                                        Name of event
+                                    </label>
                                     <div class="control">
-                                        <input type="date" class="input" v-model="startDay" id="startDate" required/>
+                                        <input type="text" class="input" v-model="title" id="title" required/>
                                     </div>
-                                </div>
-                                <div class="field">
-                                    <label class="label">End date</label>
-                                    <div class="control">
-                                        <input type="date" class="input" v-model="endDay" required/>
+                                    <div class="field">
+                                        <label class="label">Start date</label>
+                                        <div class="control">
+                                            <input type="date" class="input" v-model="startDay" id="startDate" required/>
+                                        </div>
                                     </div>
-                                </div>
-                                <v-btn class="button is-info" @click="addEvent"
-                                    dark
-                                    color='indigo darken-4'
-                                >
-                                    Create Event
+                                    <div class="field">
+                                        <label class="label">End date</label>
+                                        <div class="control">
+                                            <input type="date" class="input" v-model="endDay" required/>
+                                        </div>
+                                    </div>
+                                    <v-btn class="button is-info" @click="addEvent"
+                                        dark
+                                        color='indigo darken-4'
+                                    >
+                                        Create Event
 
-                                </v-btn>
-                                <v-btn class="button is-info" @click="deleteEvent(selectedEvent)"
-                                    dark
-                                    color='red darken-1'
-                                >
-                                    Delete Event
-                                </v-btn>
+                                    </v-btn>
+                                    <v-btn class="button is-info" @click="deleteEvent(selectedEvent)"
+                                        dark
+                                        color='red darken-1'
+                                    >
+                                        Delete Event
+                                    </v-btn>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <calendar-view v-if="displayVariable ==='month'"
-                :show-date="showDate"
-                :enableDragDrop="true"
-                :items="items"
-                displayPeriodUom="month"
-                :enable-date-selection="true"
-                :selection-start="selectionStart"
-                :selection-end="selectionEnd"
-                :display-week-numbers="false"
-                :item-top="themeOptions.top"
-                :item-content-height="themeOptions.height"
-                :item-border-height="themeOptions.border"
-                :current-period-label="themeOptions.currentPeriodLabel"
-                class="holiday-us-traditional holiday-us-official"
-                @date-selection-start="setSelection"
-                @date-selection="setSelection"
-                @date-selection-finish="finishSelection"
-                @click-item="selectEvent"
-                >
-            <calendar-view-header slot="header"
-                slot-scope="{ headerProps }"
-                :header-props="headerProps"
-                :previous-year-label="themeOptions.previousYearLabel"
-                :previous-period-label="themeOptions.previousPeriodLabel"
-                :next-period-label="themeOptions.nextPeriodLabel"
-                :next-year-label="themeOptions.nextYearLabel"
-                @input="setShowDate" />
-            </calendar-view>
-            <calendar-view v-if="displayVariable ==='week'"
-                :show-date="showDate"
-                :enableDragDrop="true"
-                :items="items"
-                displayPeriodUom="week"
-                :enable-date-selection="true"
-                :selection-start="selectionStart"
-                :selection-end="selectionEnd"
-                :display-week-numbers="false"
-                :item-top="themeOptions.top"
-                :item-content-height="themeOptions.height"
-                :item-border-height="themeOptions.border"
-                :current-period-label="themeOptions.currentPeriodLabel"
-                class="holiday-us-traditional holiday-us-official"
-                @date-selection-start="setSelection"
-                @date-selection="setSelection"
-                @date-selection-finish="finishSelection"
-                @click-item="selectEvent"
-                >
-                <calendar-view-header
-                    slot="header"
+                <calendar-view v-if="displayVariable ==='month'"
+                    :show-date="showDate"
+                    :enableDragDrop="true"
+                    :items="items"
+                    displayPeriodUom="month"
+                    :enable-date-selection="true"
+                    :selection-start="selectionStart"
+                    :selection-end="selectionEnd"
+                    :display-week-numbers="false"
+                    :item-top="themeOptions.top"
+                    :item-content-height="themeOptions.height"
+                    :item-border-height="themeOptions.border"
+                    :current-period-label="themeOptions.currentPeriodLabel"
+                    class="holiday-us-traditional holiday-us-official"
+                    @date-selection-start="setSelection"
+                    @date-selection="setSelection"
+                    @date-selection-finish="finishSelection"
+                    @click-item="selectEvent"
+                    >
+                <calendar-view-header slot="header"
                     slot-scope="{ headerProps }"
                     :header-props="headerProps"
                     :previous-year-label="themeOptions.previousYearLabel"
@@ -112,8 +95,38 @@
                     :next-period-label="themeOptions.nextPeriodLabel"
                     :next-year-label="themeOptions.nextYearLabel"
                     @input="setShowDate" />
-            </calendar-view>
-        </div>
+                </calendar-view>
+                <calendar-view v-if="displayVariable ==='week'"
+                    :show-date="showDate"
+                    :enableDragDrop="true"
+                    :items="items"
+                    displayPeriodUom="week"
+                    :enable-date-selection="true"
+                    :selection-start="selectionStart"
+                    :selection-end="selectionEnd"
+                    :display-week-numbers="false"
+                    :item-top="themeOptions.top"
+                    :item-content-height="themeOptions.height"
+                    :item-border-height="themeOptions.border"
+                    :current-period-label="themeOptions.currentPeriodLabel"
+                    class="holiday-us-traditional holiday-us-official"
+                    @date-selection-start="setSelection"
+                    @date-selection="setSelection"
+                    @date-selection-finish="finishSelection"
+                    @click-item="selectEvent"
+                    >
+                    <calendar-view-header
+                        slot="header"
+                        slot-scope="{ headerProps }"
+                        :header-props="headerProps"
+                        :previous-year-label="themeOptions.previousYearLabel"
+                        :previous-period-label="themeOptions.previousPeriodLabel"
+                        :next-period-label="themeOptions.nextPeriodLabel"
+                        :next-year-label="themeOptions.nextYearLabel"
+                        @input="setShowDate" />
+                </calendar-view>
+            </div>
+        </v-card>
     </v-main>
 </template>
 
@@ -256,9 +269,30 @@
 </script>
 
 <style lang="scss" scoped>
+
+    @import '../scss/variables.scss';
+
+
+
     .cv-item.custom-date-class-red {
         background-color: #ff6666;
     }
+
+    .calendar{
+        background-color: $light-gray;
+        //border-style: solid;
+        //border-color: black;
+        margin-left: 1rem;
+        margin-top: 1rem;
+
+    }
+
+    /*h1{
+        background-color: #1976d2;
+        margin-left: -16rem;
+        color: white;
+    }*/
+
     #calendar {
         display: flex;
         flex-grow: 1;
@@ -268,6 +302,7 @@
         width: auto;
         margin-left: auto;
         margin-right: auto;
+        //margin-left: -16rem;
     }
     .select select {
         background-color: #fff;

@@ -53,13 +53,19 @@ export default {
 
 <style scoped lang="scss">
 @import '../scss/variables.scss';
-.home {
-  &__container{
-    display: flex;
+
+  .v-application .indigo.darken-4 {
+    background-color: #1976d2!important;
+    border-color: #1a237e!important;
   }
-  a {
-    color: white;
-    text-decoration: none;
+
+  .home {
+    &__container{
+      display: flex;
+    }
+    a {
+      color: white;
+      text-decoration: none;
+    }
   }
-}
 </style>

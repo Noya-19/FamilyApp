@@ -144,7 +144,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../scss/variables.scss';
+
+  .v-application .indigo.darken-4 {
+    background-color: #1976d2!important;
+    border-color: #1a237e!important;
+  }
+
 a {
-    color: white;
+    color: $light-gray;
   }
 </style>

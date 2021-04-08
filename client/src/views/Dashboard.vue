@@ -14,7 +14,7 @@
                 color="indigo darken-4"
                 dark
               >
-              <h2> Shopping List </h2>
+              <v-toolbar-title> Shopping List </v-toolbar-title>
               <v-spacer></v-spacer>
               </v-toolbar>
               <v-container class="home__container">
@@ -57,7 +57,7 @@
                 color="indigo darken-4"
                 dark
               >
-              <h2>Calendar</h2>
+              <v-toolbar-title>Calendar</v-toolbar-title>
               <v-spacer></v-spacer>
               </v-toolbar>
 
@@ -90,7 +90,7 @@
                                               @input="setShowDate" />
                     </calendar-view>
                 </div>
-                <h2>Events</h2>
+                <v-toolbar-title>Events</v-toolbar-title>
                 <div id="calTable">
                     <v-simple-table :height="heightOfCalTable"
                                     :fixed-header="true">
@@ -132,7 +132,7 @@
 
                 <v-toolbar color="indigo darken-4"
                            dark>
-                  <h2>People</h2>
+                  <v-toolbar-title>People</v-toolbar-title>
                   <v-spacer></v-spacer>
                 </v-toolbar>
                 <v-simple-table :height="heightOfCalTable">
@@ -166,7 +166,7 @@
                 color="indigo darken-4"
                 dark
               >
-              <h2>Chores List</h2>
+              <v-toolbar-title>Chores List</v-toolbar-title>
               <v-spacer></v-spacer>
               </v-toolbar>
                 <div id="choresTable">
@@ -364,10 +364,26 @@
 </script>
 
 <style lang="scss">
+
+  
+
     @import '../scss/variables.scss';
     /*#calTable{
        max-height:100px;
     }*/
+
+    //* {background-color: $light-gray}
+
+    html {background-color: $light-gray}
+    //body {background-color: black}
+    .dashboard{background-color: $light-gray}
+    .theme--light.v-application {background: $light-gray}
+
+    .v-application .indigo.darken-4 {
+      background-color: #1976d2!important;
+      border-color: #1a237e!important;
+    }
+
     #choresTable{
         max-height:inherit;
         max-width:inherit
@@ -389,12 +405,12 @@
         grid-template-rows: 25rem auto;
         padding-right: $lg-gutter;
         background-color: $light-gray;
-        //background-color: black;
     }
 
     .grid-container {
         display: grid;
-        grid-template-areas: "left left right right" "bot-left footer right right";
+        grid-template-areas: "left left right right" 
+                             "bot-left footer right right";
         grid-column-gap: 2rem;
         grid-row-gap: 2rem;
         text-align: center;
@@ -429,8 +445,4 @@
       grid-area: footer;
     }
 
-    h2{
-      text-align: center;
-
-    }
 </style>

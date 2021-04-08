@@ -99,7 +99,7 @@
             >
                 <v-row
                     class="grey lighten-5"
-                    style="height: 300px;"
+                    style="height: 325px;"
                 >
                     <v-toolbar
                         color="indigo darken-4"

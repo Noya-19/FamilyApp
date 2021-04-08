@@ -96,6 +96,9 @@ export default {
 <style lang='scss' scoped>
 @import "../scss/variables.scss";
 
+html {background-color: black}
+.dashboard{background-color: yellow}
+
 .nav-drawer {
     &__links {
         &--active {

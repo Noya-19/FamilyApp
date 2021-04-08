@@ -15,7 +15,7 @@
                 color="indigo darken-4"
                 dark
               >
-              <h2>School Calendar</h2>
+              <v-toolbar-title>School Calendar</v-toolbar-title>
               <v-spacer></v-spacer>
               </v-toolbar>
 
@@ -62,7 +62,7 @@
                 color="indigo darken-4"
                 dark
           >
-           <h2>Upcoming Assignemets</h2>
+           <v-toolbar-title>Upcoming Assignemets</v-toolbar-title>
               <v-spacer></v-spacer>
           </v-toolbar>
           <template>
@@ -96,7 +96,7 @@
 
                 <v-toolbar color="indigo darken-4"
                            dark>
-                  <h2>People</h2>
+                  <v-toolbar-title>People</v-toolbar-title>
                   <v-spacer></v-spacer>
                 </v-toolbar>
                 <v-simple-table :height="heightOfCalTable">
