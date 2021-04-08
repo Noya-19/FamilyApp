@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const ShoppingListRecipe = sequelize.define('ShoppingListRecipe', {
         recipeName: DataTypes.STRING,
-        recipeList: DataTypes.JSON,
+        recipesList: DataTypes.JSON,
         FamilyId: DataTypes.INTEGER
     })
 

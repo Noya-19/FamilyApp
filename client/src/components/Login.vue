@@ -55,6 +55,7 @@ import AuthenticationService from '@/services/AuthenticationService'
 import FamilyService from '@/services/FamilyService'
 import ChoreService from '@/services/ChoreService'
 import EventService from '@/services/EventService'
+import ShoppingListService from '@/services/ShoppingListService'
 export default {
   name: 'Login',
   title: 'Login',
@@ -81,6 +82,7 @@ export default {
         await this.getAssociatedFamilyMembers(this.$store.state.user.FamilyId)
         await this.getFamilyChores(this.$store.state.family)
         await this.getFamilyEvents(this.$store.state.family)
+        await this.getFamilyShoppingList(this.$store.state.user.FamilyId)
         .then(this.$router.push('/dashboard'))
       } catch (error) {
         this.error = error.response.data.error
@@ -120,6 +122,18 @@ export default {
             response.then((value)=>{
               this.$store.dispatch('setEvents', value.data)
             })
+          })
+        } catch (error) {
+          this.error = error.response.data.error
+        }
+    },
+    async getFamilyShoppingList(familyid){
+      try {
+          const response = ShoppingListService.index({
+            FamilyId: familyid
+          })
+          response.then((value)=>{
+            this.$store.dispatch('setItemList', value.data)
           })
         } catch (error) {
           this.error = error.response.data.error

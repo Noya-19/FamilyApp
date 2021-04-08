@@ -461,6 +461,7 @@
 </template>
 
 <script>
+import ShoppingListService from '@/services/ShoppingListService'
 export default {
   name: "Shopping",
   title: "Shopping",
@@ -469,23 +470,7 @@ export default {
     return {
       quantity: "",
       itemName: "",
-      itemsList: [
-        {
-          quantity: "12",
-          itemName: "Eggs",
-          inEditMode: false
-        },
-        {
-          quantity: "1",
-          itemName: "Milk",
-          inEditMode: false
-        },
-        {
-          quantity: "1",
-          itemName: "FFVII",
-          inEditMode: false
-        }
-      ],
+      itemsList: [],
       quantityBox: "",
       itemNameBox: "",
       inEditMode: false,
@@ -514,7 +499,7 @@ export default {
       quantityBox: "",
       itemNameBox: "",
       inEditMode: false,
-      recipes: [], //hold recipices like burger or omelette
+      //recipes: [], //hold recipices like burger or omelette
       recipeName: "", //name of the recipe
       recipesItem: [], //acts like itemsList inside of recipes[] holding items to make the recipe
       recipesList: "", //what gets stored into recipies[]
@@ -525,27 +510,45 @@ export default {
     };
   },
   methods: {
-    addItem() {
+    async addItem() {
       //left shoppinglist
       var quantityIN = this.quantity;
       var itemNameIN = this.itemName.trim();
-      this.itemsList.push({
+      var itemToAdd = {
         quantity: quantityIN,
         itemName: itemNameIN,
-        inEditMode: false
-      });
+        inEditMode: false,
+        FamilyId: this.$store.state.user.FamilyId
+      };
+      this.itemsList.push(itemToAdd);
+      try {
+          const reponse = await ShoppingListService.createItem(itemToAdd);
+      } catch (error) {
+          this.error = error.response.data.error
+      }
       this.clearAll();
     },
 
-    addRecipe() {
+    async addRecipe() {
       //recipeList
+      var response;
       console.log(this.recipes.includes(this.recipeName))
       if(!this.recipes.includes(this.recipeName)){
         console.log(this.recipesItem);
-        this.recipes.push({
+        var myJsonString = JSON.stringify(this.recipesItem)
+        var recipeToAdd = {
           recipeName: this.recipeName,
-          recipesList: this.recipesItem
-        });
+          recipesList: this.recipesItem,
+          FamilyId: this.$store.state.user.FamilyId
+        }
+      this.recipes.push(recipeToAdd);
+      recipeToAdd.recipesList = myJsonString
+      try {
+        response = await ShoppingListService.createRecipe(recipeToAdd);
+      } catch (error) {
+          this.error = error.response.data.error
+      }
+        console.log(JSON.parse(response.data.recipesList))
         this.clearRecipeName();
       }
     },
@@ -675,6 +678,9 @@ export default {
       this.recipes[index].recipesList = this.dupRecipesItems;
       console.log(this.recipes)
     }
+  },
+  mounted: async function () {
+    this.itemsList = this.$store.state.itemList
   }
 };
 </script>

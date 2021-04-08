@@ -35,6 +35,8 @@ module.exports = (app) => {
     app.post('/events',
         EventsController.post)
 
+    app.get('/shoppinglist/items',
+        ShoppingListController.getFamilyItems)
     app.post('/shoppinglist/items',
         ShoppingListController.postItem)
     app.post('/shoppinglist/recipes',

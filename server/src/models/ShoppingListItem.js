@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const ShoppingListItem = sequelize.define('ShoppingListItem', {
         itemName: DataTypes.STRING,
-        itemQuantity:DataTypes.INTEGER,
+        quantity:DataTypes.INTEGER,
         inEditMode: DataTypes.BOOLEAN,
         FamilyId: DataTypes.INTEGER
     })

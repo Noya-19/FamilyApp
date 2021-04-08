@@ -239,20 +239,20 @@
                 itemsList:[],
                 tempList: [
                   {
-                    quantity: "12",
-                    itemName: 'Eggs',
-                    inEditMode: false,
-                  },
-                  {
-                    quantity: "1",
-                    itemName: 'Milk',
-                    inEditMode: false,
-                  },
-                  {
-                    quantity: "1",
-                    itemName: 'FFVII',
-                    inEditMode: false,
-                  },
+                  quantity: "12",
+                  itemName: "Eggs",
+                  inEditMode: false
+                },
+                {
+                  quantity: "1",
+                  itemName: "Milk",
+                  inEditMode: false
+                },
+                {
+                  quantity: "1",
+                  itemName: "FFVII",
+                  inEditMode: false
+                }
                 ],
                 name: "",
                 people:[],
@@ -311,6 +311,9 @@
             referenceChores() {
                 this.choreList = this.$store.state.chores
             },
+            referenceShoppingList(){
+                this.tempList = this.$store.state.itemList
+            },
             fillDash() {
               var today = new Date()
               today = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate()
@@ -340,18 +343,8 @@
                 this.people.push(user.firstname + " " + user.lastname)
               })
             },
-            fillItemsList() {
-
+            referenceItemsList() {
               this.itemsList = this.$store.state.itemList;
-              if (this.itemsList.length === 0) {
-                this.itemsList.push.apply(this.itemsList, this.tempList);
-                console.log(this.itemsList)
-              }
-            },
-            fillPeople() {
-              this.$store.state.family.forEach(user => {
-                this.people.push(user.firstname + " " + user.lastname)
-              })
             },
         },
 
@@ -359,7 +352,7 @@
           //Data doesn't load in properly if chores referenced second. Might be because of the amount of data in events
           await this.referenceChores()
           await this.referenceEvents()
-          await this.fillItemsList();
+          await this.referenceItemsList();
           await this.fillPeople()
         },
 

@@ -73,7 +73,6 @@ export default new Vuex.Store({
             state.chores = []
         },
         setItemList (state, items){
-            state.itemList = []
             items.forEach(item => {
                 state.itemList.push(item)
             })
@@ -120,7 +119,7 @@ export default new Vuex.Store({
         emptyChores({commit}){
             commit('emptyChores')
         },
-        setItemList({commit}, items){
+        setItemList({commit}, items) {// Is this shopping list items?
             commit('setItemList', items)
         }
     },
