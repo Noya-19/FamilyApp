@@ -506,7 +506,9 @@ export default {
       shoppingListDisplay: false,
       recipeListDisplay: false,
       editDialog: false,
-      dupRecipesItems: Array(0)
+      dupRecipesItems: Array(0),
+
+
     };
   },
   methods: {
@@ -527,6 +529,7 @@ export default {
           this.error = error.response.data.error
       }
       this.clearAll();
+      this.checkDup();
     },
 
     async addRecipe() {
@@ -647,10 +650,18 @@ export default {
     },
 
     addRecipeToItemList(index) {
+      console.log("inside addRecipeToItemList")
+      let temp =JSON.parse(JSON.stringify(this.recipes[index].recipesList))
       this.itemsList.push.apply(
         this.itemsList,
-        this.recipes[index].recipesList
+        temp
       );
+      this.checkDup();
+      console.log("recipe")
+      console.log(this.recipes[index].recipesList)
+    },
+
+    checkDup(){
       //loops through entire itemsList
       for (let i = 0; i < this.itemsList.length; i++) {
         //grabs first item
@@ -661,6 +672,7 @@ export default {
             this.itemsList[j].itemName.toLowerCase()
           ) {
             //if duplicate is found add the quanities and delete the second
+            console.log(this.itemsList)
             this.itemsList[i].quantity =
               Number(this.itemsList[i].quantity) +
               Number(this.itemsList[j].quantity);
@@ -668,7 +680,6 @@ export default {
           } //end if
         } //end for
       } //end for
-
     },
 
     duplicateRecipiesItems(index) {
