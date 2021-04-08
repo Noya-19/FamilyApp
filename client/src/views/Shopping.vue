@@ -1,10 +1,10 @@
 <template>
   <v-main class="shopping">
-    <form id="shopping-list">
       <v-card max-width="700" tile>
         <v-toolbar color="indigo darken-4" dark>
           <v-toolbar-title>Shopping List</v-toolbar-title>
           <v-spacer></v-spacer>
+
           <v-dialog v-model="shoppingListDisplay" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="white" dark text v-bind="attrs" v-on="on">
@@ -52,6 +52,7 @@
               </v-container>
             </v-card>
           </v-dialog>
+
         </v-toolbar>
         <v-container justify-space-between>
           <v-simple-table id="shopping-list-table" fixed-header height="300px">
@@ -107,9 +108,11 @@
               </td>
             </tr>
           </v-simple-table>
+          
         </v-container>
       </v-card>
-    </form>
+
+
     <br />
     <v-card max-width="700" tile>
       <v-toolbar color="indigo darken-4" dark>
@@ -265,9 +268,9 @@
         <thead>
           <tr>
             <th class="text-center">Name</th>
-            <th style="text-align:center">Add To Shopping List</th>
-            <th style="text-align:center">Edit</th>
-            <th style="text-align:center">Delete</th>
+            <th class="text-align:center">Add To Shopping List</th>
+            <th class="text-align:center">Edit</th>
+            <th class="text-align:center">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -283,7 +286,7 @@
               </v-icon>
             </td>
             <!-- This opens dialog box for editing recipies -->
-            <td>
+            <td >
               <v-dialog v-model="editDialog" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-icon
@@ -476,13 +479,83 @@ export default {
       inEditMode: false,
       recipes: [
         {
-          recipeName: "Sandwich",
+          recipeName: "Lasagna",
           recipesList: [
             {
               quantity: "1",
-              itemName: "soup",
+              itemName: "pound of sweet italian sausage",
               inEditMode: false
-            }
+            },
+            {
+              quantity: "1",
+              itemName: "pound lean ground beef",
+              inEditMode: false
+            },
+            {
+              quantity: "1",
+              itemName: "onion",
+              inEditMode: false
+            },
+            {
+              quantity: "1",
+              itemName: "cloves garlic",
+              inEditMode: false
+            },
+            {
+              quantity: "1",
+              itemName: "italian seasoning",
+              inEditMode: false
+            },
+          ]
+        },
+         {
+          recipeName: "cinnamon Rolls",
+          recipesList: [
+            {
+              quantity: "1",
+              itemName: "Rasins",
+              inEditMode: false
+            },
+             {
+              quantity: "2",
+              itemName: "Eggs",
+              inEditMode: false
+            },
+             {
+              quantity: "2",
+              itemName: "packets active dry yeast",
+              inEditMode: false
+            },
+             {
+              quantity: "1",
+              itemName: "cup all-purpose flour",
+              inEditMode: false
+            },
+          ]
+        },
+         {
+          recipeName: "Salmon",
+          recipesList: [
+            {
+              quantity: "4",
+              itemName: "table spoons of butter",
+              inEditMode: false
+            },
+             {
+              quantity: "2",
+              itemName: "Eggs",
+              inEditMode: false
+            },
+             {
+              quantity: "2",
+              itemName: "packets active dry yeast",
+              inEditMode: false
+            },
+             {
+              quantity: "1",
+              itemName: "cup all-purpose flour",
+              inEditMode: false
+            },
           ]
         },
         {
