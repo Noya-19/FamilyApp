@@ -15,7 +15,7 @@
                     >
                         <v-toolbar-title>Daily Chores</v-toolbar-title>
                         <v-spacer></v-spacer>
-                        <v-dialog v-model="dialog"
+                        <v-dialog v-model="dailyChoresDialog"
                                 persistent
                                 max-width="400px">
                                 <template v-slot:activator="{ on, attrs }">
@@ -62,20 +62,6 @@
                                                     offset-y
                                                     max-width="290px"
                                                     min-width="290px">
-                                                    <template v-slot:activator="{ on, attrs }">
-                                                        <v-text-field v-model="dueDate"
-                                                            color='indigo darken-4'
-                                                            label="Date"
-                                                            hint="MM/DD/YYYY format"
-                                                            persistent-hint
-                                                            prepend-icon="mdi-calendar"
-                                                            v-bind="attrs"
-                                                            v-on="on"></v-text-field>
-                                                    </template>
-                                                    <v-date-picker v-model="dueDate"
-                                                        color='indigo darken-4'
-                                                        no-title
-                                                        @input="menu1 = false"></v-date-picker>
                                                 </v-menu>
                                             </v-row>
                                             <v-row></v-row>
@@ -85,12 +71,12 @@
                                         <v-spacer></v-spacer>
                                         <v-btn color='indigo darken-4'
                                             text
-                                            @click="dialog = false; dueDate = ''; assigned = ''; title = ''">
+                                            @click="dailyChoresDialog = false; dueDate = ''; assigned = ''; title = ''">
                                             Close
                                         </v-btn>
                                         <v-btn color='indigo darken-4'
                                             text
-                                            @click="dialog = false; createChore()">
+                                            @click="dailyChoresDialog = false; dailyCreateChore()">
                                             Add
                                         </v-btn>
                                     </v-card-actions>
@@ -98,13 +84,13 @@
                             </v-dialog>
                     </v-toolbar>
                 <v-container fluid class="chores__daily-chore-list d-flex flex-no-wrap justify-start align-stretch">
-                    <!-- <ChoreComponent v-for="chore of completedChores" :key='chore.id'
+                    <ChoreComponent v-for="chore of incompleteDailyChores" :key='chore.id'
                         :title="chore.title"
                         :dueDate="chore.dueDate"
                         :assignedTo="chore.assignedTo"
                         :postedBy="chore.UserId"
                         :id="chore.id"
-                        :isComplete="chore.isComplete"/> -->
+                        :isComplete="chore.isComplete"/>
                 </v-container>
                 </v-row>
             </v-col>
@@ -260,7 +246,9 @@ export default {
             assigned:"",
             choreList: [],
             dialog: false,
+            dailyChoresDialog: false,
             name:[],//need someone to help fill with names
+            isDailyChore:false,
         }
     },
     methods: {
@@ -279,6 +267,7 @@ export default {
                     assignedTo: assignedTo, // INTEGER
                     UserId: this.$store.state.user.id, // INTEGER
                     isComplete: false, // BOOLEAN
+                    isDailyChore:false,//BOOLEAN
                 })
                 this.$store.dispatch('addChore', {
                     id: response.data.id,
@@ -287,6 +276,38 @@ export default {
                     assignedTo: response.data.assignedTo, // INTEGER
                     UserId: response.data.UserId, // INTEGER
                     isComplete: response.data.isComplete, // BOOLEAN
+                    isDailyChore: response.data.isDailyChore, //BOOLEAN
+                })
+            } catch (error) {
+
+            }
+        },
+         async dailyCreateChore() {
+            const dueDate = new Date(this.dueDate)
+            var assignedTo
+            this.assigned = this.assigned.split(" ")
+            this.$store.state.family.forEach(user => {
+                if(user.firstname == this.assigned[0] && user.lastname == this.assigned[1])
+                    assignedTo = user.id
+            })
+            try {
+                const response = await ChoreService.createChore({
+                    title: this.title, // STRING
+                    dueDate: Date.now(), // DATEONLY
+                    assignedTo: assignedTo, // INTEGER
+                    UserId: this.$store.state.user.id, // INTEGER
+                    isComplete: false, // BOOLEAN
+                    isDailyChore: true,//BOOLEAN
+                })
+                console.log(response)
+                this.$store.dispatch('addChore', {
+                    id: response.data.id,
+                    title: response.data.title, // STRING
+                    dueDate: response.data.dueDate, // DATEONLY
+                    assignedTo: response.data.assignedTo, // INTEGER
+                    UserId: response.data.UserId, // INTEGER
+                    isComplete: response.data.isComplete, // BOOLEAN
+                    isDailyChores: response.data.isDailyChore,//BOOLEAN
                 })
             } catch (error) {
 
@@ -311,9 +332,14 @@ export default {
         },
     },
     computed: {
+        incompleteDailyChores: function () {
+            return this.choreList.filter(function(e) {
+                return !e.isComplete && e.isDailyChore
+            })
+        },
         incompletedChores: function () {
             return this.choreList.filter(function(e) {
-                return !e.isComplete
+                return !e.isDailyChore && !e.isComplete
             })
         },  
         completedChores: function() {

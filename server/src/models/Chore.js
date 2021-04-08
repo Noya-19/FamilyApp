@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
         dueDate: DataTypes.DATEONLY,
         assignedTo: DataTypes.INTEGER,
         UserId: DataTypes.INTEGER,
-        isComplete: DataTypes.BOOLEAN
+        isComplete: DataTypes.BOOLEAN,
+        isDailyChore: DataTypes.BOOLEAN,
     })
 
     return Chore
