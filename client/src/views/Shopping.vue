@@ -57,7 +57,7 @@
 
                     </v-toolbar>
                     <v-container justify-space-between>
-                    <v-simple-table id="shopping-list-table" fixed-header height="275px">
+                    <v-simple-table id="shopping-list-table" fixed-header height="800px">
                         <thead>
                         <tr>
                             <th style="text-align:center">Quantity</th>
@@ -268,7 +268,7 @@
                     </v-dialog>
                 </v-toolbar>
                 <!-- table for recipieslist -->
-                <v-simple-table fixed-header height="300px">
+                <v-simple-table fixed-header height="825px">
                     <thead>
                     <tr>
                         <th class="text-center">Name</th>
