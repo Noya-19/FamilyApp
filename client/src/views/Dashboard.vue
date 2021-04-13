@@ -17,29 +17,43 @@
               <v-toolbar-title> Shopping List </v-toolbar-title>
               <v-spacer></v-spacer>
               </v-toolbar>
+              <v-card elevation="4"
+                outlined
+                class="mx-auto"
+                width="100%"
+                height="325px"
+>
               <v-container class="home__container">
                 <v-card-actions></v-card-actions>
-                <v-simple-table id="shopping-list-table"
-                                fixed-header>
-                  <thead>
-                    <tr>
-                      <th>Quantity</th>
-                      <th>Item</th>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tr v-for="(item, index) in itemsList">
-                    <td>
-                      <span v-show="!item.inEditMode">{{ item.quantity }}</span>
-                      <input type="number" v-bind:placeholder="item.quantity" v-show="item.inEditMode" v-model="item.quantity" />
-                    </td>
-                    <td>
-                      <span v-show="!item.inEditMode">{{ item.itemName }}</span>
-                      <input v-bind:placeholder="item.itemName" v-show="item.inEditMode" v-model="item.itemName" />
-                    </td>
-                  </tr>
-                </v-simple-table>
+                <v-simple-table id="shopping-list-table" fixed-header height="290px">
+            <thead>
+              <tr>
+                <th style="text-align:center">Quantity</th>
+                <th style="text-align:center">Item</th>
+              </tr>
+            </thead>
+            <tr v-for="(item, index) in itemsList">
+              <td style="text-align:center">
+                <span v-show="!item.inEditMode">{{ item.quantity }}</span>
+                <input
+                  type="number"
+                  v-bind:placeholder="item.quantity"
+                  v-show="item.inEditMode"
+                  v-model="item.quantity"
+                />
+              </td>
+              <td style="text-align:center">
+                <span v-show="!item.inEditMode">{{ item.itemName }}</span>
+                <input
+                  v-bind:placeholder="item.itemName"
+                  v-show="item.inEditMode"
+                  v-model="item.itemName"
+                />
+              </td>
+            </tr>
+          </v-simple-table>
               </v-container>
+              </v-card>
               </v-card>
             </div>
 
