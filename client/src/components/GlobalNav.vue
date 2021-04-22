@@ -61,8 +61,6 @@ export default {
 <style lang="scss">
 @import "../scss/variables.scss";
 
-    * {background-color: $light-gray}
-
     .global-nav{
         width: 100%;
         background: white;
