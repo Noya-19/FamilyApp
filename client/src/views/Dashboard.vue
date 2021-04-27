@@ -32,6 +32,7 @@
                 <th style="text-align:center">Item</th>
               </tr>
             </thead>
+            <tbody>
             <tr v-for="(item, index) in itemsList">
               <td style="text-align:center">
                 <span v-show="!item.inEditMode">{{ item.quantity }}</span>
@@ -51,6 +52,7 @@
                 />
               </td>
             </tr>
+            </tbody>
           </v-simple-table>
               </v-container>
               </v-card>

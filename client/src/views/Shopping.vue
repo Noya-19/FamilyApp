@@ -67,6 +67,7 @@
                             <th style="text-align:center">Delete</th>
                         </tr>
                         </thead>
+                        <tbody>
                         <tr v-for="(item, index) in itemsList">
                         <td style="text-align:center">
                             <span v-show="!item.inEditMode">{{ item.quantity }}</span>
@@ -110,6 +111,7 @@
                             </v-icon>
                         </td>
                         </tr>
+                        </tbody>
                     </v-simple-table>
                     
                     </v-container>
@@ -182,14 +184,6 @@
                                 fixed-header
                                 height="300px"
                                 >
-                                <thead>
-                                    <tr>
-                                    <th>Quantity</th>
-                                    <th>Item</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                    </tr>
-                                </thead>
                                 <tr v-for="(item, index) in recipesItem">
                                     <td>
                                     <span v-show="!item.inEditMode">{{
@@ -366,7 +360,7 @@
                                             <th>Delete</th>
                                         </tr>
                                         </thead>
-                                        <!-- try makeing this an array = to .recipiesItem -->
+                                        <tbody>
                                         <tr
                                         v-for="(innerItem,
                                         innerIndex) in dupRecipesItems"
@@ -423,6 +417,7 @@
                                             </v-icon>
                                         </td>
                                         </tr>
+                                        </tbody> 
                                     </v-simple-table>
                                     </v-card>
                                 </v-row>
@@ -436,7 +431,6 @@
                                 @click="editDialog = false"
                                 >Close</v-btn
                                 >
-                                <!-- need to add update recipie method -->
                                 <v-btn
                                 color="indigo darken-4"
                                 dark
@@ -592,49 +586,30 @@ export default {
     };
   },
   methods: {
-    async addItem() {
+    addItem() {
       //left shoppinglist
       var quantityIN = this.quantity;
       var itemNameIN = this.itemName.trim();
-      var itemToAdd = {
+      this.itemsList.push({
         quantity: quantityIN,
         itemName: itemNameIN,
-        inEditMode: false,
-        FamilyId: this.$store.state.user.FamilyId
-      };
-      this.itemsList.push(itemToAdd);
-      try {
-          const reponse = await ShoppingListService.createItem(itemToAdd);
-      } catch (error) {
-          this.error = error.response.data.error
-      }
+        inEditMode: false
+      });
       this.clearAll();
       this.checkDup();
     },
-    async addRecipe() {
+    addRecipe() {
       //recipeList
-      var response;
       console.log(this.recipes.includes(this.recipeName))
       if(!this.recipes.includes(this.recipeName)){
         console.log(this.recipesItem);
-        var myJsonString = JSON.stringify(this.recipesItem)
-        var recipeToAdd = {
+        this.recipes.push({
           recipeName: this.recipeName,
-          recipesList: this.recipesItem,
-          FamilyId: this.$store.state.user.FamilyId
-        }
-      this.recipes.push(recipeToAdd);
-      recipeToAdd.recipesList = myJsonString
-      try {
-        response = await ShoppingListService.createRecipe(recipeToAdd);
-      } catch (error) {
-          this.error = error.response.data.error
-      }
-        console.log(JSON.parse(response.data.recipesList))
+          recipesList: this.recipesItem
+        });
         this.clearRecipeName();
       }
     },
-
     addItemToRecipeList() {
       //items within the recipe
       
@@ -654,43 +629,34 @@ export default {
       });
       this.clearItemRecipe();
     },
-
     clearQuantity: function() {
       this.quantity = "";
     },
-
     clearItemName: function() {
       this.itemName = "";
     },
-
     clearQuantityDialog: function() {
       this.quantityBox = "";
     },
-
     clearItemNameDialog: function() {
       this.itemNameBox = "";
     },
-
     clearRecipeName: function() {
       this.recipeName = "";
       this.recipesList = "";
       this.recipesItem = [];
     },
-
     clearAll: function() {
       this.clearQuantity();
       this.clearItemName();
     },
-
     clearItemRecipe() {
       this.clearItemNameDialog();
       this.clearQuantityDialog();
     },
-
     clearAllRecipe() {
       this.clearRecipeName();
     },
-
     removeItem: function(index) {
       this.itemsList.splice(index, 1); //delete 1 element from the array at the position index
     },
@@ -715,19 +681,15 @@ export default {
     editRemoveRecipeItem(index){
       this.dupRecipesItems.splice(index,1)
     },
-
     // info: function(itemlist) {
     //   console.log(this.itemsList.length);
     // },
-
     openForm: function() {
       document.getElementById("myForm").style.display = "block";
     },
-
     closeForm: function() {
       document.getElementById("myForm").style.display = "none";
     },
-
     addRecipeToItemList(index) {
       console.log("inside addRecipeToItemList")
       let temp =JSON.parse(JSON.stringify(this.recipes[index].recipesList))
@@ -739,7 +701,6 @@ export default {
       console.log("recipe")
       console.log(this.recipes[index].recipesList)
     },
-
     checkDup(){
       //loops through entire itemsList
       for (let i = 0; i < this.itemsList.length; i++) {
@@ -760,7 +721,13 @@ export default {
         } //end for
       } //end for
     },
-      
+    duplicateRecipiesItems(index) {
+      this.dupRecipesItems = this.recipes[index].recipesList;
+    },
+    updateRecipie(index) {
+      this.recipes[index].recipesList = this.dupRecipesItems;
+      console.log(this.recipes)
+    }, 
     downloadShopping() {
       let a1 = document.getElementById("a1");
       let data ="Shopping List\nQuantity\t\tItems"
