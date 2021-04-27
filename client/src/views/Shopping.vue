@@ -2,6 +2,7 @@
     <v-main class="shopping">
         <div class="grid-container">
             <div class="left">
+                <a id='a1' download="ShoppingList.txt" @click="downloadShopping()"><v-btn color="blue" dark text>Download Shopping List</v-btn></a>
                 <v-card max-width="700" tile>
                     <v-toolbar color="indigo darken-4" dark>
                     <v-toolbar-title>Shopping List</v-toolbar-title>
@@ -759,14 +760,17 @@ export default {
         } //end for
       } //end for
     },
-
-    duplicateRecipiesItems(index) {
-      this.dupRecipesItems = this.recipes[index].recipesList;
+      
+    downloadShopping() {
+      let a1 = document.getElementById("a1");
+      let data ="Shopping List\nQuantity\t\tItems"
+      for(let i=0; i<this.itemsList.length;i++){
+        data= data+"\n\t"+this.itemsList[i].quantity+"\t\t\t"+this.itemsList[i].itemName
+      }
+      let blob1 = new Blob([data],{type:"text/plain"})
+      a1.href=URL.createObjectURL(blob1)
     },
-    updateRecipie(index) {
-      this.recipes[index].recipesList = this.dupRecipesItems;
-      console.log(this.recipes)
-    }
+    
   },
   mounted: async function () {
     this.itemsList = this.$store.state.itemList
