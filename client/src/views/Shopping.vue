@@ -2,6 +2,7 @@
     <v-main class="shopping">
         <div class="grid-container">
             <div class="left">
+                <a id='a1' download="ShoppingList.txt" @click="downloadShopping()"><v-btn color="blue" dark text>Download Shopping List</v-btn></a>
                 <v-card max-width="700" tile>
                     <v-toolbar color="indigo darken-4" dark>
                     <v-toolbar-title>Shopping List</v-toolbar-title>
@@ -66,6 +67,7 @@
                             <th style="text-align:center">Delete</th>
                         </tr>
                         </thead>
+                        <tbody>
                         <tr v-for="(item, index) in itemsList">
                         <td style="text-align:center">
                             <span v-show="!item.inEditMode">{{ item.quantity }}</span>
@@ -109,6 +111,7 @@
                             </v-icon>
                         </td>
                         </tr>
+                        </tbody>
                     </v-simple-table>
                     
                     </v-container>
@@ -181,14 +184,6 @@
                                 fixed-header
                                 height="300px"
                                 >
-                                <thead>
-                                    <tr>
-                                    <th>Quantity</th>
-                                    <th>Item</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                    </tr>
-                                </thead>
                                 <tr v-for="(item, index) in recipesItem">
                                     <td>
                                     <span v-show="!item.inEditMode">{{
@@ -365,7 +360,7 @@
                                             <th>Delete</th>
                                         </tr>
                                         </thead>
-                                        <!-- try makeing this an array = to .recipiesItem -->
+                                        <tbody>
                                         <tr
                                         v-for="(innerItem,
                                         innerIndex) in dupRecipesItems"
@@ -422,6 +417,7 @@
                                             </v-icon>
                                         </td>
                                         </tr>
+                                        </tbody> 
                                     </v-simple-table>
                                     </v-card>
                                 </v-row>
@@ -435,7 +431,6 @@
                                 @click="editDialog = false"
                                 >Close</v-btn
                                 >
-                                <!-- need to add update recipie method -->
                                 <v-btn
                                 color="indigo darken-4"
                                 dark
@@ -500,7 +495,7 @@ export default {
     };
   },
   methods: {
-    async addItem() {
+    addItem() {
       //left shoppinglist
       var quantityIN = this.quantity;
       var itemNameIN = this.itemName.trim();
@@ -526,14 +521,14 @@ export default {
       if(!dup){
         this.itemsList.push(itemToAdd);
         try {
-            const reponse = await ShoppingListService.createItem(itemToAdd);
+            const reponse = ShoppingListService.createItem(itemToAdd);
         } catch (error) {
             this.error = error.response.data.error
         }
       }
       this.clearAll();
     },
-    async addRecipe() {
+    addRecipe() {
       //recipeList
       var response;
       if(!this.recipes.includes(this.recipeName)){
@@ -550,14 +545,13 @@ export default {
         });
       recipeToAdd.recipesList = myJsonString
       try {
-        response = await ShoppingListService.createRecipe(recipeToAdd);
+        response = ShoppingListService.createRecipe(recipeToAdd);
       } catch (error) {
           this.error = error.response.data.error
       }
         this.clearRecipeName();
       }
     },
-
     addItemToRecipeList() {
       //items within the recipe
       
@@ -577,39 +571,31 @@ export default {
       });
       this.clearItemRecipe();
     },
-
     clearQuantity: function() {
       this.quantity = "";
     },
-
     clearItemName: function() {
       this.itemName = "";
     },
-
     clearQuantityDialog: function() {
       this.quantityBox = "";
     },
-
     clearItemNameDialog: function() {
       this.itemNameBox = "";
     },
-
     clearRecipeName: function() {
       this.recipeName = "";
       this.recipesList = "";
       this.recipesItem = [];
     },
-
     clearAll: function() {
       this.clearQuantity();
       this.clearItemName();
     },
-
     clearItemRecipe() {
       this.clearItemNameDialog();
       this.clearQuantityDialog();
     },
-
     clearAllRecipe() {
       this.clearRecipeName();
     },
@@ -654,11 +640,9 @@ export default {
     editRemoveRecipeItem(index){
       this.dupRecipesItems.splice(index,1)
     },
-
     openForm: function() {
       document.getElementById("myForm").style.display = "block";
     },
-
     closeForm: function() {
       document.getElementById("myForm").style.display = "none";
     },
@@ -695,7 +679,6 @@ export default {
         }
       }
     },
-
     checkDup(){
       //loops through entire itemsList
       for (let i = 0; i < this.itemsList.length; i++) {
@@ -725,7 +708,6 @@ export default {
         } //end for
       } //end for
     },
-
     duplicateRecipiesItems(index) {
       this.dupRecipesItems = this.recipes[index].recipesList;
     },
@@ -741,7 +723,17 @@ export default {
         } catch (error) {
           console.log("Could not update item in backend")
         }
-    }
+    }, 
+    downloadShopping() {
+      let a1 = document.getElementById("a1");
+      let data ="Shopping List\nQuantity\t\tItems"
+      for(let i=0; i<this.itemsList.length;i++){
+        data= data+"\n\t"+this.itemsList[i].quantity+"\t\t\t"+this.itemsList[i].itemName
+      }
+      let blob1 = new Blob([data],{type:"text/plain"})
+      a1.href=URL.createObjectURL(blob1)
+    },
+    
   },
   mounted: async function () {
     this.itemsList = this.$store.state.itemList
