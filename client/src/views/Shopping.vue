@@ -2,12 +2,14 @@
     <v-main class="shopping">
         <div class="grid-container">
             <div class="left">
-                <a id='a1' download="ShoppingList.txt" @click="downloadShopping()"><v-btn color="blue" dark text>Download Shopping List</v-btn></a>
+                
                 <v-card max-width="700" tile>
                     <v-toolbar color="indigo darken-4" dark>
                     <v-toolbar-title>Shopping List</v-toolbar-title>
                     <v-spacer></v-spacer>
-
+                    <a id='a1' download="ShoppingList.txt" @click="downloadShopping()"> <v-icon small class="mr-2">
+                            mdi-download
+                            </v-icon></a>
                     <v-dialog v-model="shoppingListDisplay" persistent max-width="600px">
                         <template v-slot:activator="{ on, attrs }">
                         <v-btn color="white" dark text v-bind="attrs" v-on="on">
