@@ -483,98 +483,7 @@ export default {
       quantityBox: "",
       itemNameBox: "",
       inEditMode: false,
-      recipes: [
-        {
-          recipeName: "Lasagna",
-          recipesList: [
-            {
-              quantity: "1",
-              itemName: "pound of sweet italian sausage",
-              inEditMode: false
-            },
-            {
-              quantity: "1",
-              itemName: "pound lean ground beef",
-              inEditMode: false
-            },
-            {
-              quantity: "1",
-              itemName: "onion",
-              inEditMode: false
-            },
-            {
-              quantity: "1",
-              itemName: "cloves garlic",
-              inEditMode: false
-            },
-            {
-              quantity: "1",
-              itemName: "italian seasoning",
-              inEditMode: false
-            },
-          ]
-        },
-         {
-          recipeName: "cinnamon Rolls",
-          recipesList: [
-            {
-              quantity: "1",
-              itemName: "Rasins",
-              inEditMode: false
-            },
-             {
-              quantity: "2",
-              itemName: "Eggs",
-              inEditMode: false
-            },
-             {
-              quantity: "2",
-              itemName: "packets active dry yeast",
-              inEditMode: false
-            },
-             {
-              quantity: "1",
-              itemName: "cup all-purpose flour",
-              inEditMode: false
-            },
-          ]
-        },
-         {
-          recipeName: "Salmon",
-          recipesList: [
-            {
-              quantity: "4",
-              itemName: "table spoons of butter",
-              inEditMode: false
-            },
-             {
-              quantity: "2",
-              itemName: "Eggs",
-              inEditMode: false
-            },
-             {
-              quantity: "2",
-              itemName: "packets active dry yeast",
-              inEditMode: false
-            },
-             {
-              quantity: "1",
-              itemName: "cup all-purpose flour",
-              inEditMode: false
-            },
-          ]
-        },
-        {
-          recipeName: "Omelette",
-          recipesList: [
-            {
-              quantity: "12",
-              itemName: "Eggs",
-              inEditMode: false
-            }
-          ]
-        }
-      ],
+      recipes: [],
       quantityBox: "",
       itemNameBox: "",
       inEditMode: false,
@@ -595,41 +504,56 @@ export default {
       //left shoppinglist
       var quantityIN = this.quantity;
       var itemNameIN = this.itemName.trim();
+      var dup = false
       var itemToAdd = {
         quantity: quantityIN,
         itemName: itemNameIN,
         inEditMode: false,
         FamilyId: this.$store.state.user.FamilyId
       };
-      this.itemsList.push(itemToAdd);
-      try {
-          const reponse = await ShoppingListService.createItem(itemToAdd);
-      } catch (error) {
-          this.error = error.response.data.error
+      for (let i = 0; i < this.itemsList.length; i++) {
+        if (itemToAdd.itemName.toLowerCase() == this.itemsList[i].itemName.toLowerCase()){
+          this.itemsList[i].quantity =
+              Number(this.itemsList[i].quantity) + Number(itemToAdd.quantity);
+            try{
+              ShoppingListService.updateItem(this.itemsList[i])
+            } catch (error) {
+              console.log("Could not update item in backend")
+            }
+          dup = true
+        }
+      }
+      if(!dup){
+        this.itemsList.push(itemToAdd);
+        try {
+            const reponse = await ShoppingListService.createItem(itemToAdd);
+        } catch (error) {
+            this.error = error.response.data.error
+        }
       }
       this.clearAll();
-      this.checkDup();
     },
     async addRecipe() {
       //recipeList
       var response;
-      console.log(this.recipes.includes(this.recipeName))
       if(!this.recipes.includes(this.recipeName)){
-        console.log(this.recipesItem);
-        var myJsonString = JSON.stringify(this.recipesItem)
         var recipeToAdd = {
           recipeName: this.recipeName,
           recipesList: this.recipesItem,
           FamilyId: this.$store.state.user.FamilyId
         }
-      this.recipes.push(recipeToAdd);
+      var myJsonString = JSON.stringify(this.recipesItem)
+      this.recipes.push({
+          recipeName: this.recipeName,
+          recipesList: this.recipesItem,
+          FamilyId: this.$store.state.user.FamilyId
+        });
       recipeToAdd.recipesList = myJsonString
       try {
         response = await ShoppingListService.createRecipe(recipeToAdd);
       } catch (error) {
           this.error = error.response.data.error
       }
-        console.log(JSON.parse(response.data.recipesList))
         this.clearRecipeName();
       }
     },
@@ -690,13 +614,23 @@ export default {
       this.clearRecipeName();
     },
 
-    removeItem: function(index) {
+    removeItem: async function(index) {
+      try {
+        await ShoppingListService.deleteItem(this.itemsList[index]);
+      } catch (error) {
+          console.log("Removing item broken")
+      }
       this.itemsList.splice(index, 1); //delete 1 element from the array at the position index
     },
     removeRecipeItem: function(index) {
       this.recipesItem.splice(index, 1); //delete 1 element from the array at the position index
     },
     removeRecipe: function(index) {
+      try {
+        ShoppingListService.deleteRecipe(this.recipes[index]);
+      } catch (error) {
+          console.log("Removing recipe broken")
+      }
       this.recipes.splice(index, 1); //delete 1 element from the array at the position index
     },
     editItem: function(item) {
@@ -707,6 +641,12 @@ export default {
     },
     editItemComplete: function(item) {
       item.inEditMode = false;
+      item.quantity = Number(item.quantity)
+      try{
+          ShoppingListService.updateItem(item)
+        } catch (error) {
+          console.log("Could not update item in backend")
+        }
     },
     editRecipeItemComplete: function(item) {
       item.inEditMode = false;
@@ -714,10 +654,6 @@ export default {
     editRemoveRecipeItem(index){
       this.dupRecipesItems.splice(index,1)
     },
-
-    // info: function(itemlist) {
-    //   console.log(this.itemsList.length);
-    // },
 
     openForm: function() {
       document.getElementById("myForm").style.display = "block";
@@ -727,16 +663,37 @@ export default {
       document.getElementById("myForm").style.display = "none";
     },
 
-    addRecipeToItemList(index) {
-      console.log("inside addRecipeToItemList")
+    async addRecipeToItemList(index) {
       let temp =JSON.parse(JSON.stringify(this.recipes[index].recipesList))
-      this.itemsList.push.apply(
-        this.itemsList,
-        temp
-      );
-      this.checkDup();
-      console.log("recipe")
-      console.log(this.recipes[index].recipesList)
+      for (let i = 0; i < temp.length; i++){
+        var dup = false
+        let itemToAdd = {
+          quantity: temp[i].quantity,
+          itemName: temp[i].itemName,
+          inEditMode: false,
+          FamilyId: this.$store.state.user.FamilyId
+        }
+        for (let i = 0; i < this.itemsList.length; i++) {
+          if (itemToAdd.itemName.toLowerCase() == this.itemsList[i].itemName.toLowerCase()){
+            this.itemsList[i].quantity =
+                Number(this.itemsList[i].quantity) + Number(itemToAdd.quantity);
+              try{
+                ShoppingListService.updateItem(this.itemsList[i])
+              } catch (error) {
+                console.log("Could not update item in backend")
+              }
+            dup = true
+          }
+        }
+        if(!dup){
+          this.itemsList.push(itemToAdd);
+          try {
+              const reponse = await ShoppingListService.createItem(itemToAdd);
+          } catch (error) {
+              this.error = error.response.data.error
+          }
+        }
+      }
     },
 
     checkDup(){
@@ -750,11 +707,20 @@ export default {
             this.itemsList[j].itemName.toLowerCase()
           ) {
             //if duplicate is found add the quanities and delete the second
-            console.log(this.itemsList)
             this.itemsList[i].quantity =
               Number(this.itemsList[i].quantity) +
               Number(this.itemsList[j].quantity);
+
+            try{
+              ShoppingListService.updateItem(this.itemsList[i])
+            } catch (error) {
+              console.log("Could not update item in backend")
+            }
+
             this.itemsList.splice(j, 1);
+
+                      // UPDATE ORIGINAL ITEM i TO ADD NEW QUANTITY FROM ITEM j
+                      
           } //end if
         } //end for
       } //end for
@@ -765,11 +731,27 @@ export default {
     },
     updateRecipie(index) {
       this.recipes[index].recipesList = this.dupRecipesItems;
-      console.log(this.recipes)
+      var updatedRecipe = {
+        recipeName : this.recipes[index].recipeName,
+        recipesList : JSON.stringify(this.dupRecipesItems),
+        FamilyId : this.$store.state.user.FamilyId
+      }
+      try{
+          ShoppingListService.updateRecipes(updatedRecipe)
+        } catch (error) {
+          console.log("Could not update item in backend")
+        }
     }
   },
   mounted: async function () {
     this.itemsList = this.$store.state.itemList
+    var tempRecipe = await ShoppingListService.indexRecipes(this.$store.state.user.FamilyId)
+    var tempRecipe = tempRecipe.data
+
+    for(let i = 0; i < tempRecipe.length; i++){
+      tempRecipe[i].recipesList = JSON.parse(tempRecipe[i].recipesList)
+      this.recipes.push(tempRecipe[i])
+    }
   }
 };
 </script>
