@@ -103,12 +103,27 @@
                   <template v-slot:default>
                     <tbody>
                       <tr v-for="(item, index) in people" :key="index">
-                        <td>
-                          <v-icon
-                          >mdi-account-box
-                          </v-icon>
-                          {{ item }}
-                        </td>
+                        <tr v-for="(item, index) in people" :key="index">
+                          <td>
+                              <v-icon v-if="index == 0" style="color:#5660db" 
+                              >
+                                  mdi-account-box
+                              </v-icon>
+                              <v-icon v-if="index == 1" style="color:#A9CEF4" 
+                              >
+                                  mdi-account-box
+                              </v-icon>
+                              <v-icon v-if="index == 2" style="color:#D0FFD6" 
+                              >
+                                  mdi-account-box
+                              </v-icon>
+                              <v-icon v-if="index == 3" style="color:#EEB4B3" 
+                              >
+                                  mdi-account-box
+                              </v-icon>
+                              {{ item }}
+                          </td>
+                        </tr>
                       </tr>
                     </tbody>
                   </template>
