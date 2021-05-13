@@ -37,8 +37,19 @@ module.exports = (app) => {
 
     app.get('/shoppinglist/items',
         ShoppingListController.getFamilyItems)
+    app.delete('/shoppinglist/items',
+        ShoppingListController.deleteItem)
     app.post('/shoppinglist/items',
         ShoppingListController.postItem)
+    app.get('/shoppinglist/items/update',
+        ShoppingListController.updateItemQuantity)
+
+    app.get('/shoppinglist/recipes',
+        ShoppingListController.getFamilyRecipes)
     app.post('/shoppinglist/recipes',
         ShoppingListController.postRecipe)
+    app.delete('/shoppinglist/recipes',
+        ShoppingListController.deleteRecipe)
+    app.get('/shoppinglist/recipes/update',
+        ShoppingListController.updateRecipe)
 }
