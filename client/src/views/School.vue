@@ -10,13 +10,14 @@
                 width="100%"
                 height="100%"
                 
-              >              
+              >        
               <v-toolbar
                 color="indigo darken-4"
                 dark
               >
               <v-toolbar-title>School Calendar</v-toolbar-title>
               <v-spacer></v-spacer>
+
               </v-toolbar>
 
                 <div id="calendar" class="calView">
@@ -103,13 +104,26 @@
                   <template v-slot:default>
                     <tbody>
                       <tr v-for="(item, index) in people" :key="index">
-                        <td>
-                          <v-icon
-                          >mdi-account-box
-                          </v-icon>
-                          {{ item }}
-                        </td>
-                      </tr>
+                          <td>
+                              <v-icon v-if="index == 0" style="color:#5660db" 
+                              >
+                                  mdi-account-box
+                              </v-icon>
+                              <v-icon v-if="index == 1" style="color:#A9CEF4" 
+                              >
+                                  mdi-account-box
+                              </v-icon>
+                              <v-icon v-if="index == 2" style="color:#D0FFD6" 
+                              >
+                                  mdi-account-box
+                              </v-icon>
+                              <v-icon v-if="index == 3" style="color:#EEB4B3" 
+                              >
+                                  mdi-account-box
+                              </v-icon>
+                              {{ item }}
+                          </td>
+                      </tr> 
                     </tbody>
                   </template>
                 </v-simple-table>
@@ -160,7 +174,7 @@ export default {
 				  endDate: new Date(Date.UTC(2021, 4, 11)), 
           endDate1: "5/11/2021",
           id: 1,
-          style: 'background-color: "#5660db"' 
+          style: 'background-color: rgba(86, 97, 220, .5) '
         },
         {
           name: "Josh",
@@ -170,6 +184,7 @@ export default {
 				  endDate: new Date(Date.UTC(2021, 4, 13)), 
           endDate1: "5/13/2021",
           id: 2,
+          style: 'background-color: rgba(86, 97, 220, .5) '
         },
         {
           name: "Josh",
@@ -179,6 +194,7 @@ export default {
 				  endDate: new Date(Date.UTC(2021, 4, 14)), 
           endDate1: "5/14/2021",
           id: 3, 
+          style: 'background-color: rgba(86, 97, 220, .5) '
         },
         
         {
@@ -189,6 +205,7 @@ export default {
 				  endDate: new Date(Date.UTC(2021, 4, 15)), 
           endDate1: "5/15/2021",
           id: 4,
+          style: 'background-color: rgba(86, 97, 220, .5) '
         },
         {
           name: "Josh",
@@ -198,6 +215,7 @@ export default {
 				  endDate: new Date(Date.UTC(2021, 4, 17)), 
           endDate1: "5/17/2021",
           id: 5, 
+          style: 'background-color: rgba(86, 97, 220, .5) '
         },
         {
           name: "Josh",
@@ -207,6 +225,7 @@ export default {
 				  endDate: new Date(Date.UTC(2021, 4, 17)), 
           endDate1: "5/17/2021",
           id: 6, 
+          style: 'background-color: rgba(86, 97, 220, .5) '
         },
         {
           name: "Renaldy",
@@ -216,7 +235,7 @@ export default {
           endDate: new Date(Date.UTC(2021, 4, 14)),
           endDate1: "5/14/2021", 
           id: 7,
-
+          style: 'background-color: #A9CEF4 '
         },
         {
           name: "Renaldy",
@@ -226,6 +245,7 @@ export default {
           endDate: new Date(Date.UTC(2021, 4, 17)),
           endDate1: "5/17/2021", 
           id: 8,
+          style: 'background-color: #A9CEF4 '
         },
         {
           name: "Renaldy",
@@ -235,6 +255,7 @@ export default {
           endDate: new Date(Date.UTC(2021, 4, 19)),
           endDate1: "5/19/2021", 
           id: 9,
+          style: 'background-color: #A9CEF4 '
         },
         {
           name: "Renaldy",
@@ -244,6 +265,7 @@ export default {
           endDate: new Date(Date.UTC(2021, 4, 20)),
           endDate1: "5/20/2021", 
           id: 10,
+          style: 'background-color: #A9CEF4 '
         },
         {
           name: "Renaldy",
@@ -253,6 +275,7 @@ export default {
           endDate: new Date(Date.UTC(2021, 4, 21)),
           endDate1: "5/21/2021", 
           id: 11,
+          style: 'background-color: #A9CEF4 '
         },
                 {
           name: "Christian",
@@ -262,7 +285,7 @@ export default {
           endDate: new Date(Date.UTC(2021, 4, 14)),
           endDate1: "5/14/2021", 
           id: 12,
-
+          style: 'background-color: #D0FFD6 '
         },
         {
           name: "Christian",
@@ -272,6 +295,7 @@ export default {
           endDate: new Date(Date.UTC(2021, 4, 17)),
           endDate1: "5/17/2021", 
           id: 13,
+          style: 'background-color: #D0FFD6 '
         },
         {
           name: "Christian",
@@ -281,6 +305,7 @@ export default {
           endDate: new Date(Date.UTC(2021, 4, 19)),
           endDate1: "5/19/2021", 
           id: 14,
+          style: 'background-color: #D0FFD6 '
         },
         {
           name: "Christian",
@@ -290,6 +315,7 @@ export default {
           endDate: new Date(Date.UTC(2021, 4, 20)),
           endDate1: "5/20/2021", 
           id: 15,
+          style: 'background-color: #D0FFD6 '
         },
         {
           name: "Christian",
@@ -299,6 +325,7 @@ export default {
           endDate: new Date(Date.UTC(2021, 4, 21)),
           endDate1: "5/21/2021", 
           id: 16,
+          style: 'background-color: #D0FFD6 '
         },
         {
           name: "Kyle",
@@ -308,6 +335,7 @@ export default {
           endDate: new Date(Date.UTC(2021, 4, 21)),
           endDate1: "5/21/2021", 
           id: 17,
+          style: 'background-color: #EEB4B3 '
         }
       ],// list view of assignments in left box
       name: "",
