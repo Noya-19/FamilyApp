@@ -10,13 +10,14 @@
                 width="100%"
                 height="100%"
                 
-              >              
+              >        
               <v-toolbar
                 color="indigo darken-4"
                 dark
               >
               <v-toolbar-title>School Calendar</v-toolbar-title>
               <v-spacer></v-spacer>
+
               </v-toolbar>
 
                 <div id="calendar" class="calView">
@@ -103,13 +104,26 @@
                   <template v-slot:default>
                     <tbody>
                       <tr v-for="(item, index) in people" :key="index">
-                        <td>
-                          <v-icon
-                          >mdi-account-box
-                          </v-icon>
-                          {{ item }}
-                        </td>
-                      </tr>
+                          <td>
+                              <v-icon v-if="index == 0" style="color:#5660db" 
+                              >
+                                  mdi-account-box
+                              </v-icon>
+                              <v-icon v-if="index == 1" style="color:#A9CEF4" 
+                              >
+                                  mdi-account-box
+                              </v-icon>
+                              <v-icon v-if="index == 2" style="color:#D0FFD6" 
+                              >
+                                  mdi-account-box
+                              </v-icon>
+                              <v-icon v-if="index == 3" style="color:#EEB4B3" 
+                              >
+                                  mdi-account-box
+                              </v-icon>
+                              {{ item }}
+                          </td>
+                      </tr> 
                     </tbody>
                   </template>
                 </v-simple-table>
@@ -149,9 +163,180 @@ export default {
         { text: 'Class', value: 'class' },
         {text: 'Assignment', value:'title'},
         { text: 'Due Date', value: 'endDate1' },
+        
       ],
       assignments: [
+        {
+          name: "Josh",
+          class: "COMP 491",
+          title: "COMP 491L SR PROJECT LAB - (16912-SP2021)",
+          startDate: new Date(Date.UTC(2021,4 , 11)),
+				  endDate: new Date(Date.UTC(2021, 4, 11)), 
+          endDate1: "5/11/2021",
+          id: 1,
+          style: 'background-color: rgba(86, 97, 220, .5) '
+        },
+        {
+          name: "Josh",
+          class: "COMP 491",
+          title: "COMP 491L SR PROJECT LAB - (16912-SP2021)",
+          startDate: new Date(Date.UTC(2021,4 , 13)),
+				  endDate: new Date(Date.UTC(2021, 4, 13)), 
+          endDate1: "5/13/2021",
+          id: 2,
+          style: 'background-color: rgba(86, 97, 220, .5) '
+        },
+        {
+          name: "Josh",
+          class: "GEO 101",
+          title: "Course Evalualtion",
+          startDate: new Date(Date.UTC(2021,4 , 14)),
+				  endDate: new Date(Date.UTC(2021, 4, 14)), 
+          endDate1: "5/14/2021",
+          id: 3, 
+          style: 'background-color: rgba(86, 97, 220, .5) '
+        },
         
+        {
+          name: "Josh",
+          class: "COMP 424",
+          title: "Final Exam",
+          startDate: new Date(Date.UTC(2021,4 , 15)),
+				  endDate: new Date(Date.UTC(2021, 4, 15)), 
+          endDate1: "5/15/2021",
+          id: 4,
+          style: 'background-color: rgba(86, 97, 220, .5) '
+        },
+        {
+          name: "Josh",
+          class: "GEO 101",
+          title: "Mid term # 4 Placeholder - Monday 5/17/2021 12:45 PM to 2:45 PM - Availability during this time slot only.",
+          startDate: new Date(Date.UTC(2021,4 , 17)),
+				  endDate: new Date(Date.UTC(2021, 4, 17)), 
+          endDate1: "5/17/2021",
+          id: 5, 
+          style: 'background-color: rgba(86, 97, 220, .5) '
+        },
+        {
+          name: "Josh",
+          class: "COMP 440",
+          title: "Semester Project.",
+          startDate: new Date(Date.UTC(2021,4 , 17)),
+				  endDate: new Date(Date.UTC(2021, 4, 17)), 
+          endDate1: "5/17/2021",
+          id: 6, 
+          style: 'background-color: rgba(86, 97, 220, .5) '
+        },
+        {
+          name: "Renaldy",
+          class: "COMP 429",
+          title: "Network Function Virtualization Discussion Part 2",
+          startDate: new Date(Date.UTC(2021,4 , 14)),
+          endDate: new Date(Date.UTC(2021, 4, 14)),
+          endDate1: "5/14/2021", 
+          id: 7,
+          style: 'background-color: #A9CEF4 '
+        },
+        {
+          name: "Renaldy",
+          class: "COMP 565",
+          title: "Student Proposed Project - Final Submission",
+          startDate: new Date(Date.UTC(2021,4 , 17)),
+          endDate: new Date(Date.UTC(2021, 4, 17)),
+          endDate1: "5/17/2021", 
+          id: 8,
+          style: 'background-color: #A9CEF4 '
+        },
+        {
+          name: "Renaldy",
+          class: "COMP 440",
+          title: "Student Proposed Project - Final Submission",
+          startDate: new Date(Date.UTC(2021,4 , 19)),
+          endDate: new Date(Date.UTC(2021, 4, 19)),
+          endDate1: "5/19/2021", 
+          id: 9,
+          style: 'background-color: #A9CEF4 '
+        },
+        {
+          name: "Renaldy",
+          class: "COMP 429",
+          title: "***Credit Recovery***",
+          startDate: new Date(Date.UTC(2021,4 , 20)),
+          endDate: new Date(Date.UTC(2021, 4, 20)),
+          endDate1: "5/20/2021", 
+          id: 10,
+          style: 'background-color: #A9CEF4 '
+        },
+        {
+          name: "Renaldy",
+          class: "COMP 429",
+          title: "Final Exam: Friday, May 21, 2021 Time: 8:00PM-10:00PM",
+          startDate: new Date(Date.UTC(2021,4 , 21)),
+          endDate: new Date(Date.UTC(2021, 4, 21)),
+          endDate1: "5/21/2021", 
+          id: 11,
+          style: 'background-color: #A9CEF4 '
+        },
+                {
+          name: "Christian",
+          class: "COMP 429",
+          title: "Network Function Virtualization Discussion Part 2",
+          startDate: new Date(Date.UTC(2021,4 , 14)),
+          endDate: new Date(Date.UTC(2021, 4, 14)),
+          endDate1: "5/14/2021", 
+          id: 12,
+          style: 'background-color: #D0FFD6 '
+        },
+        {
+          name: "Christian",
+          class: "COMP 565",
+          title: "Student Proposed Project - Final Submission",
+          startDate: new Date(Date.UTC(2021,4 , 17)),
+          endDate: new Date(Date.UTC(2021, 4, 17)),
+          endDate1: "5/17/2021", 
+          id: 13,
+          style: 'background-color: #D0FFD6 '
+        },
+        {
+          name: "Christian",
+          class: "COMP 440",
+          title: "Student Proposed Project - Final Submission",
+          startDate: new Date(Date.UTC(2021,4 , 19)),
+          endDate: new Date(Date.UTC(2021, 4, 19)),
+          endDate1: "5/19/2021", 
+          id: 14,
+          style: 'background-color: #D0FFD6 '
+        },
+        {
+          name: "Christian",
+          class: "COMP 429",
+          title: "***Credit Recovery***",
+          startDate: new Date(Date.UTC(2021,4 , 20)),
+          endDate: new Date(Date.UTC(2021, 4, 20)),
+          endDate1: "5/20/2021", 
+          id: 15,
+          style: 'background-color: #D0FFD6 '
+        },
+        {
+          name: "Christian",
+          class: "COMP 429",
+          title: "Final Exam: Friday, May 21, 2021 Time: 8:00PM-10:00PM",
+          startDate: new Date(Date.UTC(2021,4 , 21)),
+          endDate: new Date(Date.UTC(2021, 4, 21)),
+          endDate1: "5/21/2021", 
+          id: 16,
+          style: 'background-color: #D0FFD6 '
+        },
+        {
+          name: "Kyle",
+          class: "COMP 589 SOFTWARE METRICS - (16735-SP2021)",
+          title: "Final Exam",
+          startDate: new Date(Date.UTC(2021,4 , 21)),
+          endDate: new Date(Date.UTC(2021, 4, 21)),
+          endDate1: "5/21/2021", 
+          id: 17,
+          style: 'background-color: #EEB4B3 '
+        }
       ],// list view of assignments in left box
       name: "",
       people:[],

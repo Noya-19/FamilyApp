@@ -17,7 +17,7 @@
                 <div class="calendar-controls">
                     <div>
                         <div class="control">
-                            <div class="box">
+                            <div class="box1">
                                 <div class="select">
                                     <v-select
                                             v-model="displayVariable"
@@ -29,7 +29,7 @@
                                     </v-select>
                                 </div>
                             </div>
-                            <div class="box">
+                            <div class="box2">
                                 <div class="field">
                                     <label class="eventlabel">
                                         Name of event
@@ -62,6 +62,51 @@
                                     >
                                         Delete Event
                                     </v-btn>
+                                </div>
+                                <div class = "legend">
+                                    <v-card elevation="4"
+                                                outlined
+                                                class="mx-auto"
+                                                width="100%"
+                                                height=16rem>
+
+                                        <v-toolbar color="indigo darken-4"
+                                                dark>
+                                        <v-toolbar-title>People</v-toolbar-title>
+                                        <v-spacer></v-spacer>
+                                        </v-toolbar>
+                                        <v-simple-table :height="heightOfCalTable">
+                                        <template v-slot:default>
+                                            <tbody>
+                                            <tr v-for="(item, index) in people" :key="index">
+                                                <td>
+                                                    <v-icon v-if="index == 0" style="color:rgba(86, 97, 220, .5)" 
+                                                    >
+                                                        mdi-account-box
+                                                    </v-icon>
+                                                    <v-icon v-if="index == 1" style="color:#A9CEF4" 
+                                                    >
+                                                        mdi-account-box
+                                                    </v-icon>
+                                                    <v-icon v-if="index == 2" style="color:#D0FFD6" 
+                                                    >
+                                                        mdi-account-box
+                                                    </v-icon>
+                                                    <v-icon v-if="index == 3" style="color:#EEB4B3" 
+                                                    >
+                                                        mdi-account-box
+                                                    </v-icon>
+                                                    {{ item }}
+                                                </td>
+
+                                            </tr>
+                                            </tbody>
+                                        </template>
+                                        </v-simple-table>
+                                        <v-container class="home__container">
+                                        <v-card-actions></v-card-actions>
+                                        </v-container>
+                                    </v-card>
                                 </div>
                             </div>
                         </div>
@@ -127,6 +172,7 @@
                 </calendar-view>
             </div>
         </v-card>
+        
     </v-main>
 </template>
 
@@ -157,7 +203,9 @@
                 title:"",
                 displayVariable: "month",
                 selectedEvent: {},
-                option: ['month', 'week']
+                option: ['month', 'week'],
+                people:[],
+                eventColors: ["rgba(86, 97, 220, .5)", "#A9CEF4", "#D0FFD6", "#EEB4B3", "#FFBE86", "#D1FFC6", "#E8F8C1", "#D6D1B1"],
             }
         },
         computed: {
@@ -193,6 +241,7 @@
             this.$store.dispatch('emptyEvents')
             await this.getFamilyEvents(this.$store.state.family)
             await this.referenceEvents()
+            await this.fillPeople()
         },
         methods: {
             selectEvent (event) {
@@ -263,8 +312,14 @@
                 } catch (error) {
                     this.error = error.response.data.error
                 }
-            }
-        }
+            },
+            fillPeople() {
+              this.$store.state.family.forEach(user => {
+                this.people.push(user.firstname + " " + user.lastname)
+              })
+              console.log(this.people)
+            },
+        },
     }
 </script>
 
@@ -272,7 +327,13 @@
 
     @import '../scss/variables.scss';
 
-
+    .legend{
+       // border-style: solid;
+        //border-color: black;
+        //background-color: #EEB4B3;
+        width: 12rem;
+        height: 10rem;
+    }
 
     .cv-item.custom-date-class-red {
         background-color: #ff6666;
@@ -284,7 +345,7 @@
         //border-color: black;
         margin-left: 1rem;
         margin-top: 1rem;
-
+        height: 50rem;
     }
 
     /*h1{
@@ -298,7 +359,7 @@
         flex-grow: 1;
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         color: #2c3e50;
-        height: 67vh;
+        height: 71vh;
         width: auto;
         margin-left: auto;
         margin-right: auto;
@@ -322,13 +383,22 @@
         min-width: 14rem;
         max-width: 14rem;
     }
-    .box {
+    .box1 {
         background-color: #fff;
         border-radius: 6px;
         box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
         color: #4a4a4a;
         display: block;
         padding: 1.25rem;
+    }
+    .box2 {
+        background-color: #fff;
+        border-radius: 6px;
+        box-shadow: 0 2px 3px rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.1);
+        color: #4a4a4a;
+        display: block;
+        padding: 1.25rem;
+        height: 36rem;
     }
     .field:not(:last-child){
         margin-bottom: .75rem;
