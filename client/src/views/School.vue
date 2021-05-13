@@ -423,7 +423,7 @@ export default {
 
   .grid-container {
         grid-template-columns: 25% 25% 25% 25%;
-        grid-template-rows: 33.5rem auto;
+        grid-template-rows: 37rem auto;
         padding-right: $lg-gutter;
   }
 
@@ -443,6 +443,10 @@ export default {
     margin-top: 0.625rem;
     padding: 0.625rem;
   }
+
+  #calendar {
+        height: 51vh;
+    }
 
   .left {
     grid-area: left;
